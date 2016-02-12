@@ -16,11 +16,14 @@ namespace CandidateAssessments.Migrations
                     AssessmentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AccessCode = table.Column<string>(nullable: true),
-                    CandidateName = table.Column<string>(nullable: true)
+                    CandidateName = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assessment", x => x.AssessmentId);
+                    table.UniqueConstraint("AK_Assessment_AccessCode", x => x.AccessCode);
                 });
             migrationBuilder.CreateTable(
                 name: "Topic",
@@ -43,8 +46,9 @@ namespace CandidateAssessments.Migrations
                     AssessmentId = table.Column<int>(nullable: false),
                     NumberCorrect = table.Column<int>(nullable: false),
                     NumberOfQuestions = table.Column<int>(nullable: false),
+                    TimeCompleted = table.Column<DateTime>(nullable: false),
                     TimeLimit = table.Column<int>(nullable: false),
-                    TimeTaken = table.Column<int>(nullable: false),
+                    TimeStarted = table.Column<DateTime>(nullable: false),
                     TopicId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -74,7 +78,9 @@ namespace CandidateAssessments.Migrations
                     ChoiceC = table.Column<string>(nullable: true),
                     ChoiceD = table.Column<string>(nullable: true),
                     CorrectAnswer = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     QuestionText = table.Column<string>(nullable: true),
+                    QuestionType = table.Column<int>(nullable: false),
                     TopicId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -94,7 +100,11 @@ namespace CandidateAssessments.Migrations
                     QuizQuestionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Answer = table.Column<string>(nullable: true),
+                    NextQuestionId = table.Column<int>(nullable: false),
+                    QuestionNumber = table.Column<int>(nullable: false),
                     QuizId = table.Column<int>(nullable: false),
+                    TimeAnswered = table.Column<DateTime>(nullable: false),
+                    TimePresented = table.Column<DateTime>(nullable: false),
                     TopicQuestionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

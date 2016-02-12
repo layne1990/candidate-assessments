@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace CandidateAssessments.Models
 {
+    public enum QuestionTypes { MultipleChoice, TrueFalse, FillInBlank}
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
         public string QuestionText { get; set; }
+
+        [MaxLength(50)]
         public string CorrectAnswer { get; set; }
+
+        // Determines if this question will be used in new quizes
         public bool IsActive { get; set; }
 
+        public QuestionTypes QuestionType { get; set; }
+        
+        // Used for multiple choice questions
         public string ChoiceA { get; set; }
         public string ChoiceB { get; set; }
         public string ChoiceC { get; set; }

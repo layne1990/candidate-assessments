@@ -42,7 +42,7 @@ namespace CandidateAssessments
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=CandidateAssessment.Eric;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=CandidateAssessment.Dev;Trusted_Connection=True;";
 
             services.AddEntityFramework()
                 .AddSqlServer()

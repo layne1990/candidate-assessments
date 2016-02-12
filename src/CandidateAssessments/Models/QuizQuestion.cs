@@ -11,10 +11,19 @@ namespace CandidateAssessments.Models
 
         public string Answer { get; set; }
 
+        public DateTime TimePresented { get; set; }
+        public DateTime TimeAnswered { get; set; }
+
         public int QuizId { get; set; }
         public Quiz Quiz { get; set; }
 
         public int TopicQuestionId { get; set; }
         public TopicQuestion Question { get; set; }
+
+        // An ordinal number for the question starting at 1.
+        public int QuestionNumber { get; set; }
+
+        // The id of the next quiz question
+        public int NextQuestionId { get; set; }
     }
 }

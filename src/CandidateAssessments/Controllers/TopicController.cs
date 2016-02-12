@@ -11,17 +11,17 @@ namespace CandidateAssessments.Controllers
 {
     public class TopicController : Controller
     {
-        private AssessmentContext _context;
+        private AssessmentContext _db;
 
         public TopicController(AssessmentContext context)
         {
-            _context = context;
+            _db = context;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(_context.Topics.ToList());
+            return View(_db.Topics.ToList());
         }
 
         public IActionResult Create()
@@ -34,8 +34,8 @@ namespace CandidateAssessments.Controllers
         {
             if(ModelState.IsValid)
             {
-                _context.Topics.Add(topic);
-                _context.SaveChanges();
+                _db.Topics.Add(topic);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 

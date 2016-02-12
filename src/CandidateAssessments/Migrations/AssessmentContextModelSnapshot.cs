@@ -21,11 +21,19 @@ namespace CandidateAssessments.Migrations
                     b.Property<int>("AssessmentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AccessCode");
+                    b.Property<string>("AccessCode")
+                        .HasAnnotation("MaxLength", 36);
 
-                    b.Property<string>("CandidateName");
+                    b.Property<string>("CandidateName")
+                        .HasAnnotation("MaxLength", 128);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("ExpirationDate");
 
                     b.HasKey("AssessmentId");
+
+                    b.HasAlternateKey("AccessCode");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.Quiz", b =>
@@ -39,9 +47,11 @@ namespace CandidateAssessments.Migrations
 
                     b.Property<int>("NumberOfQuestions");
 
+                    b.Property<DateTime>("TimeCompleted");
+
                     b.Property<int>("TimeLimit");
 
-                    b.Property<int>("TimeTaken");
+                    b.Property<DateTime>("TimeStarted");
 
                     b.Property<int>("TopicId");
 
@@ -55,7 +65,15 @@ namespace CandidateAssessments.Migrations
 
                     b.Property<string>("Answer");
 
+                    b.Property<int>("NextQuestionId");
+
+                    b.Property<int>("QuestionNumber");
+
                     b.Property<int>("QuizId");
+
+                    b.Property<DateTime>("TimeAnswered");
+
+                    b.Property<DateTime>("TimePresented");
 
                     b.Property<int>("TopicQuestionId");
 
@@ -67,7 +85,8 @@ namespace CandidateAssessments.Migrations
                     b.Property<int>("TopicId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasAnnotation("MaxLength", 128);
 
                     b.HasKey("TopicId");
                 });
@@ -85,11 +104,14 @@ namespace CandidateAssessments.Migrations
 
                     b.Property<string>("ChoiceD");
 
-                    b.Property<string>("CorrectAnswer");
+                    b.Property<string>("CorrectAnswer")
+                        .HasAnnotation("MaxLength", 50);
 
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("QuestionText");
+
+                    b.Property<int>("QuestionType");
 
                     b.Property<int>("TopicId");
 

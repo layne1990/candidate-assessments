@@ -1,0 +1,66 @@
+@model CandidateAssessments.Models.TopicQuestion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TopicQuestion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoiceA)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChoiceA)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoiceB)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChoiceB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoiceC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChoiceC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoiceD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChoiceD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CorrectAnswer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CorrectAnswer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuestionText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuestionType)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.TopicQuestionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

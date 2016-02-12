@@ -23,6 +23,9 @@ namespace CandidateAssessments.Models
                 .HasOne(tq => tq.Question)
                 .WithMany()
                 .OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
+
+            // So we can quickly find an assessment by the acccess code
+            modelBuilder.Entity<Assessment>().HasAlternateKey(a => a.AccessCode);
         }
     }
 }
