@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -12,7 +13,7 @@ namespace WebApplication1.Controllers
 
         public AssessmentsController(AssessmentContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: Assessments
@@ -41,6 +42,8 @@ namespace WebApplication1.Controllers
         // GET: Assessments/Create
         public IActionResult Create()
         {
+            // pass TopicList to ViewBag for Create View
+            ViewBag.TopicList = _context.Topics.ToList();
             return View();
         }
 
@@ -51,10 +54,20 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Generate the times and Access Code
+                // TODO: need to replace this with the Guid
+                assessment.AccessCode     = "ASDF1234";
+                //assessment.AccessCode     = new Guid(assessment.CandidateName).ToString();
+
+                assessment.CreatedDate    = DateTime.Now;
+                assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
+
                 _context.Assessments.Add(assessment);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
+            // pass TopicList to ViewBag for Create View
+            ViewBag.TopicList = _context.Topics.ToList();
             return View(assessment);
         }
 
