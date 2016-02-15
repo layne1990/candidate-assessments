@@ -9,7 +9,7 @@ namespace CandidateAssessments.Models
     {
         public int QuizQuestionId { get; set; }
 
-        public Answer Answer { get; set; }
+        public String Answer { get; set; }
 
         public DateTime TimePresented { get; set; }
         public DateTime TimeAnswered { get; set; }

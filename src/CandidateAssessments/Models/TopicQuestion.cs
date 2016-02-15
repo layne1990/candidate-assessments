@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
 namespace CandidateAssessments.Models
 {
@@ -11,11 +10,10 @@ namespace CandidateAssessments.Models
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
-        
         public string QuestionText { get; set; }
-       
+
         [MaxLength(50)]
-        public Answer CorrectAnswer { get; set; }
+        public string CorrectAnswer { get; set; }
 
         // Determines if this question will be used in new quizes
         public bool IsActive { get; set; }
