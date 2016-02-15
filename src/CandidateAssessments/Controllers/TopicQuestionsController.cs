@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using CandidateAssessments.Models;
+using System.Collections.Generic;
 
 namespace WebApplication1.Controllers
 {
@@ -42,7 +43,8 @@ namespace WebApplication1.Controllers
         // GET: TopicQuestions/Create
         public IActionResult Create()
         {
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Topic");
+            
+            ViewBag.TopicList = _context.Topics.ToList();
             return View();
         }
 
@@ -53,11 +55,17 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+               var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
+                topicQuestion.Topic = top;
+                //not sure when topic.Questions gets initiated
+                if (top.Questions == null)
+                    top.Questions = new List<TopicQuestion>();
+               top.Questions.Add(topicQuestion); 
                 _context.TopicQuestions.Add(topicQuestion);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Topic", topicQuestion.TopicId);
+            ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
         }
 
@@ -74,7 +82,7 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Topic", topicQuestion.TopicId);
+            ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
         }
 
@@ -85,11 +93,19 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+                // if topic was changes need to remove question from original topic list
+                var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
+                topicQuestion.Topic = top;
+                
+                //not sure when topic.Questions gets initiated
+                if (top.Questions == null)
+                    top.Questions = new List<TopicQuestion>();
+                top.Questions.Add(topicQuestion);
                 _context.Update(topicQuestion);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewData["TopicId"] = new SelectList(_context.Topics, "TopicId", "Topic", topicQuestion.TopicId);
+            ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
         }
 
@@ -117,6 +133,9 @@ namespace WebApplication1.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
+            var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
+            if (top.Questions != null)
+                top.Questions.Remove(topicQuestion);
             _context.TopicQuestions.Remove(topicQuestion);
             _context.SaveChanges();
             return RedirectToAction("Index");
