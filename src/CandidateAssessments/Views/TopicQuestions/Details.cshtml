@@ -65,6 +65,7 @@
     </dl>
 </div>
 <p>
-    <a asp-action="Edit" asp-route-id="@Model.TopicQuestionId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TopicQuestionId}) |
+        @Html.ActionLink("Back to List", "Index")
+   
 </p>
