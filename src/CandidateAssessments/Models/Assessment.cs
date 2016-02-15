@@ -15,12 +15,17 @@ namespace CandidateAssessments.Models
         [MaxLength(128)]
         public string CandidateName { get; set; }
 
+        [Display(Name = "Access Code")]
         [MaxLength(36)]
         public string AccessCode { get; set; }
 
+        [Display(Name = "Date Created")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
 
+        [Display(Name = "Expiration Date")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime ExpirationDate { get; set; }
 
