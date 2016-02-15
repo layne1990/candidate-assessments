@@ -57,7 +57,7 @@ namespace WebApplication1.Controllers
                 // Generate the times and Access Code
                 // TODO: need to replace this with the Guid
                 assessment.AccessCode     = "ASDF1234";
-                //assessment.AccessCode     = new Guid(assessment.CandidateName).ToString();
+                //assessment.AccessCode   = new Guid(assessment.CandidateName).ToString();
 
                 assessment.CreatedDate    = DateTime.Now;
                 assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);

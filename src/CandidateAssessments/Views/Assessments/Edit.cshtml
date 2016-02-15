@@ -6,6 +6,29 @@
 
 <h2>Edit</h2>
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <div class="form-group">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.AccessCode)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.AccessCode)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CandidateName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.CandidateName)
+            </div>
+        </div>
+    </fieldset>
+<input class="btn btn-primary" type="submit" value="Save..." />
+}
+
+<!--
 <form asp-action="Edit">
     <div class="form-horizontal">
         <h4>Assessment</h4>
@@ -47,6 +70,7 @@
         </div>
     </div>
 </form>
+-->
 
 <div>
     <a asp-action="Index">Back to List</a>
