@@ -95,8 +95,6 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 _context.Update(assessment);
-
-                // TODO: this is throwing an error when trying to update.
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
