@@ -11,9 +11,9 @@ namespace CandidateAssessments.Models
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
-        [DisplayName("Question Text")]
+        
         public string QuestionText { get; set; }
-        [DisplayName("Correct Answer")]
+       
         [MaxLength(50)]
         public Answer CorrectAnswer { get; set; }
 
