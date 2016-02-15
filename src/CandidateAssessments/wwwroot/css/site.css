@@ -10,10 +10,6 @@
     padding-right: 15px;
 }
 
-.col-md-6 {
-    min-height: 1000px;
-}
-
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
