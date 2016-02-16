@@ -35,7 +35,6 @@ namespace CandidateAssessments.Controllers
             if(ModelState.IsValid)
             {
                 _db.Topics.Add(topic);
-                topic.Questions = new List<TopicQuestion>();
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
