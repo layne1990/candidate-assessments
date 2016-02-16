@@ -6,7 +6,25 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-controller="Topic" asp-action="Create" method="post" class="form-horizontal" role="form">
+@using (Html.BeginForm())
+{   
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        <legend>Topic</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(topic => topic.Name)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(topic => topic.Name)
+        </div>
+
+        <input type="submit" value="Create">
+
+    </fieldset>
+}
+<!--form asp-controller="Topic" asp-action="Create" method="post" class="form-horizontal" role="form">
     <div class="form-horizontal">
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
         <div class="form-group">
@@ -22,4 +40,4 @@
             </div>
         </div>
     </div>
-</form>
+</form-->
