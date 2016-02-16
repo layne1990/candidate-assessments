@@ -9,6 +9,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    <!-- TODO: HACKS!!!!  that only partially work... -->
+    @Html.HiddenFor(model => model.AssessmentId)
+    @Html.HiddenFor(model => model.CreatedDate)
+    @Html.HiddenFor(model => model.ExpirationDate)
+    @Html.HiddenFor(model => model.Quizes)
+
     <fieldset>
         <div class="form-group">
             <div class="editor-label">
