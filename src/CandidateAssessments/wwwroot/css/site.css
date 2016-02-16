@@ -16,7 +16,7 @@ select,
 textarea {
     max-width: 280px;
 }
-
+  
 /* Carousel */
 .carousel-caption {
     z-index: 10 !important;
@@ -32,3 +32,4 @@ textarea {
         z-index: 10 !important;
     }
 }
+
