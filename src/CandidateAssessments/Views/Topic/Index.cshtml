@@ -1,12 +1,36 @@
 ﻿@model IEnumerable<CandidateAssessments.Models.Topic>
 
-<h2>Topics</h2>
+<script>
+    function goToQuestions() {
+        window.location.href = '/TopicQuestions';
+    }
+</script>
 
-<p>
-    <a asp-controller="Topic" asp-action="Create">Create New</a>
-</p>
 
-<table class="table">
+<!--
+    Navbar for Search and CreateNew
+-->
+<nav class="navbar navbar-full navbar-default" id="pageNav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Topics</a>
+
+        <form class="nav navbar-form navbar-nav pull-right" method="get" asp-action="Create">
+            <button type="submit" class="btn btn-danger" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+        </form>
+
+        <form class="navbar-form pull-right" role="search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </form>
+
+    </div>
+</nav>
+
+<table class="table Topics">
     <tr>
         <th>Id</th>
         <th>Title</th>
@@ -15,7 +39,7 @@
     <!-- Comment to test push -->
     @foreach (var item in Model)
     {
-        <tr>
+        <tr onclick="goToQuestions(); return false;">
             <td>
                 @Html.DisplayFor(modelItem => item.TopicId)
             </td>
