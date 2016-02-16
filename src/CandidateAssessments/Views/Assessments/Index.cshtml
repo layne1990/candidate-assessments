@@ -4,11 +4,36 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<!--
+    Navbar for Search and CreateNew
+-->
+<nav class="navbar navbar-full navbar-default" id="pageNav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Assessment Results</a>
+
+        <form class="nav navbar-form navbar-nav pull-right" asp-action="Create">
+            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+        </form>
+
+        <form class="navbar-form pull-right" role="search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </form>
+
+    </div>
+</nav>
+
+
+
+<!--  
+TODO:
+    Change table display into cards
+-->
 <table class="table">
     <tr>
         <th>
@@ -25,26 +50,27 @@
         </th>
         <th></th>
     </tr>
-    
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CandidateName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpirationDate)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.AssessmentId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.AssessmentId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
-        </td>
-    </tr>
-}
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CandidateName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpirationDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AssessmentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AssessmentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            </td>
+        </tr>
+    }
 </table>
