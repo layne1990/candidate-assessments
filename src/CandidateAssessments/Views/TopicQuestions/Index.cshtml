@@ -24,29 +24,6 @@
     </div>
 </nav>
 
-<div class="jumbotron">
-    TEMPLATE ---- TEST CARD TEST CARD TEST CARD TEST CARD ---- TEMPLATE
-    <div>
-        <span>Q-Topic</span> <span>Q-Num</span> <span class="space"> </span>  <span class="pull-right">Delete</span><span class="pull-right">Edit |&nbsp;</span>
-    </div>
-    <div>
-        This is where the question text will go.
-    </div>
-    <div>
-        A. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        B. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        C. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        D. lkjaldkjsadlaksjdsda
-    </div>
-
-</div>
-
 <div class="card-deck-wrapper">
     <div class="card-deck">
 
@@ -54,7 +31,7 @@
         {
             <div class="card">
                 <h3 class="card-header">
-                    Topic | Question #
+                <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span>&nbsp;|&nbsp;&nbsp;&nbsp;Question # @Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
                 </h3>
                 <div class="card-block">
                     <blockquote class="card-blockquote">
@@ -75,7 +52,7 @@
                         </ul>
                     </blockquote>
                 </div>
-                <dl class="dl-horizontal card-footer text-muted">
+                <dl class="dl-horizontal card-footer text-muted card-img-bottom">
                     <dt>
                         @Html.DisplayNameFor(modelItem => item.CorrectAnswer)
                     </dt>
