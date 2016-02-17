@@ -8,6 +8,7 @@ using System.ComponentModel;
 namespace CandidateAssessments.Models
 {
     public enum QuestionTypes {MultipleChoice, TrueFalse, FillInBlank }
+   
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
