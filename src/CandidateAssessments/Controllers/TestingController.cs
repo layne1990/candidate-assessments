@@ -24,21 +24,26 @@ namespace CandidateAssessments.Controllers
         // GET: /testing/
         public IActionResult Index()
         {
-            return View();
+            return View(new Assessment());
         }
 
         // GET: /testing/assessment/{code}
         public IActionResult Assessment(string accessCode)
         {
+            if (accessCode == null)
+            {
+                return HttpNotFound();
+            }
+
             // if access code is not null, then save it as a cookie.
             // if it is null then make sure there is already a cookie set.
 
             // retrieve accessment by access code alternate key (be sure to include the quiz list)
-
+            Assessment assessment =_db.Assessments.SingleOrDefault(a => a.AccessCode == accessCode);
             // validate that the access code has not expired
 
             // return the assessment to the view
-            return View();
+            return View(assessment);
         }
 
         // GET: /testing/quiz/id
