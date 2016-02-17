@@ -50,7 +50,7 @@ textarea {
   display: block;
   margin-bottom: .75rem;
   background-color: #fff;
-  border: 1px solid #e5e5e5;
+  border: 2px solid gray;
   border-radius: .25rem;
 }
 
@@ -319,8 +319,13 @@ textarea {
 
 .card > h3 {
     margin: 0 !important;
+    font-weight: bold;
 }
 
 .card > dl {
     margin: 0 !important;
+}
+
+.bold {
+    font-weight: bold;
 }

@@ -25,41 +25,43 @@
 </nav>
 
 <div class="card-deck-wrapper">
-    <div class="card-deck">
+    <div class="card-deck row">
 
         @foreach (var item in Model)
         {
-            <div class="card">
-                <h3 class="card-header">
-                <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span>&nbsp;|&nbsp;&nbsp;&nbsp;Question # @Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
-                </h3>
-                <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                        <ul>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceA)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceB)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceC)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceD)
-                            </li>
-                        </ul>
-                    </blockquote>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="card">
+                    <h3 class="card-header">
+                        <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span>&nbsp;|&nbsp;&nbsp;&nbsp;Question # @Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                    </h3>
+                    <div class="card-block">
+                        <blockquote class="card-blockquote">
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="bold">A.)</span> @Html.DisplayFor(modelItem => item.ChoiceA)
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="bold">B.)</span> @Html.DisplayFor(modelItem => item.ChoiceB)
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="bold">C.)</span> @Html.DisplayFor(modelItem => item.ChoiceC)
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="bold">D.)</span> @Html.DisplayFor(modelItem => item.ChoiceD)
+                                </li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                    <dl class="dl-horizontal card-footer text-muted card-img-bottom">
+                        <dt>
+                            @Html.DisplayNameFor(modelItem => item.CorrectAnswer)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.CorrectAnswer)
+                        </dd>
+                    </dl>
                 </div>
-                <dl class="dl-horizontal card-footer text-muted card-img-bottom">
-                    <dt>
-                        @Html.DisplayNameFor(modelItem => item.CorrectAnswer)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(modelItem => item.CorrectAnswer)
-                    </dd>
-                </dl>
             </div>
         }
     </div>
