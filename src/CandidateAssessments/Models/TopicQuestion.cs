@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace CandidateAssessments.Models
 {
-    public enum QuestionTypes {MultipleChoice, TrueFalse, FillInBlank }
+   
+   
+    public enum QuestionTypes {[Display(Name = "Multiple choice")]MultipleChoice, [Display(Name = "True or Flase")]TrueFalse, [Display(Name = "Fill In the Blank")]FillInBlank }
    
     public class TopicQuestion
     {

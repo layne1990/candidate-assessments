@@ -1,5 +1,6 @@
 @model CandidateAssessments.Models.TopicQuestion
 @using CandidateAssessments.Models
+@using System.ComponentModel.DataAnnotations;
 @{
     ViewData["Title"] = "Edit";
 }
@@ -19,10 +20,35 @@
         <div class="form-group">
             @Html.LabelFor(model => model.QuestionType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.QuestionType, Enum.GetNames(typeof(QuestionTypes)).Select(e => new SelectListItem
-           {
-               Text = e
-           }))
+                @{
+
+                    Func<object, string> GetDisplayName = o =>
+                    {
+                        var result = null as string;
+                        var display = o.GetType()
+                                       .GetMember(o.ToString()).First()
+                                       .GetCustomAttributes(false)
+                                       .OfType<DisplayAttribute>()
+                                       .LastOrDefault();
+                        if (display != null)
+                        {
+                            result = display.GetName();
+                        }
+
+                        return result ?? o.ToString();
+                    };
+
+                    var values = Enum.GetValues(typeof(QuestionTypes)).Cast<object>()
+                                     .Select(v => new SelectListItem
+                                     {
+                                         Selected = v.Equals(Model),
+                                         Text = GetDisplayName(v),
+                                         Value = v.ToString()
+                                     });
+                }
+
+                @Html.DropDownListFor(model => model.QuestionType, values, new { htmlAttributes = new { @class = "form-control" } })
+
 
                 @Html.ValidationMessageFor(model => model.QuestionType, "", new { @class = "text-danger" })
             </div>
@@ -60,32 +86,36 @@
                 @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChoiceA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChoiceA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChoiceA, "", new { @class = "text-danger" })
+        <div id="MCQuestions">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ChoiceA, htmlAttributes: new { @class = "control-label col-md-2", @id = "trueLabel" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ChoiceA, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChoiceA, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChoiceB, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChoiceB, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChoiceB, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ChoiceB, htmlAttributes: new { @class = "control-label col-md-2", @id = "falseLabel" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ChoiceB, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChoiceB, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChoiceC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChoiceC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChoiceC, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChoiceD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChoiceD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChoiceD, "", new { @class = "text-danger" })
+            <div id="offForTrueFalse">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChoiceC, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ChoiceC, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChoiceC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChoiceD, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ChoiceD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChoiceD, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -94,11 +124,10 @@
             </div>
         </div>
     </div>
-}
-
+                    }
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
