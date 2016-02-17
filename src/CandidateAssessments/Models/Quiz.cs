@@ -18,8 +18,8 @@ namespace CandidateAssessments.Models
         public int NumberCorrect { get; set; }
         public int TimeLimit { get; set; }
         
-        public DateTime TimeStarted { get; set; }
-        public DateTime TimeCompleted { get; set; }
+        public DateTime? TimeStarted { get; set; }
+        public DateTime? TimeCompleted { get; set; }
 
 
         public List<QuizQuestion> Questions { get; set; }

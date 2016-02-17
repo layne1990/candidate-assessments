@@ -95,6 +95,9 @@ namespace CandidateAssessments
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Only while in development
+            SampleData.Initialize(app.ApplicationServices);
         }
 
         // Entry point for the application.
