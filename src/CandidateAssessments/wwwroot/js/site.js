@@ -1,6 +1,6 @@
 ﻿$(function () {
     $("#QuestionType").change(function () {
-        var select = $("#QuestionType option:selected").text();
+        var select = $("#QuestionType option:selected").val();
         $('#trueLabel').text('Choice A');
         $('#falseLabel').text('Choice B');
         $("#MCQuestions").show();
