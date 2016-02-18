@@ -111,6 +111,7 @@ namespace CandidateAssessments.Controllers
            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
             ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
             ViewBag.TimeLimit = quiz.TimeLimit;
+            ViewBag.QTopic = _db.Topics.Include(x => x.Name).Where(x => x.TopicId == question.TopicQuestionId);
             return View(question);
         }
 
