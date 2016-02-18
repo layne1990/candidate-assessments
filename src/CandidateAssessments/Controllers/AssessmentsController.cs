@@ -55,11 +55,20 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 // Generate the times and Access Code
-                // Creates a random 8 character access code.
+                // Creates a random 10 character access code.
                 // TODO: May need to place in a try/catch, not sure what happens if there is a duplicate. It's unlikely, but possible.
                 assessment.AccessCode     = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 10);
                 assessment.CreatedDate    = DateTime.Now;
                 assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
+
+                /*
+                foreach(int TopicId in TopicIds)
+                {
+                    // Add each new quiz based on the topic.
+                    // var TopicToAdd = _context.Topics.Single
+                    assessment.Quizes.Add(new Quiz(TopicToAdd, 20))
+                }
+                */
 
                 _context.Assessments.Add(assessment);
                 _context.SaveChanges();

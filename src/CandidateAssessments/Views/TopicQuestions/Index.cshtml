@@ -9,11 +9,11 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Questions</a>
 
-        <form class="nav navbar-form navbar-nav pull-right" method="get" asp-action="Create">
+        <form class="nav navbar-form navbar-nav navbar-right" method="get" asp-action="Create">
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
         </form>
 
-        <form class="navbar-form pull-right" role="search">
+        <form class="navbar-form navbar-right" role="search">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search">
                 <span class="input-group-btn">
@@ -24,73 +24,80 @@
     </div>
 </nav>
 
-<div class="jumbotron">
-    TEMPLATE ---- TEST CARD TEST CARD TEST CARD TEST CARD ---- TEMPLATE
-    <div>
-        <span>Q-Topic</span> <span>Q-Num</span> <span class="space"> </span>  <span class="pull-right">Delete</span><span class="pull-right">Edit |&nbsp;</span>
-    </div>
-    <div>
-        This is where the question text will go.
-    </div>
-    <div>
-        A. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        B. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        C. lkjaldkjsadlaksjdsda
-    </div>
-    <div>
-        D. lkjaldkjsadlaksjdsda
-    </div>
-
-</div>
-
 <div class="card-deck-wrapper">
-    <div class="card-deck">
+    <div class="card-deck row">
 
-        @foreach (var item in Model)
-        {
-            <div class="card">
-                <h3 class="card-header">
-                    Topic | Question #
-                </h3>
-                <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                        <ul>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceA)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceB)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceC)
-                            </li>
-                            <li>
-                                @Html.DisplayFor(modelItem => item.ChoiceD)
-                            </li>
-                        </ul>
-                    </blockquote>
+        @{
+            var altRow = false;
+            foreach (var item in Model)
+            {
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="card">
+                        <h3 class="card-header">
+                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">Question # @Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                        </h3>
+                        <div class="card-block">
+                            <blockquote class="card-blockquote">
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <span class="bold">A.)</span> @Html.DisplayFor(modelItem => item.ChoiceA)
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="bold">B.)</span> @Html.DisplayFor(modelItem => item.ChoiceB)
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="bold">C.)</span> @Html.DisplayFor(modelItem => item.ChoiceC)
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="bold">D.)</span> @Html.DisplayFor(modelItem => item.ChoiceD)
+                                    </li>
+                                </ul>
+                            </blockquote>
+                        </div>
+                        <div class="dl-horizontal card-footer text-muted card-img-bottom">
+                            <span>Correct Answer: &nbsp;@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
+                            <span class="pull-right">
+                        <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a> |
+                        <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                    </span>
+
+                        </div>
+                    </div>
                 </div>
-                <dl class="dl-horizontal card-footer text-muted">
-                    <dt>
-                        @Html.DisplayNameFor(modelItem => item.CorrectAnswer)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(modelItem => item.CorrectAnswer)
-                    </dd>
-                </dl>
-            </div>
+
+                if (altRow == true)
+                {
+                    <div class="clearfix visible-sm-block visible-md-block visible-lg-block visible-xl-block"></div>
+                }
+
+                altRow = !altRow;
+            }
         }
     </div>
 </div>
 
 
 
-<!-- <table class="table">
+<!--
+    if (i % 2 == 0)
+                {
+                    <div class="clearfix visible-sm-block"></div>
+                }
+                if (i % 3 == 0)
+                {
+                    <div class="clearfix visible-md-block"></div>
+                }
+                if (i % 4 == 0)
+                {
+                    <div class="clearfix visible-lg-block"></div>
+                }
+            <div class="clearfix visible-sm-block visible-md-block visible-lg-block visible-xl-block"></div>
+
+
+<table class="table">
 <tr>
     <th>
         @Html.DisplayNameFor(model => model.QuestionText)

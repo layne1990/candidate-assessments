@@ -9,6 +9,7 @@ namespace CandidateAssessments.Models
    
     public class TopicQuestion
     {
+        [Display(Name = "Question ID #")]
         public int TopicQuestionId { get; set; }
         [Display(Name = "Question Text")]
         public string QuestionText { get; set; }

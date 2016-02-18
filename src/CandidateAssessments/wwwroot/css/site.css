@@ -50,7 +50,7 @@ textarea {
   display: block;
   margin-bottom: .75rem;
   background-color: #fff;
-  border: 1px solid #e5e5e5;
+  border: 2px solid gray;
   border-radius: .25rem;
 }
 
@@ -211,21 +211,20 @@ textarea {
   border-radius: 0 0 .25rem .25rem;
 }
 
-@media (min-width: 544px) {
-  .card-deck {
-    display: table;
-    table-layout: fixed;
+
+.card-deck {
+    display: block;
     border-spacing: 1.25rem 0;
-  }
-  .card-deck .card {
-    display: table-cell;
-    width: 1%;
+}
+
+.card-deck .card {
+    display: block;
     vertical-align: top;
-  }
-  .card-deck-wrapper {
-    margin-right: -1.25rem;
-    margin-left: -1.25rem;
-  }
+}
+
+.cardHeader {
+    display: inline-block;
+    min-width: 50px;
 }
 
 @media (min-width: 544px) {
@@ -284,4 +283,49 @@ textarea {
     display: inline-block;
     width: 100%;
   }
+}
+
+@media (min-width: 34em) {
+    .card-columns {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media (min-width: 48em) {
+    .card-columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media (min-width: 62em) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+}
+
+@media (min-width: 75em) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+}
+
+.card > h3 {
+    margin: 0 !important;
+    font-weight: bold;
+}
+
+.card > dl {
+    margin: 0 !important;
+}
+
+.bold {
+    font-weight: bold;
 }
