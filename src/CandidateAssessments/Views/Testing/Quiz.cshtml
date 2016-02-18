@@ -3,7 +3,7 @@
 }
 @model CandidateAssessments.Models.QuizQuestion
 
-<span>Time Remaining: @ViewBag.TimeRemaining</span>
+<span>Time Remaining: @ViewBag.TimeRemaining.Minutes:@ViewBag.TimeRemaining.Seconds</span>
 
 <form asp-action="Quiz">
            <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />

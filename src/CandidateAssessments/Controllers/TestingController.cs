@@ -79,28 +79,33 @@ namespace CandidateAssessments.Controllers
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
             if(quiz.AssessmentId != assessment.AssessmentId)
-                return new HttpUnauthorizedResult();
+                return HttpUnauthorized();
 
-            // Quiz is not yet complete
-            if(quiz.TimeCompleted != null)
-                return new HttpUnauthorizedResult();
+            // Quiz is has been completed
+            if (quiz.TimeCompleted != null)
+                return View("QuizComplete");
 
 
-            // Quiz time has not expired
-//            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now )
-//                return new HttpUnauthorizedResult();
+            // Quiz time has expired
+            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now)
+                return View("QuizComplete");
 
             // If quiz not started, then record the start time
-            if(!quiz.TimeStarted.HasValue)
+            if (!quiz.TimeStarted.HasValue)
             {
                 quiz.TimeStarted = DateTime.Now;
                 _db.SaveChanges();
             }
 
             // Find the first unanswered question and send it to the view
-            QuizQuestion question = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizId == id && x.Answer=="").OrderBy(x => x.QuestionNumber).FirstOrDefault();
+            QuizQuestion question = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizId == id && x.Answer==null).OrderBy(x => x.QuestionNumber).FirstOrDefault();
+            
+            // If no next question, the redirect back to list of quizes
+            if (question == null)
+                return RedirectToAction("assessment");
 
-            ViewBag.TimeRemaining = quiz.TimeLimit - quiz.TimeStarted.Value.Subtract(DateTime.Now).Minutes;
+            ViewBag.TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
+
             return View(question);
         }
 
@@ -128,19 +133,19 @@ namespace CandidateAssessments.Controllers
             if (quiz.AssessmentId != assessment.AssessmentId)
                 return new HttpUnauthorizedResult();
 
-            // Quiz is not yet complete
+            // Quiz is complete
             if (quiz.TimeCompleted != null)
-                return new HttpUnauthorizedResult();
+                return View("QuizComplete");
 
 
-            // Quiz time has not expired
-            //            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now )
-            //                return new HttpUnauthorizedResult();
+            // Quiz time has expired
+            if (quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now)
+                return View("QuizComplete");
 
 
 
             // Save the answer
-            if(quizQuestion.Answer == "")
+            if (quizQuestion.Answer == "")
             {
                 quizQuestion.Answer = questionAnswered.Answer;
                 quizQuestion.TimeAnswered = DateTime.Now;
@@ -152,7 +157,7 @@ namespace CandidateAssessments.Controllers
             }
 
             // Calculate time remaining
-            ViewBag.TimeRemaining = quiz.TimeLimit - quiz.TimeStarted.Value.Subtract(DateTime.Now).Minutes;
+            ViewBag.TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
 
             // Get the next question
             QuizQuestion nextQuestion = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).FirstOrDefault();
