@@ -4930,7 +4930,7 @@ a.label:focus {
   background-color: #286090;
 }
 .label-success {
-  background-color: #5cb85c;
+  background-color: #5cb85c !important;
 }
 .label-success[href]:hover,
 .label-success[href]:focus {

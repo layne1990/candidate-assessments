@@ -1,4 +1,9 @@
-@model IEnumerable<CandidateAssessments.Models.TopicQuestion>
+@using System
+@using System.Collections.Generic
+@using System.ComponentModel
+@using System.Net.Mime
+@using System.Threading.Tasks
+@model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
 @{
     ViewData["Title"] = "Index";
@@ -29,8 +34,23 @@
 
         @{
             var altRow = false;
+            string[] correct = {"", "", "", ""};
             foreach (var item in Model)
             {
+
+                switch (item.CorrectAnswer)
+                {
+                    case "A":
+                        correct[0] = "label-success"; break;
+                    case "B":
+                        correct[1] = "label-success"; break;
+                    case "C":
+                        correct[2] = "label-success"; break;
+                    case "D":
+                        correct[3] = "label-success"; break;
+                    default:
+                        break;
+                }
 
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="card">
@@ -41,16 +61,16 @@
                             <blockquote class="card-blockquote">
                                 <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
                                 <ul class="list-group">
-                                    <li class="list-group-item">
+                                    <li class="list-group-item @correct[0] }">
                                         <span class="bold">A.)</span> @Html.DisplayFor(modelItem => item.ChoiceA)
                                     </li>
-                                    <li class="list-group-item">
+                                    <li class="list-group-item @correct[1] }">
                                         <span class="bold">B.)</span> @Html.DisplayFor(modelItem => item.ChoiceB)
                                     </li>
-                                    <li class="list-group-item">
+                                    <li class="list-group-item @correct[2] }">
                                         <span class="bold">C.)</span> @Html.DisplayFor(modelItem => item.ChoiceC)
                                     </li>
-                                    <li class="list-group-item">
+                                    <li class="list-group-item @correct[3] }">
                                         <span class="bold">D.)</span> @Html.DisplayFor(modelItem => item.ChoiceD)
                                     </li>
                                 </ul>
@@ -59,14 +79,19 @@
                         <div class="dl-horizontal card-footer text-muted card-img-bottom">
                             <span>Correct Answer: &nbsp;@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
                             <span class="pull-right">
-                        <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a> |
-                        <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
-                    </span>
+                                <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a> |
+                                <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                            </span>
 
                         </div>
                     </div>
                 </div>
+
+                correct[0] = "";
+                correct[1] = "";
+                correct[2] = "";
+                correct[3] = "";
 
                 if (altRow == true)
                 {

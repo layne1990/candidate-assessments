@@ -3,32 +3,41 @@
 }
 @model CandidateAssessments.Models.QuizQuestion
 
-<span>Time Remaining: @ViewBag.TimeRemaining</span>
+<h4 class="col-md-offset-9">Time Remaining: @ViewBag.TimeRemaining.Minutes:@ViewBag.TimeRemaining.Seconds</h4>
 
 <form asp-action="Quiz">
            <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
-    <p>
-        @Html.DisplayFor(model => model.QuestionNumber).
-        @Html.DisplayFor(model => model.Question.QuestionText)
-    </p>
+    <div class="form-horizontal">
+        <div class="form-group">
+          
+            <label class="control-label row"> 
+                @Html.DisplayFor(model => model.QuestionNumber).
+                @Html.DisplayFor(model => model.Question.QuestionText)
+            </label>
+           
 
-    <p>
-        
-        <input type="radio" name="Answer" value="A" /> @Html.DisplayFor(model => model.Question.ChoiceA)
-    </p>
+            
 
-    <p>
+            <div class="form-control-static">
+                <div>
+                    <input type="radio" name="Answer" value="A" /> @Html.DisplayFor(model => model.Question.ChoiceA)
+                </div>
 
-        <input type="radio" name="Answer" value="B" /> @Html.DisplayFor(model => model.Question.ChoiceB)
-    </p>
-    <p>
 
-        <input type="radio" name="Answer" value="C" /> @Html.DisplayFor(model => model.Question.ChoiceC)
-    </p>
-    <p>
 
-        <input type="radio" name="Answer" value="D" /> @Html.DisplayFor(model => model.Question.ChoiceD)
-    </p>
+                <div><input type="radio" name="Answer" value="B" /> @Html.DisplayFor(model => model.Question.ChoiceB)</div>
 
-    <input type="submit" value="Next" />
+
+
+                <div> <input type="radio" name="Answer" value="C" /> @Html.DisplayFor(model => model.Question.ChoiceC)</div>
+
+
+
+                <div> <input type="radio" name="Answer" value="D" /> @Html.DisplayFor(model => model.Question.ChoiceD)</div>
+            </div>
+            
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-default" value="Next" />
 </form>
