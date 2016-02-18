@@ -56,16 +56,20 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 // Generate the times and Access Code
-                // Creates a random 10 character access code.
-                // TODO: May need to place in a try/catch, not sure what happens if there is a duplicate. It's unlikely, but possible.
-                assessment.AccessCode     = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 10);
+                assessment.AccessCode     = Guid.NewGuid().ToString();
                 assessment.CreatedDate    = DateTime.Now;
-                assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
+                assessment.ExpirationDate = DateTime.Now.AddDays(7);
 
                 foreach(string TopicIdString in Topics)
                 {
-                    int TopicIdInt = Int32.Parse(TopicIdString);
-                    assessment.Quizes.Add(new Quiz(_context.Topics.Single(m => m.TopicId == TopicIdInt)));
+                    int TopicIdInt = int.Parse(TopicIdString);
+                    Quiz Quiz = new Quiz();
+                    Quiz.Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt);
+                    Quiz.NumberOfQuestions = 20;
+                    Quiz.TimeLimit = 10;
+                    Quiz.Assessment = assessment;
+
+                    assessment.Quizes.Add(Quiz);
                 }
 
                 _context.Assessments.Add(assessment);
