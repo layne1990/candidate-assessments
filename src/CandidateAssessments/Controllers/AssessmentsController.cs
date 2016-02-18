@@ -43,16 +43,15 @@ namespace WebApplication1.Controllers
         // GET: Assessments/Create
         public IActionResult Create()
         {
-            Assessment assessment = new Assessment();
-            assessment.Topics = _context.Topics.ToList();
+            ViewBag.Topics = _context.Topics.ToList();
             
-            return View(assessment);
+            return View();
         }
 
         // POST: Assessments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Assessment assessment)
+        public IActionResult Create(Assessment assessment, string[] Topics)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +61,12 @@ namespace WebApplication1.Controllers
                 assessment.AccessCode     = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 10);
                 assessment.CreatedDate    = DateTime.Now;
                 assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
+
+                foreach(string TopicIdString in Topics)
+                {
+                    int TopicIdInt = Int32.Parse(TopicIdString);
+                    assessment.Quizes.Add(new Quiz(_context.Topics.Single(m => m.TopicId == TopicIdInt)));
+                }
 
                 _context.Assessments.Add(assessment);
                 _context.SaveChanges();
