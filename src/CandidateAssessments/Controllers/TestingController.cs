@@ -100,7 +100,7 @@ namespace CandidateAssessments.Controllers
             // Find the first unanswered question and send it to the view
             QuizQuestion question = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizId == id && x.Answer=="").OrderBy(x => x.QuestionNumber).FirstOrDefault();
 
-            ViewBag.TimeRemaining = quiz.TimeLimit - DateTime.Now.Subtract(quiz.TimeStarted.Value).Minutes;
+            ViewBag.TimeRemaining = quiz.TimeLimit - quiz.TimeStarted.Value.Subtract(DateTime.Now).Minutes;
             return View(question);
         }
 
