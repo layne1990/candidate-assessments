@@ -14,5 +14,6 @@ namespace CandidateAssessments.Models
         public string Name { get; set; }
 
         public List<TopicQuestion> Questions { get; set; }
+
     }
 }

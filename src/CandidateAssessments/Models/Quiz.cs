@@ -23,5 +23,7 @@ namespace CandidateAssessments.Models
         public DateTime? TimeCompleted { get; set; }
 
         public List<QuizQuestion> Questions { get; set; }
+
+        public bool Checked { get; set; }
     }
 }

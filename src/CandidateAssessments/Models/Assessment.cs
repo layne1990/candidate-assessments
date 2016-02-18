@@ -8,6 +8,12 @@ namespace CandidateAssessments.Models
 {
     public class Assessment
     {
+
+        public Assessment()
+        {
+            this.Quizes = new List<Quiz>();
+        }
+
         public int AssessmentId { get; set; }
 
         [Required]
@@ -28,6 +34,8 @@ namespace CandidateAssessments.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime ExpirationDate { get; set; }
+            
+        public List<Topic> Topics { get; set; }
 
         public List<Quiz> Quizes { get; set; }
     }
