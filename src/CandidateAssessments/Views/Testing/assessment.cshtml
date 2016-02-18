@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_TestingLayout";
+}
+@model CandidateAssessments.Models.Assessment
+<h3> Hello @Model.CandidateName!</h3>
+<h4>
+    Your assessment consists of @Model.Quizes.Count
+    @if (Model.Quizes.Count == 1)
+    {<text>quiz.</text>}
+    else {<text>quizzes.</text>}
+</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Time Limit</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var quiz in Model.Quizes)
+    {
+        <tr>
+            <td>
+
+                @Html.DisplayFor(x => quiz.Topic.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(x => quiz.TimeLimit):00
+            </td>
+            <td>
+                @if (quiz.TimeCompleted.HasValue)
+                {   <div class="disabled text-success">
+                   Complete <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                }
+                else {
+                    <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                        Begin
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+
+
+</table>

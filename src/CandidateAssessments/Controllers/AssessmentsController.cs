@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using CandidateAssessments.Models;
+using System.Collections.Generic;
 
 namespace WebApplication1.Controllers
 {
@@ -42,9 +43,10 @@ namespace WebApplication1.Controllers
         // GET: Assessments/Create
         public IActionResult Create()
         {
-            // pass TopicList to ViewBag for Create View
-            ViewBag.TopicList = _context.Topics.ToList();
-            return View();
+            Assessment assessment = new Assessment();
+            assessment.Topics = _context.Topics.ToList();
+            
+            return View(assessment);
         }
 
         // POST: Assessments/Create
@@ -60,15 +62,6 @@ namespace WebApplication1.Controllers
                 assessment.AccessCode     = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 10);
                 assessment.CreatedDate    = DateTime.Now;
                 assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
-
-                /*
-                foreach(int TopicId in TopicIds)
-                {
-                    // Add each new quiz based on the topic.
-                    // var TopicToAdd = _context.Topics.Single
-                    assessment.Quizes.Add(new Quiz(TopicToAdd, 20))
-                }
-                */
 
                 _context.Assessments.Add(assessment);
                 _context.SaveChanges();

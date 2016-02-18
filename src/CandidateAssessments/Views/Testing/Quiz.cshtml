@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "_TestingLayout";
+}
+@model CandidateAssessments.Models.QuizQuestion
+
+<h4 class="col-md-offset-9">Time Remaining: @ViewBag.TimeRemaining.Minutes:@ViewBag.TimeRemaining.Seconds</h4>
+
+<form asp-action="Quiz">
+           <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
+    <div class="form-horizontal">
+        <div class="form-group">
+          
+            <label class="control-label row"> 
+                @Html.DisplayFor(model => model.QuestionNumber).
+                @Html.DisplayFor(model => model.Question.QuestionText)
+            </label>
+           
+
+            
+
+            <div class="form-control-static">
+                <div>
+                    <input type="radio" name="Answer" value="A" /> @Html.DisplayFor(model => model.Question.ChoiceA)
+                </div>
+
+
+
+                <div><input type="radio" name="Answer" value="B" /> @Html.DisplayFor(model => model.Question.ChoiceB)</div>
+
+
+
+                <div> <input type="radio" name="Answer" value="C" /> @Html.DisplayFor(model => model.Question.ChoiceC)</div>
+
+
+
+                <div> <input type="radio" name="Answer" value="D" /> @Html.DisplayFor(model => model.Question.ChoiceD)</div>
+            </div>
+            
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-default" value="Next" />
+</form>

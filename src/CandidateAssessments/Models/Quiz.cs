@@ -13,6 +13,7 @@ namespace CandidateAssessments.Models
         public Topic Topic{get;set;}
 
         public Assessment Assessment { get; set; }
+        public int AssessmentId { get; set; }
 
         // this can be calculated based on the length of this.Questions, do we need to keep it around?
         public int NumberOfQuestions { get; set; }
@@ -23,5 +24,7 @@ namespace CandidateAssessments.Models
         public DateTime? TimeCompleted { get; set; }
 
         public List<QuizQuestion> Questions { get; set; }
+
+        public bool Checked { get; set; }
     }
 }
