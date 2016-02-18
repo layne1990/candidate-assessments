@@ -56,16 +56,34 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 // Generate the times and Access Code
-                // Creates a random 10 character access code.
-                // TODO: May need to place in a try/catch, not sure what happens if there is a duplicate. It's unlikely, but possible.
-                assessment.AccessCode     = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 10);
+                assessment.AccessCode     = Guid.NewGuid().ToString();
                 assessment.CreatedDate    = DateTime.Now;
-                assessment.ExpirationDate = new DateTime(assessment.CreatedDate.Year, assessment.CreatedDate.Month, assessment.CreatedDate.Day + 7);
+                assessment.ExpirationDate = DateTime.Now.AddDays(7);
 
                 foreach(string TopicIdString in Topics)
                 {
-                    int TopicIdInt = Int32.Parse(TopicIdString);
-                    assessment.Quizes.Add(new Quiz(_context.Topics.Single(m => m.TopicId == TopicIdInt)));
+                    int TopicIdInt = int.Parse(TopicIdString);
+                    Quiz q = new Quiz();
+                    q.Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt);
+                    q.NumberOfQuestions = 20;
+                    q.TimeLimit = 10;
+                    q.Assessment = assessment;
+
+                    // TODO: This should add random questions to the quizes.
+                    int i = 1;
+                    foreach(TopicQuestion tq in _context.TopicQuestions)
+                    {
+                        _context.QuizQuestions.Add(
+                            new QuizQuestion()
+                            {
+                                Quiz = q,
+                                QuestionNumber = i++,
+                                NextQuestionId = 0,
+                                Question = tq,
+                            });
+                    }
+
+                    assessment.Quizes.Add(q);
                 }
 
                 _context.Assessments.Add(assessment);
