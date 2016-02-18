@@ -55,7 +55,8 @@ namespace CandidateAssessments.Models
                 context.Assessments.AddRange(
                     new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
                     new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
-                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) }
+                    // Expired assessment
+                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now }
                 );
                 context.SaveChanges();
 
@@ -70,7 +71,8 @@ namespace CandidateAssessments.Models
                             Assessment = a,
                             Topic = t,
                             NumberOfQuestions = 20,
-                            NumberCorrect = 0, TimeLimit = 10,
+                            NumberCorrect = t.TopicId % 2 == 0 ? 15 : 0,
+                            TimeLimit = 10,
                             TimeStarted = t.TopicId % 2 == 0 ? (DateTime?)DateTime.Now.AddDays(-1) : null,
                             TimeCompleted = t.TopicId % 2 == 0 ? (DateTime?)DateTime.Now.AddDays(-1).AddMinutes(8) : null,
                         });
@@ -85,17 +87,38 @@ namespace CandidateAssessments.Models
                     int i = 1;
                     foreach (TopicQuestion tq in context.TopicQuestions)
                     {
-                        context.QuizQuestions.Add(
-                        new QuizQuestion()
+
+                        if(tq.TopicId % 2 == 0)
                         {
-                            Answer = "C",
-                            TimeAnswered = DateTime.Now,
-                            TimePresented = DateTime.Now.AddMinutes(-1),
-                            Quiz = q,
-                            QuestionNumber = i++,
-                            NextQuestionId = 0,
-                            Question = tq,
-                        });
+
+                            // Answered questions
+                            context.QuizQuestions.Add(
+                            new QuizQuestion()
+                            {
+                                Answer = "C",
+                                TimeAnswered = DateTime.Now,
+                                TimePresented = DateTime.Now.AddMinutes(-1),
+                                Quiz = q,
+                                QuestionNumber = i++,
+                                NextQuestionId = 0,
+                                Question = tq,
+                            });
+
+                        }
+                        else
+                        {
+                            // Unanswered questions
+
+                            context.QuizQuestions.Add(
+                            new QuizQuestion()
+                            {
+                                Quiz = q,
+                                QuestionNumber = i++,
+                                NextQuestionId = 0,
+                                Question = tq,
+                            });
+                        }
+                        
                     }
                     context.SaveChanges();
 
