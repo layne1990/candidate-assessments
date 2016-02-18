@@ -2,21 +2,66 @@
     Layout = "_TestingLayout";
 }
 @model CandidateAssessments.Models.QuizQuestion
+<script>
 
-<h4 class="col-md-offset-9">Time Remaining: @ViewBag.TimeRemaining.Minutes:@ViewBag.TimeRemaining.Seconds</h4>
+    var dt = '@ViewBag.EndDate';
+    var dateAr = dt.split('-');
+    var newDate = dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2];
+
+    var end = new Date(dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2]);
+
+    var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+
+    var timer;
+
+    function showRemaining() {
+        var now = new Date();
+        var distance = end - now;
+        var limit = @ViewBag.TimeLimit;
+        if (distance < ((limit*60000)/2 )) {
+
+            document.getElementById('countdown').className = "text-danger"
+
+        }
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById('countdown').innerHTML = 'EXPIRED';
+            window.location.href = '/testing/assessment';
+
+            return;
+        }
+
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+
+
+        document.getElementById('countdown').innerHTML = minutes + ':';
+        if (seconds < 10)
+            document.getElementById('countdown').innerHTML += '0' + seconds;
+        else
+            document.getElementById('countdown').innerHTML += seconds + '';
+    }
+
+    timer = setInterval(showRemaining, 1000);
+
+</script>
+<h4 class="col-md-offset-9">Time Remaining: <span id="countdown" class="text-success"></span></h4>
 
 <form asp-action="Quiz">
-           <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
+    <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
     <div class="form-horizontal">
         <div class="form-group">
-          
-            <label class="control-label row"> 
+
+            <label class="control-label row">
                 @Html.DisplayFor(model => model.QuestionNumber).
                 @Html.DisplayFor(model => model.Question.QuestionText)
             </label>
-           
 
-            
+
+
 
             <div class="form-control-static">
                 <div>
@@ -35,7 +80,7 @@
 
                 <div> <input type="radio" name="Answer" value="D" /> @Html.DisplayFor(model => model.Question.ChoiceD)</div>
             </div>
-            
+
         </div>
     </div>
 

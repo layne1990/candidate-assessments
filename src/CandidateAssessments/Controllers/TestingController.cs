@@ -87,8 +87,12 @@ namespace CandidateAssessments.Controllers
 
 
             // Quiz time has expired
-            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now)
+            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now) {
+                quiz.TimeCompleted = quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit);
+                _db.SaveChanges();
                 return View("QuizComplete");
+            }
+              
 
             // If quiz not started, then record the start time
             if (!quiz.TimeStarted.HasValue)
@@ -104,8 +108,9 @@ namespace CandidateAssessments.Controllers
             if (question == null)
                 return RedirectToAction("assessment");
 
-            ViewBag.TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
-
+           var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
+            ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
+            ViewBag.TimeLimit = quiz.TimeLimit;
             return View(question);
         }
 
@@ -140,7 +145,12 @@ namespace CandidateAssessments.Controllers
 
             // Quiz time has expired
             if (quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now)
+            {
+                quiz.TimeCompleted = quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit);
+                _db.SaveChanges();
                 return View("QuizComplete");
+            }
+
 
 
 
@@ -157,14 +167,18 @@ namespace CandidateAssessments.Controllers
             }
 
             // Calculate time remaining
-            ViewBag.TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
-
+            ViewBag.TimeLimit = quiz.TimeLimit;
+            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
+            ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
             // Get the next question
             QuizQuestion nextQuestion = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).FirstOrDefault();
-
+       
             // If no next question, the redirect back to list of quizes
-            if (nextQuestion == null)
+            if (nextQuestion == null) {
+                quiz.TimeCompleted = DateTime.Now;
+                _db.SaveChanges();
                 return RedirectToAction("assessment");
+        }
 
             // Save the time we presented this question
             nextQuestion.TimePresented = DateTime.Now;

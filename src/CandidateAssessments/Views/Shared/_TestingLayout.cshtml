@@ -18,8 +18,29 @@
         @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
     </head>
     <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                
+                    <a id="LogoBrand" asp-controller="Testing" asp-action="Index" class="navbar-brand">
+                        <img src="~/images/RDA_Logo_Blue.png" />
+                    </a>
+                </div>
+                
+            </div>
+        </div>
         <div class="container body-content">
+            <br />
+            <br />
+            <br />
             @RenderBody()
+            <hr />
+            <footer>
+                <p>
+                    &copy; 2016 - RDA Corp
+                    Hunt Valley, MD
+                </p>
+            </footer>
         </div>
 
         <environment names="Development">
