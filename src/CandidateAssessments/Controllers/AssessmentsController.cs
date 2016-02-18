@@ -63,13 +63,27 @@ namespace WebApplication1.Controllers
                 foreach(string TopicIdString in Topics)
                 {
                     int TopicIdInt = int.Parse(TopicIdString);
-                    Quiz Quiz = new Quiz();
-                    Quiz.Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt);
-                    Quiz.NumberOfQuestions = 20;
-                    Quiz.TimeLimit = 10;
-                    Quiz.Assessment = assessment;
+                    Quiz q = new Quiz();
+                    q.Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt);
+                    q.NumberOfQuestions = 20;
+                    q.TimeLimit = 10;
+                    q.Assessment = assessment;
 
-                    assessment.Quizes.Add(Quiz);
+                    // TODO: This should add random questions to the quizes.
+                    int i = 1;
+                    foreach(TopicQuestion tq in _context.TopicQuestions)
+                    {
+                        _context.QuizQuestions.Add(
+                            new QuizQuestion()
+                            {
+                                Quiz = q,
+                                QuestionNumber = i++,
+                                NextQuestionId = 0,
+                                Question = tq,
+                            });
+                    }
+
+                    assessment.Quizes.Add(q);
                 }
 
                 _context.Assessments.Add(assessment);
