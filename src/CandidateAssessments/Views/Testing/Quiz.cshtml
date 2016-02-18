@@ -20,7 +20,7 @@
         var now = new Date();
         var distance = end - now;
         var limit = @ViewBag.TimeLimit;
-        if (distance < ((limit*60000)/2 )) {
+        if (distance < ((limit*60000)/4 )) {
 
             document.getElementById('countdown').className = "text-danger"
 
