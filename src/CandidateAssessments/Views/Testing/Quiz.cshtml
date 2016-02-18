@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "_TestingLayout";
+}
+@model CandidateAssessments.Models.QuizQuestion
+
+<span>Time Remaining: @ViewBag.TimeRemaining</span>
+
+<form asp-action="Quiz">
+           <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
+    <p>
+        @Html.DisplayFor(model => model.QuestionNumber).
+        @Html.DisplayFor(model => model.Question.QuestionText)
+    </p>
+
+    <p>
+        
+        <input type="radio" name="Answer" value="A" /> @Html.DisplayFor(model => model.Question.ChoiceA)
+    </p>
+
+    <p>
+
+        <input type="radio" name="Answer" value="B" /> @Html.DisplayFor(model => model.Question.ChoiceB)
+    </p>
+    <p>
+
+        <input type="radio" name="Answer" value="C" /> @Html.DisplayFor(model => model.Question.ChoiceC)
+    </p>
+    <p>
+
+        <input type="radio" name="Answer" value="D" /> @Html.DisplayFor(model => model.Question.ChoiceD)
+    </p>
+
+    <input type="submit" value="Next" />
+</form>

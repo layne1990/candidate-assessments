@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
 using CandidateAssessments.Models;
+using Microsoft.Data.Entity;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,71 +26,147 @@ namespace CandidateAssessments.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
+        } 
+        
         // GET: /testing/assessment/{code}
         public IActionResult Assessment(string accessCode)
         {
             // if access code is not null, then save it as a cookie.
-            // if it is null then make sure there is already a cookie set.
+            if (!string.IsNullOrEmpty(accessCode))
+                SetAccessCodeCookie(accessCode);
+            else
+                accessCode = GetAccessCodeCookie();
+
+            if (string.IsNullOrEmpty(accessCode))
+                return new HttpUnauthorizedResult();
+
 
             // retrieve accessment by access code alternate key (be sure to include the quiz list)
+            Assessment assessment = _db.Assessments.Where(x => x.AccessCode == accessCode).Include(x => x.Quizes).ThenInclude(y => y.Topic).FirstOrDefault();
+            
+
+            if (assessment == null)
+                return new HttpNotFoundResult();
+
 
             // validate that the access code has not expired
+            if (assessment.ExpirationDate < DateTime.Now)
+                return View("Expired");
 
-            // return the assessment to the view
-            return View();
+                // return the assessment to the view
+            return View(assessment);
         }
 
         // GET: /testing/quiz/id
         public IActionResult Quiz(int id)
         {
-            // Get the quiz from the db by id
 
             // Get the assessment from the db based on access code cookie.
+            string accessCode = GetAccessCodeCookie();
+
+            if (string.IsNullOrEmpty(accessCode))
+                return HttpUnauthorized();
+
+            Assessment assessment = _db.Assessments.Where(x => x.AccessCode == accessCode).FirstOrDefault();
+
+            if (assessment == null)
+                return HttpNotFound();
+            
+            // Get the quiz from the db by id
+            Quiz quiz = _db.Quizes.Where(x => x.QuizId == id).FirstOrDefault();
+
 
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
+            if(quiz.AssessmentId != assessment.AssessmentId)
+                return new HttpUnauthorizedResult();
+
             // Quiz is not yet complete
+            if(quiz.TimeCompleted != null)
+                return new HttpUnauthorizedResult();
+
+
             // Quiz time has not expired
+//            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now )
+//                return new HttpUnauthorizedResult();
 
             // If quiz not started, then record the start time
+            if(!quiz.TimeStarted.HasValue)
+            {
+                quiz.TimeStarted = DateTime.Now;
+                _db.SaveChanges();
+            }
 
             // Find the first unanswered question and send it to the view
-            QuizQuestion nextQuestion = null;
+            QuizQuestion question = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizId == id && x.Answer=="").OrderBy(x => x.QuestionNumber).FirstOrDefault();
 
-            return View(nextQuestion);
+            ViewBag.TimeRemaining = quiz.TimeLimit - quiz.TimeStarted.Value.Subtract(DateTime.Now).Minutes;
+            return View(question);
         }
 
         [HttpPost]
-        public IActionResult Quiz(QuizQuestion question)
+        public IActionResult Quiz(QuizQuestion questionAnswered)
         {
-            // Get the quiz from the db by question.quizid
-
             // Get the assessment from the db based on access code cookie.
+            string accessCode = GetAccessCodeCookie();
+
+            if (string.IsNullOrEmpty(accessCode))
+                return HttpUnauthorized();
+
+            Assessment assessment = _db.Assessments.Where(x => x.AccessCode == accessCode).FirstOrDefault();
+
+            if (assessment == null)
+                return HttpNotFound();
+
+            // Find the question that was just answered
+            QuizQuestion quizQuestion = _db.QuizQuestions.Include(x => x.Question).Include(x => x.Quiz).Where(x => x.QuizQuestionId == questionAnswered.QuizQuestionId).FirstOrDefault();
+            Quiz quiz = quizQuestion.Quiz;
+
 
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
+            if (quiz.AssessmentId != assessment.AssessmentId)
+                return new HttpUnauthorizedResult();
+
             // Quiz is not yet complete
+            if (quiz.TimeCompleted != null)
+                return new HttpUnauthorizedResult();
+
+
             // Quiz time has not expired
+            //            if(quiz.TimeStarted.HasValue && quiz.TimeStarted.Value.AddMinutes(quiz.TimeLimit) < DateTime.Now )
+            //                return new HttpUnauthorizedResult();
 
-            // Ensure question has not already been answered - if so, then skip to next question
 
-            // Record the answer to this question in the db
 
-            // Update the number correct field in the quiz
+            // Save the answer
+            if(quizQuestion.Answer == "")
+            {
+                quizQuestion.Answer = questionAnswered.Answer;
+                quizQuestion.TimeAnswered = DateTime.Now;
 
-            // Update the time answered field
+                if (quizQuestion.Answer == quizQuestion.Question.CorrectAnswer)
+                    quiz.NumberCorrect++;
 
-            // Retrieve the next question
-            QuizQuestion nextQuestion = null;
+                _db.SaveChanges();
+            }
 
-            // Update time presented field
+            // Calculate time remaining
+            ViewBag.TimeRemaining = quiz.TimeLimit - quiz.TimeStarted.Value.Subtract(DateTime.Now).Minutes;
 
-            // If no next question, then record completion time, redirect to assessment actionresult
+            // Get the next question
+            QuizQuestion nextQuestion = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).FirstOrDefault();
 
+            // If no next question, the redirect back to list of quizes
+            if (nextQuestion == null)
+                return RedirectToAction("assessment");
+
+            // Save the time we presented this question
+            nextQuestion.TimePresented = DateTime.Now;
+            _db.SaveChanges();
 
             return View(nextQuestion);
+
         }
 
         public string GetAccessCodeCookie()

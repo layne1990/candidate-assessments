@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "_TestingLayout";
+}
+@model CandidateAssessments.Models.Assessment
+
+@foreach (var quiz in Model.Quizes)
+{
+    <div>
+        <a asp-action="Quiz" asp-route-id="@quiz.QuizId">
+            @Html.DisplayFor(x => quiz.Topic.Name)
+            </a>
+    </div>
+}
+
+
+
