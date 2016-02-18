@@ -37,6 +37,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.Quizes)
         </dt>
+        @Model.Quizes.Count
         @foreach(var Quiz in Model.Quizes)
         {
             @Quiz.Topic.Name

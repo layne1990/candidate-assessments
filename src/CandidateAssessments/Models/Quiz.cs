@@ -8,6 +8,16 @@ namespace CandidateAssessments.Models
     public class Quiz
     {
 
+        public Quiz()
+        {
+
+        }
+
+        public Quiz(Topic Topic)
+        {
+            this.Topic = Topic;
+        }
+
         public int QuizId { get; set; }
 
         public Topic Topic{get;set;}

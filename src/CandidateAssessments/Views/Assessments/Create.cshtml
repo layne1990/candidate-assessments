@@ -28,10 +28,10 @@
     <!-- TODO: add checkboxes here, but when these are passed, we need to create quiz objects to add to the assessment. -->
     @Html.LabelFor(model => model.Quizes)
 
-    @for (var i = 0; i < Model.Topics.Count; i++)
+    @foreach(var Topic in ViewBag.Topics)
     {
-        @Model.Topics[i].Name
-        <input type="checkbox" name="Topics" onclick="handleClick(this);" value="@Model.Topics[i].TopicId"/>
+        @Topic.Name
+        <input type="checkbox" name="Topics" onclick="handleClick(this);" value="@Topic.TopicId"/>
     }
 
     <div class="form-group">
@@ -93,4 +93,10 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function handleClick(box) {
+        console.log("Clicked checkbox" + box.valule);
+        console.log(typeof(box.value))
+    }
+</script>
 }
