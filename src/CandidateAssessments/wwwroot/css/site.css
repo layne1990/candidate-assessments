@@ -328,10 +328,6 @@ textarea {
     min-height: 50px;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 .question_label{
 
     font-weight: bold;
@@ -340,6 +336,7 @@ textarea {
 }
 
 .question_text{
+    font-weight: normal;
     display: block;
     margin-left: 1em;
 }
