@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            Assessment assessment = _context.Assessments.Single(m => m.AssessmentId == id);
+            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).Include(m => m.Quizes).ThenInclude(y => y.Topic).FirstOrDefault();
             if (assessment == null)
             {
                 return HttpNotFound();
