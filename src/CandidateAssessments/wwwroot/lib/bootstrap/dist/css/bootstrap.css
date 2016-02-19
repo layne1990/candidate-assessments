@@ -4998,9 +4998,11 @@ a.badge:focus {
   font-size: 16px;
   float: right;
   padding: 10px 10px;
+  background-color: #BBB;
+  color: #000;
 }
 .list-group-item + .label-success > .badge {
-  color: #5cb85c;
+  color: #2f882f;
 }
 .list-group-item > .badge + .badge {
   margin-right: 5px;

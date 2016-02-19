@@ -47,10 +47,12 @@
     timer = setInterval(showRemaining, 1000);
 
 </script>
-<div class="container-fluid">
 
+
+
+<div class="container-fluid">
     <div class="row">
-        <h4 class="col-md-offset-9">Time Remaining: <span id="countdown" class="text-success"></span></h4>
+        <h3 class="cold-md-12 pull-right"><span>Time Remaining: </span><span id="countdown" class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h3>
     </div>
     <form asp-action="Quiz">
         <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId"/>
@@ -59,27 +61,27 @@
 
                 <div class="card">
                     <h3 class="card-header">
-                        <span class="cardHeader">Topic Goes Here</span><span class="pull-right">Question # @Html.DisplayFor(model => model.QuestionNumber)</span>
+                        <span class="cardHeader">@Html.DisplayFor(model => model.Question.Topic.Name) </span><span class="pull-right">Question # @Html.DisplayFor(model => model.QuestionNumber)</span>
                     </h3>
                     <div class="card-block">
                         <blockquote class="card-blockquote">
                             <p class="card-text">@Html.DisplayFor(model => model.Question.QuestionText)</p>
                             <div class="list-group">
-                                <label class="list-group-item" for="radio-1">
+                                <label class="container-fluid list-group-item" for="radio-1">
                                     <input type="radio" name="Answer" value="A" id="radio-1"/>
-                                    <span class="bold">A.) </span>@Html.DisplayFor(model => model.Question.ChoiceA)
+                                    <span class="question_label">A.) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
                                 </label>
-                                <label class="list-group-item" for="radio-1">
+                                <label class="container-fluid list-group-item" for="radio-1">
                                     <input type="radio" name="Answer" value="B" id="radio-1"/>
-                                    <span class="bold">B.) </span>@Html.DisplayFor(model => model.Question.ChoiceB)
+                                    <span class="question_label">B.) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
                                 </label>
-                                <label class="list-group-item" for="radio-1">
+                                <label class="container-fluid list-group-item" for="radio-1">
                                     <input type="radio" name="Answer" value="C" id="radio-1"/>
-                                    <span class="bold">C.) </span>@Html.DisplayFor(model => model.Question.ChoiceC)
+                                    <span class="question_label">C.) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceC)</span>
                                 </label>
-                                <label class="list-group-item" for="radio-1">
+                                <label class="container-fluid list-group-item" for="radio-1">
                                     <input type="radio" name="Answer" value="D" id="radio-1"/>
-                                    <span class="bold">D.) </span>@Html.DisplayFor(model => model.Question.ChoiceD)
+                                    <span class="question_label">D.) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceD)</span>
                                 </label>
                             </div>
                         </blockquote>

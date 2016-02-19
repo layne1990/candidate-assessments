@@ -60,7 +60,6 @@ namespace CandidateAssessments.Controllers
         // GET: /testing/quiz/id
         public IActionResult Quiz(int id)
         {
-
             // Get the assessment from the db based on access code cookie.
             string accessCode = GetAccessCodeCookie();
 
@@ -102,7 +101,7 @@ namespace CandidateAssessments.Controllers
             }
 
             // Find the first unanswered question and send it to the view
-            QuizQuestion question = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizId == id && x.Answer==null).OrderBy(x => x.QuestionNumber).FirstOrDefault();
+            QuizQuestion question = _db.QuizQuestions.Where(x => x.QuizId == id && x.Answer==null).Include(x => x.Question).ThenInclude(y => y.Topic).OrderBy(x => x.QuestionNumber).FirstOrDefault();
             
             // If no next question, the redirect back to list of quizes
             if (question == null)
@@ -111,7 +110,7 @@ namespace CandidateAssessments.Controllers
            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
             ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
             ViewBag.TimeLimit = quiz.TimeLimit;
-            ViewBag.QTopic = _db.Topics.Include(x => x.Name).Where(x => x.TopicId == question.TopicQuestionId);
+            ViewBag.QTopic = _db.Topics.Where(x => x.TopicId == quiz.TopicId).Include(x => x.Name);
             return View(question);
         }
 
@@ -172,7 +171,7 @@ namespace CandidateAssessments.Controllers
             var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
             ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
             // Get the next question
-            QuizQuestion nextQuestion = _db.QuizQuestions.Include(x => x.Question).Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).FirstOrDefault();
+            QuizQuestion nextQuestion = _db.QuizQuestions.Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).Include(x => x.Question).ThenInclude(y => y.Topic).FirstOrDefault();
        
             // If no next question, the redirect back to list of quizes
             if (nextQuestion == null) {
