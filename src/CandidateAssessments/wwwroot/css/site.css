@@ -341,8 +341,7 @@ textarea {
 
 .question_text{
     display: block;
-    margin-left: 2em;
-
+    margin-left: 1em;
 }
 
 div.question:nth-child(odd)
@@ -353,4 +352,8 @@ div.question:nth-child(odd)
 input[type="radio"],
 .input-label {
     display: none;
+}
+
+.list-group-item > .col-md-9 {
+    width: 82%;
 }

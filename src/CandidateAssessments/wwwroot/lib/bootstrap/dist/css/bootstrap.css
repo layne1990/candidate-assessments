@@ -4995,7 +4995,12 @@ a.badge:focus {
   background-color: #fff;
 }
 .list-group-item > .badge {
+  font-size: 16px;
   float: right;
+  padding: 10px 10px;
+}
+.list-group-item + .label-success > .badge {
+  color: #5cb85c;
 }
 .list-group-item > .badge + .badge {
   margin-right: 5px;

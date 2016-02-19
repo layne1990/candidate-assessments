@@ -156,7 +156,7 @@ namespace CandidateAssessments.Controllers
 
 
             // Save the answer
-            if (quizQuestion.Answer == "")
+            if (quizQuestion.Answer == null)
             {
                 quizQuestion.Answer = questionAnswered.Answer;
                 quizQuestion.TimeAnswered = DateTime.Now;
