@@ -17,10 +17,18 @@ namespace WebApplication1.Controllers
         }
 
         // GET: TopicQuestions
-        public IActionResult Index()
+        public IActionResult Index(int? TopicId)
         {
-            var assessmentContext = _context.TopicQuestions.Include(t => t.Topic);
-            return View(assessmentContext.ToList());
+            List<TopicQuestion> assessmentContext; 
+            if (TopicId != null)
+            {
+                assessmentContext = _context.TopicQuestions.Where(tq=>tq.TopicId==TopicId).Include(t => t.Topic).ToList();
+            }
+            else {
+                assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
+            }
+
+            return View(assessmentContext);
         }
 
         // GET: TopicQuestions/Details/5

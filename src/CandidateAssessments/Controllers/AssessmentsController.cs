@@ -31,13 +31,30 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            Assessment assessment = _context.Assessments.Single(m => m.AssessmentId == id);
+            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).Include(m => m.Quizes).ThenInclude(y => y.Topic).FirstOrDefault();
             if (assessment == null)
             {
                 return HttpNotFound();
             }
 
             return View(assessment);
+        }
+
+        // GET: Assessments/Quiz/
+        public IActionResult Quiz(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Quiz quiz = _context.Quizes.Where(m => m.QuizId == id).Include(m => m.Topic).FirstOrDefault();
+            if (quiz == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(quiz);
         }
 
         // GET: Assessments/Create
@@ -66,7 +83,6 @@ namespace WebApplication1.Controllers
                     _context.Quizes.Add(
                         new Quiz()
                         {
-                            
                             Assessment = assessment,
                            
                             Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt),
