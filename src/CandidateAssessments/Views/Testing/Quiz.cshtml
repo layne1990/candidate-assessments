@@ -2,8 +2,8 @@
     Layout = "_TestingLayout";
 }
 @model CandidateAssessments.Models.QuizQuestion
-<script>
 
+<script>
     var dt = '@ViewBag.EndDate';
     var dateAr = dt.split('-');
     var newDate = dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2];
@@ -20,7 +20,7 @@
         var now = new Date();
         var distance = end - now;
         var limit = @ViewBag.TimeLimit;
-        if (distance < ((limit*60000)/4 )) {
+        if (distance < ((limit*60000)/2 )) {
 
             document.getElementById('countdown').className = "text-danger"
 
@@ -55,34 +55,76 @@
     <div class="form-horizontal">
         <div class="form-group">
 
-            <label class="control-label row">
-                @Html.DisplayFor(model => model.QuestionNumber).
-                @Html.DisplayFor(model => model.Question.QuestionText)
-            </label>
-
-
-
-
-            <div class="form-control-static">
-                <div>
-                    <input type="radio" name="Answer" value="A" /> @Html.DisplayFor(model => model.Question.ChoiceA)
+            <div class="card">
+                <h3 class="card-header">
+                    <span class="cardHeader">Topic Goes Here</span><span class="pull-right">Question # @Html.DisplayFor(model => model.Question.TopicQuestionId)</span>
+                </h3>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p class="card-text">@Html.DisplayFor(model => model.Question.QuestionText)</p>
+                        <div class="list-group">
+                            <label class="list-group-item" for="radio-1">
+                                <input type="radio" name="Answer" id="radio-1"/>
+                                <span class="bold">A.) </span>@Html.DisplayFor(model => model.Question.ChoiceA)
+                            </label>
+                            <label class="list-group-item" for="radio-1">
+                                <input type="radio" name="Answer" id="radio-1" />
+                                <span class="bold">B.) </span>@Html.DisplayFor(model => model.Question.ChoiceB)
+                            </label>
+                            <label class="list-group-item" for="radio-1">
+                                <input type="radio" name="Answer" id="radio-1" />
+                                <span class="bold">C.) </span>@Html.DisplayFor(model => model.Question.ChoiceC)
+                            </label>
+                            <label class="list-group-item" for="radio-1">
+                                <input type="radio" name="Answer" id="radio-1" />
+                                <span class="bold">D.) </span>@Html.DisplayFor(model => model.Question.ChoiceD)
+                            </label>
+                        </div>
+                    </blockquote>
                 </div>
+                <div class="dl-horizontal card-footer">
+                    <span class="col-lg-1">
+                        &nbsp;
+                    </span>
+                    <span class="col-lg-offset-10 col-lg-1">
+                        <input type="submit" display="inline-block" class="btn btn-default" value="Next" />
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <!--
+
+
+            var topic = '@ViewBag.QTopic';
+
+        <label class="control-label row">
+            @Html.DisplayFor(model => model.QuestionNumber).
+            @Html.DisplayFor(model => model.Question.QuestionText)
+        </label>
 
 
 
-                <div><input type="radio" name="Answer" value="B" /> @Html.DisplayFor(model => model.Question.ChoiceB)</div>
 
-
-
-                <div> <input type="radio" name="Answer" value="C" /> @Html.DisplayFor(model => model.Question.ChoiceC)</div>
-
-
-
-                <div> <input type="radio" name="Answer" value="D" required/> @Html.DisplayFor(model => model.Question.ChoiceD)</div>
+        <div class="form-control-static">
+            <div>
+                <input type="radio" name="Answer" value="A"/> @Html.DisplayFor(model => model.Question.ChoiceA)
             </div>
 
-        </div>
-    </div>
 
-    <input type="submit" class="btn btn-default" value="Next" />
+
+            <div><input type="radio" name="Answer" value="B"/> @Html.DisplayFor(model => model.Question.ChoiceB)</div>
+
+
+
+            <div> <input type="radio" name="Answer" value="C"/> @Html.DisplayFor(model => model.Question.ChoiceC)</div>
+
+
+
+            <div> <input type="radio" name="Answer" value="D"/> @Html.DisplayFor(model => model.Question.ChoiceD)</div>
+        </div>
+-->
+
+    </div>
 </form>
