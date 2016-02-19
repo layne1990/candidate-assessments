@@ -6,7 +6,20 @@
     }
 </script>
 
-
+<style>
+  a, a:hover, a:active{
+       text-decoration: none;
+       color:black;
+  }
+    .bubble{
+         background-color: #ff4d4d;
+  width: 50%;
+  padding: 30px;
+  margin: 30px;
+  font-size: 28px;
+  border-radius: 10px;
+    }
+</style>
 <!--
     Navbar for Search and CreateNew
 -->
@@ -30,22 +43,29 @@
     </div>
 </nav>
 
-<table class="table Topics">
-    <tr>
-        <th>Id</th>
-        <th>Title</th>
-    </tr>
-
-    <!-- Comment to test push -->
+<ul class="list-unstyled col-md-offset-3">
     @foreach (var item in Model)
     {
-        <tr onclick="goToQuestions(); return false;">
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-        </tr>
+        <li> <div class="bubble col-md-offset-4 danger"><a href="/TopicQuestions/?TopicId=@item.TopicId"><h3 class="text-center">@item.Name <span class="glyphicon glyphicon-chevron-right"></span></h3></a></div></li>
+
     }
-</table>
+</ul>
+@*<table class="table Topics">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr onclick="goToQuestions(); return false;">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopicId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+    </table>*@
