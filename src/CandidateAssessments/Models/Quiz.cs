@@ -9,7 +9,8 @@ namespace CandidateAssessments.Models
     {
         public int QuizId { get; set; }
 
-        public Topic Topic{get;set;}
+        public Topic Topic{get;set; }
+        public int TopicId { get; set; }
 
         public Assessment Assessment { get; set; }
         public int AssessmentId { get; set; }

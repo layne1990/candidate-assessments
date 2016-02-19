@@ -34,44 +34,30 @@
 
         @{
             var altRow = false;
-            string[] correct = {"", "", "", ""};
             foreach (var item in Model)
             {
+                
 
-                switch (item.CorrectAnswer)
-                {
-                    case "A":
-                        correct[0] = "label-success"; break;
-                    case "B":
-                        correct[1] = "label-success"; break;
-                    case "C":
-                        correct[2] = "label-success"; break;
-                    case "D":
-                        correct[3] = "label-success"; break;
-                    default:
-                        break;
-                }
-
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="question col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="card">
                         <h3 class="card-header">
-                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">Question # @Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
                         </h3>
                         <div class="card-block">
                             <blockquote class="card-blockquote">
                                 <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
                                 <ul class="list-group">
-                                    <li class="list-group-item @correct[0] }">
-                                        <span class="bold">A.)</span> @Html.DisplayFor(modelItem => item.ChoiceA)
+                                    <li class="list-group-item @(item.CorrectAnswer == "A" ? "label-success" : "")">
+                                        <span class="question_label">A)</span> <span class="question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
                                     </li>
-                                    <li class="list-group-item @correct[1] }">
-                                        <span class="bold">B.)</span> @Html.DisplayFor(modelItem => item.ChoiceB)
+                                    <li class="list-group-item @(item.CorrectAnswer == "B" ? "label-success" : "")">
+                                        <span class="question_label">B)</span> <span class="question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
                                     </li>
-                                    <li class="list-group-item @correct[2] }">
-                                        <span class="bold">C.)</span> @Html.DisplayFor(modelItem => item.ChoiceC)
+                                    <li class="list-group-item @(item.CorrectAnswer == "C" ? "label-success" : "")">
+                                        <span class="question_label">C)</span> <span class="question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span>
                                     </li>
-                                    <li class="list-group-item @correct[3] }">
-                                        <span class="bold">D.)</span> @Html.DisplayFor(modelItem => item.ChoiceD)
+                                    <li class="list-group-item @(item.CorrectAnswer == "D" ? "label-success" : "")">
+                                        <span class="question_label">D)</span> <span class="question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span>
                                     </li>
                                 </ul>
                             </blockquote>
@@ -87,15 +73,9 @@
                         </div>
                     </div>
                 </div>
-
-                correct[0] = "";
-                correct[1] = "";
-                correct[2] = "";
-                correct[3] = "";
-
+                
                 if (altRow == true)
                 {
-                    <div class="clearfix visible-sm-block visible-md-block visible-lg-block visible-xl-block"></div>
                 }
 
                 altRow = !altRow;

@@ -13,8 +13,12 @@ namespace CandidateAssessments.Models
         {
             var context = serviceProvider.GetService<AssessmentContext>();
 
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+
+            string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+
+            var random = new Random();
 
             if (!context.Topics.Any())
             {
@@ -36,11 +40,11 @@ namespace CandidateAssessments.Models
                         context.TopicQuestions.Add(
                         new TopicQuestion()
                         {
-                            QuestionText = "This is question " + i.ToString(),
-                            ChoiceA = "This is choice A",
-                            ChoiceB = "This is choice B",
-                            ChoiceC = "This is choice C",
-                            ChoiceD = "This is choice D",
+                            QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0,lorem.Length)),
+                            ChoiceA = "This is choice A" +lorem.Substring(random.Next(0,100), random.Next(0, 50)),
+                            ChoiceB = "This is choice B" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
+                            ChoiceC = "This is choice C" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
+                            ChoiceD = "This is choice D" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
                             CorrectAnswer = "C",
                             QuestionType = QuestionTypes.MultipleChoice,
                             IsActive = true,
@@ -85,7 +89,7 @@ namespace CandidateAssessments.Models
                 foreach (Quiz q in context.Quizes.ToList())
                 {
                     int i = 1;
-                    foreach (TopicQuestion tq in context.TopicQuestions)
+                    foreach (TopicQuestion tq in context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
                     {
 
                         if(tq.TopicId % 2 == 0)

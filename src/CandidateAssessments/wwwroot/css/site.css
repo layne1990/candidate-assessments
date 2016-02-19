@@ -329,3 +329,21 @@ textarea {
 .bold {
     font-weight: bold;
 }
+
+.question_label{
+
+    font-weight: bold;
+    display: block;
+    float:left;
+}
+
+.question_text{
+    display: block;
+    margin-left: 2em;
+
+}
+
+div.question:nth-child(odd)
+{
+    clear: both;
+}
