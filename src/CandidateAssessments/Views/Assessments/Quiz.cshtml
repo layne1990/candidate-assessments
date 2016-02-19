@@ -7,12 +7,50 @@
 <h3>@Model.Topic.Name Quiz Results</h3>
 <h4>@Model.NumberOfQuestions questions in this quiz</h4>
 
-@foreach(var question in Model.Questions)
-{
-    @* Need to display this as a card *@
-    var item = question.Question;
-    @item.TopicQuestionId
 
+<div class="card-deck-wrapper">
+    <div class="card-deck row">
+        @foreach(var question in Model.Questions)
+        {
+        @* Need to display this as a card *@
+        var item = question.Question;
 
+        <div class="question col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="card">
+                <h3 class="card-header">
+                    <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                </h3>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                        <ul class="list-group">
+                            <li class="container-fluid list-group-item">
+                                <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge">50%</span>
+                            </li>
+                            <li class="container-fluid list-group-item">
+                                <span class="question_label">B)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge">50%</span>
+                            </li>
+                            <li class="container-fluid list-group-item">
+                                <span class="question_label">C)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span><span class="badge">50%</span>
+                            </li>
+                            <li class="container-fluid list-group-item ">
+                                <span class="question_label">D)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span><span class="badge">50%</span>
+                            </li>
+                        </ul>
+                    </blockquote>
+                </div>
+                <div class="card-footer text-muted">
+                    <span>Correct Answer: &nbsp;@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
+                    <span class="pull-right">
+                        <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a> |
+                        <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                    </span>
 
-}
+                </div>
+            </div>
+        </div>
+
+        }
+    </div>
+</div>
