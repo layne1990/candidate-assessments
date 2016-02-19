@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
         public IActionResult Create()
         {
             ViewBag.Topics = _context.Topics.ToList();
-            
+
             return View();
         }
 
@@ -56,37 +56,61 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 // Generate the times and Access Code
-                assessment.AccessCode     = Guid.NewGuid().ToString();
-                assessment.CreatedDate    = DateTime.Now;
+                assessment.AccessCode = Guid.NewGuid().ToString();
+                assessment.CreatedDate = DateTime.Now;
                 assessment.ExpirationDate = DateTime.Now.AddDays(7);
 
-                foreach(string TopicIdString in Topics)
+                foreach (string TopicIdString in Topics)
                 {
                     int TopicIdInt = int.Parse(TopicIdString);
-                    Quiz q = new Quiz();
-                    q.Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt);
-                    q.NumberOfQuestions = 20;
-                    q.TimeLimit = 10;
-                    q.Assessment = assessment;
+                    _context.Quizes.Add(
+                        new Quiz()
+                        {
+                            
+                            Assessment = assessment,
+                           
+                            Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt),
+                            NumberOfQuestions = 20,
+                            NumberCorrect = 0,
+                            TimeLimit = 10,
+                            TimeStarted = null,
+                            TimeCompleted = null,
+                        });
 
-                    // TODO: This should add random questions to the quizes.
-                    int i = 1;
-                    foreach(TopicQuestion tq in _context.TopicQuestions)
-                    {
-                        _context.QuizQuestions.Add(
-                            new QuizQuestion()
-                            {
-                                Quiz = q,
-                                QuestionNumber = i++,
-                                NextQuestionId = 0,
-                                Question = tq,
-                            });
-                    }
-
-                    assessment.Quizes.Add(q);
                 }
-
                 _context.Assessments.Add(assessment);
+                _context.SaveChanges();
+
+                // TODO: This should add random questions to the quizes.
+                foreach (Quiz q in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
+                {
+                    int i = 1;
+                    foreach (TopicQuestion tq in _context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
+                    {
+
+
+                        // Unanswered questions
+
+                        _context.QuizQuestions.Add(
+                        new QuizQuestion()
+                        {
+                            Quiz = q,
+                            QuestionNumber = i++,
+                            NextQuestionId = 0,
+                            Question = tq,
+                        });
+
+
+                    }
+                    _context.SaveChanges();
+                    int nextId = 0;
+                    foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
+                    {
+                        qq.NextQuestionId = nextId;
+                        nextId = qq.QuizQuestionId;
+                    }
+                }
+              
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -94,6 +118,7 @@ namespace WebApplication1.Controllers
             ViewBag.TopicList = _context.Topics.ToList();
             return View(assessment);
         }
+
 
         // GET: Assessments/Edit/5
         public IActionResult Edit(int? id)
