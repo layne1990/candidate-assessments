@@ -33,7 +33,6 @@
     <div class="card-deck row">
 
         @{
-            var altRow = false;
             foreach (var item in Model)
             {
                 
@@ -73,12 +72,6 @@
                         </div>
                     </div>
                 </div>
-                
-                if (altRow == true)
-                {
-                }
-
-                altRow = !altRow;
             }
         }
     </div>
