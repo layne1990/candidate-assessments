@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            Quiz quiz = _context.Quizes.Where(m => m.QuizId == id).Include(m => m.Topic).FirstOrDefault();
+            Quiz quiz = _context.Quizes.Where(m => m.QuizId == id).Include(m => m.Topic).Include(m => m.Questions).ThenInclude(y => y.Question).FirstOrDefault();
             if (quiz == null)
             {
                 return HttpNotFound();

@@ -6,3 +6,13 @@
 
 <h3>@Model.Topic.Name Quiz Results</h3>
 <h4>@Model.NumberOfQuestions questions in this quiz</h4>
+
+@foreach(var question in Model.Questions)
+{
+    @* Need to display this as a card *@
+    var item = question.Question;
+    @item.TopicQuestionId
+
+
+
+}
