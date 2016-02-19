@@ -66,6 +66,6 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TopicQuestionId}) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index",new { TopicId = Model.TopicId })
    
 </p>
