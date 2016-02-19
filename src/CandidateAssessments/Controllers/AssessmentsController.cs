@@ -66,7 +66,6 @@ namespace WebApplication1.Controllers
                     _context.Quizes.Add(
                         new Quiz()
                         {
-                            
                             Assessment = assessment,
                            
                             Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt),
