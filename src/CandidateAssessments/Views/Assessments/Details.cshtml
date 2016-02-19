@@ -4,45 +4,42 @@
     ViewData["Title"] = "Details";
 }
 
-<div>
-    <h2>@Model.CandidateName's Assessment</h2>
-    <h4>
-        @Model.Quizes.Count quizes assigned.
-    </h4>
-    <hr />
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Topic</th>
-                <th>Score</th>
-                <th></th>
-            </tr>
-        </thead>
-        @foreach (var quiz in Model.Quizes)
-        {
-            <tr>
-                <td>@Html.DisplayFor(m => quiz.Topic.Name)</td>
-                <td>@quiz.NumberCorrect / @quiz.NumberOfQuestions</td>
-                <td>
-                    @if (quiz.TimeCompleted.HasValue)
-                    {
-                        @* asp action to see quiz results *@
-                        <div class="text-success">
-                            Results <span class="glyphicon glyphicon-edit"></span>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-danger">
-                            Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
-                        </div>
-                    }
-                </td>
-            </tr>
-        }
-    </table>
-</div>
+<h2>@Model.CandidateName's Assessment</h2>
+<h4>
+    @Model.Quizes.Count quizes assigned.
+</h4>
+<hr />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Score</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var quiz in Model.Quizes)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => quiz.Topic.Name)</td>
+            <td>@quiz.NumberCorrect / @quiz.NumberOfQuestions</td>
+            <td>
+                @if (quiz.TimeCompleted.HasValue)
+                {
+                    @* asp action to see quiz results *@
+                    <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                        Results <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                }
+                else
+                {
+                    <div class="text-danger">
+                        Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+</table>
 
 
     @*<dl class="dl-horizontal">
@@ -73,8 +70,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.Quizes)
         </dt>
-    </dl>
-</div>*@
+    </dl>*@
 
 <p>
     <a asp-action="Edit" asp-route-id="@Model.AssessmentId">Edit</a> |
