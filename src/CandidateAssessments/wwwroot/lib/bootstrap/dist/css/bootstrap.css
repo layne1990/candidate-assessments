@@ -4930,7 +4930,7 @@ a.label:focus {
   background-color: #286090;
 }
 .label-success {
-  background-color: #5cb85c;
+  background-color: #5cb85c !important;
 }
 .label-success[href]:hover,
 .label-success[href]:focus {
@@ -5001,7 +5001,7 @@ a.badge:focus {
   background-color: #BBB;
   color: #000;
 }
-.list-group-item + .list-group-item-success > .badge {
+.list-group-item + .label-success > .badge {
   color: #2f882f;
 }
 .list-group-item > .badge + .badge {
