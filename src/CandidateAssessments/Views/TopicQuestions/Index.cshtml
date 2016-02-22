@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Questions</a>
 
-        <form class="nav navbar-form navbar-nav navbar-right" method="get" asp-action="Create">
+        <form class="nav navbar-form navbar-nav navbar-right" method="get" asp-action="Create" asp-route-id="@ViewBag.TopicId">
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
         </form>
 

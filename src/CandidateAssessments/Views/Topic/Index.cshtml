@@ -38,7 +38,7 @@
                 <div class="bubble col-md-offset-4 danger">
                     <h3 class="text-center">
 
-                        @item.Name&nbsp;&nbsp;&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
+                        @item.Name&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </h3>
                 </div>
@@ -50,7 +50,7 @@
         <a class="TopicLink" href="/TopicQuestions/">
             <div class="bubble col-md-offset-4">
                 <h3 class="text-center">
-                    All&nbsp;&nbsp;&nbsp;&nbsp;@qs.Count() Questions
+                    All&nbsp;&nbsp;@qs.Count() Questions
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </h3>
             </div>
