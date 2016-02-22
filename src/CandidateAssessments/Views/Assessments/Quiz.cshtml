@@ -6,13 +6,13 @@
 
 <h3>@Model.Topic.Name Quiz Results</h3>
 <h4>@Model.NumberOfQuestions questions in this quiz</h4>
+<a asp-action="Details" asp-route-id="@Model.AssessmentId">Back to Assessment</a>
 
 
 <div class="card-deck-wrapper">
     <div class="card-deck row">
         @foreach(var question in Model.Questions)
         {
-        @* Need to display this as a card *@
         var item = question.Question;
 
         <div class="question col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -24,16 +24,16 @@
                     <blockquote class="card-blockquote">
                         <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
                         <ul class="list-group">
-                            <li class="container-fluid list-group-item">
+                            <li class='container-fluid @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
                                 <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge">50%</span>
                             </li>
-                            <li class="container-fluid list-group-item">
+                            <li class='container-fluid @(item.CorrectAnswer == "B" ? "list-group-item-success" : (question.Answer == "B" ? "list-group-item-danger" : "list-group-item-default"))'>
                                 <span class="question_label">B)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge">50%</span>
                             </li>
-                            <li class="container-fluid list-group-item">
+                            <li class='container-fluid @(item.CorrectAnswer == "C" ? "list-group-item-success" : (question.Answer == "C" ? "list-group-item-danger" : "list-group-item-default"))'>
                                 <span class="question_label">C)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span><span class="badge">50%</span>
                             </li>
-                            <li class="container-fluid list-group-item ">
+                            <li class='container-fluid @(item.CorrectAnswer == "D" ? "list-group-item-success" : (question.Answer == "D" ? "list-group-item-danger" : "list-group-item-default"))'>
                                 <span class="question_label">D)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span><span class="badge">50%</span>
                             </li>
                         </ul>
