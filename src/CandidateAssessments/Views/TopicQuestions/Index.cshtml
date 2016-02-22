@@ -45,30 +45,24 @@
                         <div class="card-block">
                             <blockquote class="card-blockquote">
                                 <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                                <ul class="list-group">
-                                    <li class="container-fluid list-group-item @(item.CorrectAnswer == "A" ? "label-success" : "")">
+                                <ul class="list-group list-unstyled">
+                                    <li class='container-fluid @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge">50%</span>
                                     </li>
-                                    <li class="container-fluid list-group-item @(item.CorrectAnswer == "B" ? "label-success" : "")">
+                                    <li class='container-fluid @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">B)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge">50%</span>
 </li>
-                                    <li class="container-fluid list-group-item @(item.CorrectAnswer == "C" ? "label-success" : "")">
+                                    <li class='container-fluid @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">C)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span><span class="badge">50%</span>
 </li>
-                                    <li class="container-fluid list-group-item @(item.CorrectAnswer == "D" ? "label-success" : "")">
+                                    <li class='container-fluid @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">D)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span><span class="badge">50%</span>
 </li>
                                 </ul>
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
-                            <span>Correct Answer: &nbsp;@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
-                            <span class="pull-right">
-                                <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a> |
-                                <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a> |
-                                <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
-                            </span>
-
+                            <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
                         </div>
                     </div>
                 </div>
