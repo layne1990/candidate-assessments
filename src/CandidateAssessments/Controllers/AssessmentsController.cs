@@ -22,7 +22,20 @@ namespace WebApplication1.Controllers
         {
             return View(_context.Assessments.ToList());
         }
-
+        // GET: Assessments/Code/5
+        public IActionResult Code(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
+            if (assessment == null)
+            {
+                return HttpNotFound();
+            }
+            return View(assessment);
+        }
         // GET: Assessments/Details/5
         public IActionResult Details(int? id)
         {
@@ -139,7 +152,7 @@ namespace WebApplication1.Controllers
                 }
               
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Code",new { id = assessment.AssessmentId });
             }
             // pass TopicList to ViewBag for Create View
             ViewBag.TopicList = _context.Topics.ToList();
