@@ -6,26 +6,7 @@
     }
 </script>
 
-<style>
-  a, a:hover, a:active{
-       text-decoration: none;
-       color:black;
-  }
-    .bubble{
-         background-color: #ff4d4d;
-  width: 50%;
-  padding: 30px;
-  margin: 30px;
-  font-size: 28px;
-  border-radius: 10px;
-  border:solid;
-  border-color:white;
-    }
-    .bubble:hover{
-         border-color:black;
 
-    }
-</style>
 <!--
     Navbar for Search and CreateNew
 -->
@@ -34,7 +15,7 @@
         <a class="navbar-brand" href="#">Topics</a>
 
         <form class="nav navbar-form navbar-nav pull-right" method="get" asp-action="Create">
-            <button type="submit" class="btn btn-danger" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
         </form>
 
         <form class="navbar-form pull-right" role="search">
@@ -52,13 +33,28 @@
 <ul class="list-unstyled col-md-offset-3">
     @foreach (var item in Model)
     {
-        <li> <a href="/TopicQuestions/?TopicId=@item.TopicId"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">
+        <li>
+            <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                <div class="bubble col-md-offset-4 danger">
+                    <h3 class="text-center">
 
-    @item.Name @qs.Where(x => x.TopicId == item.TopicId).Count() Questions
-    <span class="glyphicon glyphicon-chevron-right"></span>
-</h3></div></a></li>
+                        @item.Name&nbsp;&nbsp;&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </h3>
+                </div>
+            </a>
+        </li>
 
     }
-    <li> <a href="/TopicQuestions/"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">All @qs.Count() Questions<span class="glyphicon glyphicon-chevron-right"></span></h3></div></a></li>
+    <li>
+        <a class="TopicLink" href="/TopicQuestions/">
+            <div class="bubble col-md-offset-4">
+                <h3 class="text-center">
+                    All&nbsp;&nbsp;&nbsp;&nbsp;@qs.Count() Questions
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </h3>
+            </div>
+        </a>
+    </li>
 
 </ul>
