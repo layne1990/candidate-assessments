@@ -111,7 +111,10 @@ namespace WebApplication1.Controllers
                     int i = 1;
                     foreach (TopicQuestion tq in _context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
                     {
-
+                        if (i > NumQuestions)
+                        {
+                            break;
+                        }
 
                         // Unanswered questions
 
