@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
             else {
                 assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
             }
-
+            ViewBag.TopicId = TopicId;
             return View(assessmentContext);
         }
 
@@ -49,10 +49,11 @@ namespace WebApplication1.Controllers
         }
 
         // GET: TopicQuestions/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
             
             ViewBag.TopicList = _context.Topics.ToList();
+            ViewBag.TopicId = id;
             return View();
         }
 
