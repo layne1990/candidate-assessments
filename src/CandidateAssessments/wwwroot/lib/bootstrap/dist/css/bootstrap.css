@@ -5001,11 +5001,11 @@ a.badge:focus {
   background-color: #BBB;
   color: #000;
 }
-.list-group-item + .list-group-item-success > .badge {
+.list-group-item-success > .badge {
   color: #2f882f;
 }
 
-.list-group-item + .list-group-item-danger > .badge {
+.list-group-item-danger > .badge {
   color: #882f2f;
 }
 

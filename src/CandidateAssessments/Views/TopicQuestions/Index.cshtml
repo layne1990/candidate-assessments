@@ -62,7 +62,7 @@
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
-                            <a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                            &nbsp; <a class="pull-right" asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -74,21 +74,7 @@
 
 
 <!--
-    if (i % 2 == 0)
-                {
-                    <div class="clearfix visible-sm-block"></div>
-                }
-                if (i % 3 == 0)
-                {
-                    <div class="clearfix visible-md-block"></div>
-                }
-                if (i % 4 == 0)
-                {
-                    <div class="clearfix visible-lg-block"></div>
-                }
-            <div class="clearfix visible-sm-block visible-md-block visible-lg-block visible-xl-block"></div>
-
-
+ 
 <table class="table">
 <tr>
     <th>
