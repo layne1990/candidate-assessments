@@ -68,10 +68,18 @@ namespace WebApplication1.Controllers
         // POST: Assessments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Assessment assessment, string[] Topics)
+        public IActionResult Create(Assessment assessment, string[] Topics, int TimeLimit, int NumQuestions)
         {
             if (ModelState.IsValid)
             {
+                if (TimeLimit == 0)
+                {
+                    TimeLimit = 10;
+                }
+                if (NumQuestions == 0)
+                {
+                    NumQuestions = 20;
+                }
                 // Generate the times and Access Code
                 assessment.AccessCode = Guid.NewGuid().ToString();
                 assessment.CreatedDate = DateTime.Now;
@@ -86,9 +94,9 @@ namespace WebApplication1.Controllers
                             Assessment = assessment,
                            
                             Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt),
-                            NumberOfQuestions = 20,
+                            NumberOfQuestions = NumQuestions,
                             NumberCorrect = 0,
-                            TimeLimit = 10,
+                            TimeLimit = TimeLimit,
                             TimeStarted = null,
                             TimeCompleted = null,
                         });
