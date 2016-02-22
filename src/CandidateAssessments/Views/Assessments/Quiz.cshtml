@@ -23,7 +23,7 @@
                 <div class="card-block">
                     <blockquote class="card-blockquote">
                         <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                        <ul class="list-group card-list">
+                        <ul class="list-group list-unstyled">
                             <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
                                 <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge pull-right">50%</span>
                             </li>
