@@ -350,6 +350,10 @@ textarea {
     margin-left: 1em;
 }
 
+.card-list {
+    list-style: none;
+}
+
 div.question:nth-child(odd) {
     clear: both;
 }
