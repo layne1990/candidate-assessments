@@ -71,7 +71,7 @@ namespace WebApplication1.Controllers
                top.Questions.Add(topicQuestion); 
                 _context.TopicQuestions.Add(topicQuestion);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { TopicId = top.TopicId });
             }
             ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
@@ -111,7 +111,7 @@ namespace WebApplication1.Controllers
                 top.Questions.Add(topicQuestion);
                 _context.Update(topicQuestion);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { TopicId = top.TopicId });
             }
             ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
@@ -146,7 +146,7 @@ namespace WebApplication1.Controllers
                 top.Questions.Remove(topicQuestion);
             _context.TopicQuestions.Remove(topicQuestion);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { TopicId = top.TopicId });
         }
     }
 }

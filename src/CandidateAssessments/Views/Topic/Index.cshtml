@@ -48,13 +48,17 @@
 
     </div>
 </nav>
-
+@{ IEnumerable<dynamic> qs = ViewBag.Questions;}
 <ul class="list-unstyled col-md-offset-3">
     @foreach (var item in Model)
     {
-        <li> <a href="/TopicQuestions/?TopicId=@item.TopicId"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">@item.Name <span class="glyphicon glyphicon-chevron-right"></span></h3></div></a></li>
+        <li> <a href="/TopicQuestions/?TopicId=@item.TopicId"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">
+
+    @item.Name @qs.Where(x => x.TopicId == item.TopicId).Count() Questions
+    <span class="glyphicon glyphicon-chevron-right"></span>
+</h3></div></a></li>
 
     }
-    <li> <a href="/TopicQuestions/"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">All <span class="glyphicon glyphicon-chevron-right"></span></h3></div></a></li>
+    <li> <a href="/TopicQuestions/"><div class="bubble col-md-offset-4 danger"><h3 class="text-center">All @qs.Count() Questions<span class="glyphicon glyphicon-chevron-right"></span></h3></div></a></li>
 
 </ul>

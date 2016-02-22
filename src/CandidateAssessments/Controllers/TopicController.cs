@@ -21,6 +21,7 @@ namespace CandidateAssessments.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewBag.Questions = _db.TopicQuestions.ToList();
             return View(_db.Topics.ToList());
         }
 
