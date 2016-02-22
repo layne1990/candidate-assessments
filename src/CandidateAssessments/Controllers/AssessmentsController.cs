@@ -34,6 +34,7 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.url = Request.Host;
             return View(assessment);
         }
         // GET: Assessments/Details/5
