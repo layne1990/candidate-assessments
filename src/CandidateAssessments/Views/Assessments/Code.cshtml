@@ -1,13 +1,17 @@
 ﻿@model CandidateAssessments.Models.Assessment
-
 @{
     ViewData["Title"] = "Code";
 }
+@using System;
 <h2>@Model.CandidateName's Link and Assesment Code</h2>
 <h3>Assessment Code:</h3>
 <h1>
     @Model.AccessCode
 </h1>
+
 <h3>Direct Link:</h3>
-<h4><a href="https://localhost:44375/Testing/Assessment?accesscode=@Model.AccessCode">https://localhost:44375/Testing/Assessment?accesscode=@Model.AccessCode</a></h4>
+@{ 
+    String location = "https://" + @ViewBag.url + "/Testing/Assessment?accesscode=" + @Model.AccessCode;
+}
+<h4>@Html.ActionLink(location, "Assessment","Testing", new { AccessCode = @Model.AccessCode })</h4>
 @Html.ActionLink("Return to List of assesments","Index")
