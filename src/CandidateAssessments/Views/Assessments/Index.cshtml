@@ -18,7 +18,7 @@
 
         <form class="navbar-form pull-right" role="search">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" id="AssessSearch" class="form-control" placeholder="Search">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
@@ -51,11 +51,11 @@ TODO:
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="assesments">
             <td>
                 @Html.DisplayFor(modelItem => item.AccessCode)
             </td>
-            <td>
+            <td class="CanaditeName">
                 @Html.DisplayFor(modelItem => item.CandidateName)
             </td>
             <td>
