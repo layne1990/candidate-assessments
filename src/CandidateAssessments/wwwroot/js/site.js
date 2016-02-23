@@ -35,7 +35,7 @@ $("#AssessSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
     $(".CanaditeName").each(function () {
         var s = $(this).text().toLowerCase();
-        $(this).closest('.assesments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+        $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
 $(function () {
