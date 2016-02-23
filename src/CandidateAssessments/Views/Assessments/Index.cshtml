@@ -1,75 +1,56 @@
 @model IEnumerable<CandidateAssessments.Models.Assessment>
 
-@{
+    @{
     ViewData["Title"] = "Index";
-}
-
-
-<!--
-    Navbar for Search and CreateNew
--->
-<nav class="navbar navbar-full navbar-default" id="pageNav">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Assessment Results</a>
-
-        <form class="nav navbar-form navbar-nav pull-right" method="get" asp-action="Create">
-            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
-        </form>
-
-        <form class="navbar-form pull-right" role="search">
-            <div class="input-group">
-                <input type="text" id="AssessSearch" class="form-control" placeholder="Search">
-                <span class="input-group-btn">
-                    <button type="button" id="AssessSearchBtn" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
-        </form>
-
-    </div>
-</nav>
-
-<!--  
-TODO:
-    Change table display into cards
--->
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AccessCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CandidateName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpirationDate)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr class="assesments">
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessCode)
-            </td>
-            <td class="CanaditeName">
-                @Html.DisplayFor(modelItem => item.CandidateName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AssessmentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AssessmentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a> |
-                <a asp-action="Code" asp-route-id="@item.AssessmentId">Code</a> 
-            </td>
-        </tr>
     }
-</table>
+
+
+    <!--
+        Navbar for Search and CreateNew
+    -->
+    <nav class="navbar navbar-full navbar-default" id="pageNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Assessment Results</a>
+
+            <form class="nav navbar-form navbar-nav pull-right" method="get" asp-action="Create">
+                <button type="submit" id="AssessSearchBtn" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+            </form>
+
+            <form class="navbar-form pull-right" role="search">
+                <div class="input-group">
+                    <input type="text" id="AssessSearch" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+                        <button type="button" id="AssessSearchBtn" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </form>
+
+        </div>
+    </nav>
+
+    @{ IEnumerable<dynamic>
+        qs = ViewBag.Quizzes;}
+
+        <div class="list-group">
+            @foreach (var item in Model)
+            {
+            <div class="list-group-item assessments">
+                <h4 class="list-group-item-heading CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</h4>
+                <div>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.ExpirationDate)
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </div>
+                <div>
+                    @qs.Where(x => x.AssessmentId == item.AssessmentId).Count() quizzes assigned
+                </div>
+
+                <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.AssessmentId">Details</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            </div>
+            }
+        </div>

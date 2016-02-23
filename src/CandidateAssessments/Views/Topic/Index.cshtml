@@ -1,10 +1,5 @@
 ﻿@model IEnumerable<CandidateAssessments.Models.Topic>
 
-<script>
-    function goToQuestions() {
-        window.location.href = '/TopicQuestions';
-    }
-</script>
 
 <style>
     .TopicLink, .TopicLink:hover, .TopicLink:active {
@@ -40,7 +35,7 @@
 
         <form class="navbar-form pull-right" role="search">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search">
+                <input type="text" class="form-control" id="TopicSearch" placeholder="Search">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
@@ -53,12 +48,12 @@
 <ul class="list-unstyled col-md-offset-3">
     @foreach (var item in Model)
     {
-        <li>
+        <li class="TopicItems">
             <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                 <div class="bubble col-md-offset-4 danger">
                     <h3 class="text-center">
 
-                        @item.Name&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
+                        <span class="TopicNames"> @item.Name</span>&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </h3>
                 </div>

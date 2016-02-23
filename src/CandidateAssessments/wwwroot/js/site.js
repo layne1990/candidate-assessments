@@ -30,14 +30,40 @@ $(document).ready(function () {
 
     });
 });
-
+$("#AssessSearchBtn").on("click", function () {
+    var g = $('#AssessSearch').val().toLowerCase();
+    $(".CandidateName").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
 $("#AssessSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".CanaditeName").each(function () {
+    $(".CandidateName").each(function () {
         var s = $(this).text().toLowerCase();
-        $(this).closest('.assesments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+        $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
+$(function () {
+    var tags=[];
+    $(".CandidateName").each(function () {
+        tags.push(this.innerText)
+    });
+    $("#AssessSearch").autocomplete({
+        source: tags
+    });
+})
+$("#TopicSearch").on("keyup", function () {
+    var g = $(this).val().toLowerCase();
+    $(".TopicNames").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.TopicItems')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
 
-
-
+$(function () {
+    var tags = $(".TopicNames").text().split(" ");
+    $("#TopicSearch").autocomplete({
+        source: tags
+    });
+})
