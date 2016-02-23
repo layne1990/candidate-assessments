@@ -126,7 +126,7 @@ namespace WebApplication1.Controllers
                     var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId && x.IsActive == true).ToList();
                     Random rand = new Random();
                     var QsUsed = new List<int>();
-                    while (QsUsed.Count < NumQuestions)
+                    while (QsUsed.Count < NumQuestions && QsUsed.Count!=List.Count)
                     {
                         int r = rand.Next(0, List.Count());
                         if (!QsUsed.Contains(r))
@@ -142,26 +142,7 @@ namespace WebApplication1.Controllers
                             QsUsed.Add(r);
                         }
                     }
-                    //foreach (TopicQuestion tq in _context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
-                    //{
-                    //    if (i > NumQuestions)
-                    //    {
-                    //        break;
-                    //    }
-
-                    //    // Unanswered questions
-
-                    //    _context.QuizQuestions.Add(
-                    //    new QuizQuestion()
-                    //    {
-                    //        Quiz = q,
-                    //        QuestionNumber = i++,
-                    //        NextQuestionId = 0,
-                    //        Question = tq,
-                    //    });
-
-
-                    //}
+                 
                     _context.SaveChanges();
                     int nextId = 0;
                     foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
