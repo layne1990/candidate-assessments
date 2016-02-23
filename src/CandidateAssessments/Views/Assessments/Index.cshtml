@@ -33,9 +33,7 @@
     </div>
 </nav>
 
-@{ IEnumerable<dynamic>
-                                    qs = ViewBag.Quizzes;}
-
+@{ IEnumerable<dynamic> qs = ViewBag.Quizzes;}
 <div class="list-group">
     @foreach (var item in Model)
             {
@@ -58,27 +56,26 @@
                 {
                     <div class="list-group-item">
                         <span>@quiz.Topic.Name</span>
-                        @if (quiz.TimeCompleted!=null)
+                        @if (quiz.TimeCompleted != null)
                         {
-                            <span>@quiz.TimeCompleted</span>
-
+                            <span>@quiz.NumberCorrect / @quiz.NumberOfQuestions</span>
+                            <div>
+                                <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                                    Full Results <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </div>
                         }
                         else
                         {
-                            <p> Hello World</p>
-
+                            <div class="text-danger">
+                                Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
+                            </div>
                         }
-
                     </div>
-
                 }
-
-
             </div>
-
-            <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
-            <a class="btn btn-default" asp-action="Details" asp-route-id="@item.AssessmentId">Details</a>
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            <a asp-action="Code" asp-route-id="@item.AssessmentId">Code</a> |
+            <a asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
         </div>
     }
 </div>
