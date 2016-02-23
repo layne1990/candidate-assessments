@@ -106,7 +106,7 @@ namespace WebApplication1.Controllers
                         new Quiz()
                         {
                             Assessment = assessment,
-                           
+
                             Topic = _context.Topics.Single(m => m.TopicId == TopicIdInt),
                             NumberOfQuestions = NumQuestions,
                             NumberCorrect = 0,
@@ -123,26 +123,45 @@ namespace WebApplication1.Controllers
                 foreach (Quiz q in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
                 {
                     int i = 1;
-                    foreach (TopicQuestion tq in _context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
+                    var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId).ToList();
+                    Random rand = new Random();
+                    var QsUsed = new List<int>();
+                    while (QsUsed.Count < NumQuestions)
                     {
-                        if (i > NumQuestions)
+                        int r = rand.Next(0, List.Count());
+                        if (!QsUsed.Contains(r))
                         {
-                            break;
-                        }
-
-                        // Unanswered questions
-
-                        _context.QuizQuestions.Add(
+                            _context.QuizQuestions.Add(
                         new QuizQuestion()
                         {
                             Quiz = q,
                             QuestionNumber = i++,
                             NextQuestionId = 0,
-                            Question = tq,
+                            Question = List[r],
                         });
-
-
+                            QsUsed.Add(r);
+                        }
                     }
+                    //foreach (TopicQuestion tq in _context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
+                    //{
+                    //    if (i > NumQuestions)
+                    //    {
+                    //        break;
+                    //    }
+
+                    //    // Unanswered questions
+
+                    //    _context.QuizQuestions.Add(
+                    //    new QuizQuestion()
+                    //    {
+                    //        Quiz = q,
+                    //        QuestionNumber = i++,
+                    //        NextQuestionId = 0,
+                    //        Question = tq,
+                    //    });
+
+
+                    //}
                     _context.SaveChanges();
                     int nextId = 0;
                     foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
@@ -151,9 +170,9 @@ namespace WebApplication1.Controllers
                         nextId = qq.QuizQuestionId;
                     }
                 }
-              
+
                 _context.SaveChanges();
-                return RedirectToAction("Code",new { id = assessment.AssessmentId });
+                return RedirectToAction("Code", new { id = assessment.AssessmentId });
             }
             // pass TopicList to ViewBag for Create View
             ViewBag.TopicList = _context.Topics.ToList();

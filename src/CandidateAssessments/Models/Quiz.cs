@@ -25,6 +25,6 @@ namespace CandidateAssessments.Models
 
         public List<QuizQuestion> Questions { get; set; }
 
-        public bool Checked { get; set; }
+      
     }
 }
