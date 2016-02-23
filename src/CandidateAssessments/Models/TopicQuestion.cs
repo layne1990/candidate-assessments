@@ -32,6 +32,12 @@ namespace CandidateAssessments.Models
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
 
+        public double PercentA { get; set; }
+        public double PercentB { get; set; }
+        public double PercentC { get; set; }
+        public double PercentD { get; set; }
+    }
+
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
     }
