@@ -38,22 +38,6 @@ namespace WebApplication1.Controllers
             ViewBag.url = Request.Host;
             return View(assessment);
         }
-        // GET: Assessments/Details/5
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).Include(m => m.Quizes).ThenInclude(y => y.Topic).FirstOrDefault();
-            if (assessment == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(assessment);
-        }
 
         // GET: Assessments/Quiz/
         public IActionResult Quiz(int? id)
