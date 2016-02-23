@@ -100,7 +100,7 @@ $("#QuestionSearch").on("keyup", function () {
 $(function () {
     var tags = [];
     $(".card-text").each(function () {
-        tags.push(this.innerText)
+        tags.push(this.innerText.substring(0, 45))
     });
     $("#QuestionSearch").autocomplete({
         source: tags
