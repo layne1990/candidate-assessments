@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         // GET: Assessments
         public IActionResult Index()
         {
-            ViewBag.Quizzes = _context.Quizes.ToList();
+            ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).Include(x => x.TimeCompleted).ToList();
             return View(_context.Assessments.ToList());
         }
         // GET: Assessments/Code/5
