@@ -36,7 +36,6 @@ namespace CandidateAssessments.Models
         public double PercentB { get; set; }
         public double PercentC { get; set; }
         public double PercentD { get; set; }
-    }
 
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
