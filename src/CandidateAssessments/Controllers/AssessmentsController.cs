@@ -123,7 +123,7 @@ namespace WebApplication1.Controllers
                 foreach (Quiz q in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
                 {
                     int i = 1;
-                    var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId).ToList();
+                    var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId && x.IsActive == true).ToList();
                     Random rand = new Random();
                     var QsUsed = new List<int>();
                     while (QsUsed.Count < NumQuestions)
