@@ -28,26 +28,29 @@
         </div>
     </nav>
 
-    <!--
-    TODO:
-        Change table display into cards
-    -->
-    <div class="list-group">
-        @foreach (var item in Model)
-        {
-        <div class="list-group-item">
-            <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.CandidateName)</h4>
-            <div>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-                @Html.DisplayFor(modelItem => item.CreatedDate)
+    @{ IEnumerable<dynamic>
+        qs = ViewBag.Quizzes;}
+
+        <div class="list-group">
+            @foreach (var item in Model)
+            {
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">@Html.DisplayFor(modelItem => item.CandidateName)</h4>
+                <div>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.ExpirationDate)
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </div>
+                <div>
+                    @qs.Where(x => x.AssessmentId == item.AssessmentId).Count() quizzes assigned
+                </div>
+
+                <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
+                <a class="btn btn-default" asp-action="Details" asp-route-id="@item.AssessmentId">Details</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
             </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.ExpirationDate)
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
-            </div>
-            <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
-            <a class="btn btn-default" asp-action="Details" asp-route-id="@item.AssessmentId">Results</a>
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            }
         </div>
-        }
-    </div>

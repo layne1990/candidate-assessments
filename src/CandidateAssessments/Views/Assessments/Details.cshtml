@@ -9,68 +9,32 @@
     @Model.Quizes.Count quizes assigned.
 </h4>
 <hr />
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Topic</th>
-            <th>Score</th>
-            <th></th>
-        </tr>
-    </thead>
+
+<div class="list-group">
     @foreach (var quiz in Model.Quizes)
     {
-        <tr>
-            <td>@Html.DisplayFor(m => quiz.Topic.Name)</td>
-            <td>@quiz.NumberCorrect / @quiz.NumberOfQuestions</td>
-            <td>
-                @if (quiz.TimeCompleted.HasValue)
-                {
-                    @* asp action to see quiz results *@
-                    <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
-                        Results <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                }
-                else
-                {
-                    <div class="text-danger">
-                        Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
-                    </div>
-                }
-            </td>
-        </tr>
+    <div class="list-group-item">
+        <h4 class="list-group-item-heading">@Html.DisplayFor(q => quiz.Topic.Name)</h4>
+        
+        @if (quiz.TimeCompleted.HasValue)
+        {
+        <span>@quiz.NumberCorrect / @quiz.NumberOfQuestions</span>
+        <div>
+            <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                Full Results <span class="glyphicon glyphicon-edit"></span>
+            </a>
+        </div>
+        }
+        else
+        {
+        <div class="text-danger">
+            Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+        }
+        
+    </div>
     }
-</table>
-
-
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AccessCode)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AccessCode)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CandidateName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CandidateName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpirationDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ExpirationDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Quizes)
-        </dt>
-    </dl>*@
+</div>
 
 <p>
     <a asp-action="Edit" asp-route-id="@Model.AssessmentId">Edit</a> |
