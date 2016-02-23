@@ -53,6 +53,19 @@
                     @qs.Where(x => x.AssessmentId == item.AssessmentId).Count() quizzes assigned
                 </div>
 
+                <div class="list-group">
+                    @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
+                    {
+                        <div class="list-group-item">
+                            <span>@quiz.Topic.Name</span>
+                            <span>@quiz.TimeCompleted</span>
+                        </div>
+                        
+                    }
+                    
+
+                </div>
+
                 <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
                 <a class="btn btn-default" asp-action="Details" asp-route-id="@item.AssessmentId">Details</a>
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
