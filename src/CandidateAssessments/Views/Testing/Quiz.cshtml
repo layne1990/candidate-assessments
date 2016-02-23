@@ -13,7 +13,7 @@
     var _second = 1000;
     var _minute = _second * 60;
     var _hour = _minute * 60;
-
+    var _day = _hour * 24;
     var timer;
 
     function showRemaining() {
@@ -32,12 +32,21 @@
 
             return;
         }
-
+        var hours = Math.floor((distance % _day) / _hour);
         var minutes = Math.floor((distance % _hour) / _minute);
         var seconds = Math.floor((distance % _minute) / _second);
 
-
-        document.getElementById('countdown').innerHTML = minutes + ':';
+        if(hours>0){
+            document.getElementById('countdown').innerHTML = hours + ':';
+            if(minutes<10)
+                document.getElementById('countdown').innerHTML += '0'+minutes + ':';
+            else
+                document.getElementById('countdown').innerHTML += minutes + '0:';
+        }else{
+            document.getElementById('countdown').innerHTML = minutes + ':';
+        
+        }
+       
         if (seconds < 10)
             document.getElementById('countdown').innerHTML += '0' + seconds;
         else
