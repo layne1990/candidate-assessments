@@ -32,21 +32,21 @@ $(document).ready(function () {
 });
 $("#AssessSearchBtn").on("click", function () {
     var g = $('#AssessSearch').val().toLowerCase();
-    $(".CanaditeName").each(function () {
+    $(".CandidateName").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
 $("#AssessSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".CanaditeName").each(function () {
+    $(".CandidateName").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
 $(function () {
     var tags=[];
-    $(".CanaditeName").each(function () {
+    $(".CandidateName").each(function () {
         tags.push(this.innerText)
     });
     $("#AssessSearch").autocomplete({
