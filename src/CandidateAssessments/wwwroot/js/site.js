@@ -30,6 +30,10 @@ $(document).ready(function () {
 
     });
 });
+
+
+
+
 $("#AssessSearchBtn").on("click", function () {
     var g = $('#AssessSearch').val().toLowerCase();
     $(".CandidateName").each(function () {
@@ -53,6 +57,10 @@ $(function () {
         source: tags
     });
 })
+
+
+
+
 $("#TopicSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
     $(".TopicNames").each(function () {
@@ -62,8 +70,47 @@ $("#TopicSearch").on("keyup", function () {
 });
 
 $(function () {
-    var tags = $(".TopicNames").text().split(" ");
+    var tags = [];
+    $(".TopicNames").each(function () {
+        tags.push(this.innerText)
+    });
     $("#TopicSearch").autocomplete({
         source: tags
     });
 })
+
+$("#TopicSearchBtn").on("click", function () {
+    var g = $('#TopicSearch').val().toLowerCase();
+    $(".TopicNames").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.TopicItems')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
+
+
+
+
+$("#QuestionSearch").on("keyup", function () {
+    var g = $(this).val().toLowerCase();
+    $(".card-text").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
+$(function () {
+    var tags = [];
+    $(".card-text").each(function () {
+        tags.push(this.innerText)
+    });
+    $("#QuestionSearch").autocomplete({
+        source: tags
+    });
+})
+
+$("#QuestionSearchBtn").on("click", function () {
+    var g = $('#QuestionSearch').val().toLowerCase();
+    $(".card-text").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
