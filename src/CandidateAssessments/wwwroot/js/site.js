@@ -1,5 +1,5 @@
 ﻿$(function () {
-    $("#QuestionType").change(function() {
+    $("#QuestionType").change(function () {
         var select = $("#QuestionType option:selected").val();
         $('#trueLabel').text('Choice A');
         $('#falseLabel').text('Choice B');
@@ -17,23 +17,27 @@
     })
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     var $options = $("label.list-group-item");
 
-    $options.click(function(e) {
+    $options.click(function (e) {
         var $current = $(this);
-        e.preventDefault();
-        e.stopPropagation();
+       
         $options.removeClass("active");
         $current.addClass("active");
         $("input", $current).prop("checked", true);
+        $('#AnswerSubmit').removeClass('hidden');
+
     });
 });
 
-$("#AssessSearch").on("keyup", function() {
+$("#AssessSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".CanaditeName").each(function() {
+    $(".CanaditeName").each(function () {
         var s = $(this).text().toLowerCase();
-        $(this).closest('.assesments')[ s.indexOf(g) !== -1 ? 'show' : 'hide' ]();
+        $(this).closest('.assesments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
+
+
+

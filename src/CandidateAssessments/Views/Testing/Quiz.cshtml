@@ -80,16 +80,16 @@
                                     <input type="radio" name="Answer" value="A" id="radio-1"/>
                                     <span class="question_label">A) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
                                 </label>
-                                <label class="container-fluid list-group-item" for="radio-1">
-                                    <input type="radio" name="Answer" value="B" id="radio-1"/>
+                                <label class="container-fluid list-group-item" for="radio-2">
+                                    <input type="radio" name="Answer" value="B" id="radio-2"/>
                                     <span class="question_label">B) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
                                 </label>
-                                <label class="container-fluid list-group-item" for="radio-1">
-                                    <input type="radio" name="Answer" value="C" id="radio-1"/>
+                                <label class="container-fluid list-group-item" for="radio-3">
+                                    <input type="radio" name="Answer" value="C" id="radio-3"/>
                                     <span class="question_label">C) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceC)</span>
                                 </label>
-                                <label class="container-fluid list-group-item" for="radio-1">
-                                    <input type="radio" name="Answer" value="D" id="radio-1"/>
+                                <label class="container-fluid list-group-item" for="radio-4">
+                                    <input type="radio" name="Answer" value="D" id="radio-4"/>
                                     <span class="question_label">D) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceD)</span>
                                 </label>
                             </div>
@@ -100,7 +100,7 @@
                         &nbsp;
                     </span>
                         <span class="col-lg-offset-10 col-lg-1">
-                        <input type="submit" display="inline-block" class="btn btn-default" value="Next" />
+                        <input type="submit" display="inline-block" id="AnswerSubmit"class="btn btn-default hidden" value="Next" />
                     </span>
 
                     </div>
