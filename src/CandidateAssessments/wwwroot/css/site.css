@@ -43,9 +43,6 @@ textarea {
     padding: 0 0 !important;
 }
 
-.Topics {
-}
-
 .card {
     position: relative;
     display: block;
@@ -349,7 +346,6 @@ textarea {
 .question_text {
     font-weight: normal;
     display: block;
-    margin-left: 1em;
 }
 
 div.question:nth-child(odd) {
@@ -359,8 +355,4 @@ div.question:nth-child(odd) {
 input[type="radio"],
 .input-label {
     display: none;
-}
-
-.list-group-item > .col-md-9 {
-    width: 82%;
 }
