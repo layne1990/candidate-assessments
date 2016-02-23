@@ -55,7 +55,7 @@
                 @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
                 {
                     <div class="list-group-item">
-                        <span>@quiz.Topic.Name</span>
+                        <h5>@quiz.Topic.Name</h5>
                         @if (quiz.TimeCompleted != null)
                         {
                             <span>@quiz.NumberCorrect / @quiz.NumberOfQuestions</span>
@@ -74,8 +74,10 @@
                     </div>
                 }
             </div>
-            <a asp-action="Code" asp-route-id="@item.AssessmentId">Code</a> |
-            <a asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            <div>
+                <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+            </div>
         </div>
     }
 </div>
