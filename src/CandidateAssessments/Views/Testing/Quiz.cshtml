@@ -100,7 +100,7 @@
                         &nbsp;
                     </span>
                         <span class="col-lg-offset-10 col-lg-1">
-                        <input type="submit" display="inline-block" id="AnswerSubmit"class="btn btn-default hidden" value="Next" />
+                        <input type="submit" display="inline-block" id="AnswerSubmit"class="btn btn-default hidden" value='@(Model.NextQuestionId == 0 ? "Done" : "Next")' />
                     </span>
 
                     </div>
