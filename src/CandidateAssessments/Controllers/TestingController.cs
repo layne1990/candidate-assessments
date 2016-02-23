@@ -132,7 +132,6 @@ namespace CandidateAssessments.Controllers
             QuizQuestion quizQuestion = _db.QuizQuestions.Include(x => x.Question).Include(x => x.Quiz).Where(x => x.QuizQuestionId == questionAnswered.QuizQuestionId).FirstOrDefault();
             Quiz quiz = quizQuestion.Quiz;
 
-
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
             if (quiz.AssessmentId != assessment.AssessmentId)
@@ -151,7 +150,7 @@ namespace CandidateAssessments.Controllers
                 return View("QuizComplete");
             }
 
-
+            
 
 
             // Save the answer
@@ -159,9 +158,28 @@ namespace CandidateAssessments.Controllers
             {
                 quizQuestion.Answer = questionAnswered.Answer;
                 quizQuestion.TimeAnswered = DateTime.Now;
+                quizQuestion.Question.TimesAnswered++;
 
                 if (quizQuestion.Answer == quizQuestion.Question.CorrectAnswer)
                     quiz.NumberCorrect++;
+
+                switch (quizQuestion.Answer)
+                {
+                    case "A":
+                        quizQuestion.Question.ASelected++;
+                        break;
+                    case "B":
+                        quizQuestion.Question.BSelected++;
+                        break;
+                    case "C":
+                        quizQuestion.Question.CSelected++;
+                        break;
+                    case "D":
+                        quizQuestion.Question.DSelected++;
+                        break;
+                    default :
+                        break;
+                }
 
                 _db.SaveChanges();
             }
@@ -170,6 +188,7 @@ namespace CandidateAssessments.Controllers
             ViewBag.TimeLimit = quiz.TimeLimit;
             var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
             ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
+
             // Get the next question
             QuizQuestion nextQuestion = _db.QuizQuestions.Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).Include(x => x.Question).ThenInclude(y => y.Topic).FirstOrDefault();
        
@@ -178,7 +197,7 @@ namespace CandidateAssessments.Controllers
                 quiz.TimeCompleted = DateTime.Now;
                 _db.SaveChanges();
                 return RedirectToAction("assessment");
-        }
+            }
 
             // Save the time we presented this question
             nextQuestion.TimePresented = DateTime.Now;

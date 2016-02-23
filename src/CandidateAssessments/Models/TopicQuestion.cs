@@ -31,7 +31,7 @@ namespace CandidateAssessments.Models
         public string ChoiceC { get; set; }
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
-        public int TimesChosen { get; set; }
+        public int TimesAnswered { get; set; }
         public int ASelected { get; set; }
         public int BSelected { get; set; }
         public int CSelected { get; set; }
