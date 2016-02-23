@@ -31,11 +31,11 @@ namespace CandidateAssessments.Models
         public string ChoiceC { get; set; }
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
-
-        public double PercentA { get; set; }
-        public double PercentB { get; set; }
-        public double PercentC { get; set; }
-        public double PercentD { get; set; }
+        public int TimesChosen { get; set; }
+        public int ASelected { get; set; }
+        public int BSelected { get; set; }
+        public int CSelected { get; set; }
+        public int DSelected { get; set; }
 
         public int TopicId { get; set; }
         public Topic Topic { get; set; }

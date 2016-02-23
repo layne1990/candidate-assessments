@@ -349,7 +349,7 @@ textarea {
 }
 
 div.question:nth-child(odd) {
-    clear: both;
+    //clear: both;
 }
 
 input[type="radio"],
