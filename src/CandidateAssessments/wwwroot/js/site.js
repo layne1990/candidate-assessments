@@ -38,6 +38,26 @@ $("#AssessSearch").on("keyup", function () {
         $(this).closest('.assesments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
+$(function () {
+    var tags=[];
+    $(".CanaditeName").each(function () {
+        tags.push(this.innerText)
+    });
+    $("#AssessSearch").autocomplete({
+        source: tags
+    });
+})
+$("#TopicSearch").on("keyup", function () {
+    var g = $(this).val().toLowerCase();
+    $(".TopicNames").each(function () {
+        var s = $(this).text().toLowerCase();
+        $(this).closest('.TopicItems')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
+    });
+});
 
-
-
+$(function () {
+    var tags = $(".TopicNames").text().split(" ");
+    $("#TopicSearch").autocomplete({
+        source: tags
+    });
+})
