@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     $options.click(function (e) {
         var $current = $(this);
-       
+
         $options.removeClass("active");
         $current.addClass("active");
         $("input", $current).prop("checked", true);
@@ -49,7 +49,7 @@ $("#AssessSearch").on("keyup", function () {
     });
 });
 $(function () {
-    var tags=[];
+    var tags = [];
     $(".CandidateName").each(function () {
         tags.push(this.innerText)
     });
@@ -92,7 +92,7 @@ $("#TopicSearchBtn").on("click", function () {
 
 $("#QuestionSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".card-text").each(function () {
+    $(".card").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
@@ -102,6 +102,10 @@ $(function () {
     $(".card-text").each(function () {
         tags.push(this.innerText.substring(0, 45))
     });
+    $(".cardHeader").each(function () {
+        if (tags.indexOf(this.innerText) == -1)
+            tags.push(this.innerText)
+    });
     $("#QuestionSearch").autocomplete({
         source: tags
     });
@@ -109,7 +113,7 @@ $(function () {
 
 $("#QuestionSearchBtn").on("click", function () {
     var g = $('#QuestionSearch').val().toLowerCase();
-    $(".card-text").each(function () {
+    $(".card").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
