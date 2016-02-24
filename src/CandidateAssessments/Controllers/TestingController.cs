@@ -160,7 +160,7 @@ namespace CandidateAssessments.Controllers
                 quizQuestion.TimeAnswered = DateTime.Now;
                 quizQuestion.Question.TimesAnswered++;
 
-                if (quizQuestion.Answer == quizQuestion.Question.CorrectAnswer)
+                if (string.Equals(quizQuestion.Answer, quizQuestion.Question.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
                     quiz.NumberCorrect++;
 
                 switch (quizQuestion.Answer)

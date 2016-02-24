@@ -350,9 +350,7 @@ textarea {
 div.question {
     margin-bottom: 20px;
 }
-
-input[type="radio"],
-.input-label {
+.quiz-radio, .input-label {
     display: none;
 }
 

@@ -44,9 +44,9 @@
                 document.getElementById('countdown').innerHTML += minutes + ':';
         }else{
             document.getElementById('countdown').innerHTML = minutes + ':';
-        
+
         }
-       
+
         if (seconds < 10)
             document.getElementById('countdown').innerHTML += '0' + seconds;
         else
@@ -64,7 +64,7 @@
         <h3 class="cold-md-12 pull-right"><span>Time Remaining: </span><span id="countdown" class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h3>
     </div>
     <form asp-action="Quiz">
-        <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId"/>
+        <input type="hidden" name="QuizQuestionId" value="@Model.QuizQuestionId" />
         <div class="form-horizontal">
             <div class="form-group">
 
@@ -76,32 +76,52 @@
                         <blockquote class="card-blockquote">
                             <p class="card-text">@Html.DisplayFor(model => model.Question.QuestionText)</p>
                             <div class="list-group">
-                                <label class="container-fluid list-group-item" for="radio-1">
-                                    <input type="radio" name="Answer" value="A" id="radio-1"/>
-                                    <span class="question_label">A) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
-                                </label>
-                                <label class="container-fluid list-group-item" for="radio-2">
-                                    <input type="radio" name="Answer" value="B" id="radio-2"/>
-                                    <span class="question_label">B) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
-                                </label>
-                                <label class="container-fluid list-group-item" for="radio-3">
-                                    <input type="radio" name="Answer" value="C" id="radio-3"/>
-                                    <span class="question_label">C) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceC)</span>
-                                </label>
-                                <label class="container-fluid list-group-item" for="radio-4">
-                                    <input type="radio" name="Answer" value="D" id="radio-4"/>
-                                    <span class="question_label">D) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceD)</span>
-                                </label>
+                                @if (Model.Question.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
+                                {
+                                    <label class="container-fluid list-group-item" for="radio-1">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="A" id="radio-1" />
+                                        <span class="question_label">A) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
+                                    </label>
+                                    <label class="container-fluid list-group-item" for="radio-2">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="B" id="radio-2" />
+                                        <span class="question_label">B) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
+                                    </label>
+                                    <label class="container-fluid list-group-item" for="radio-3">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="C" id="radio-3" />
+                                        <span class="question_label">C) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceC)</span>
+                                    </label>
+                                    <label class="container-fluid list-group-item" for="radio-4">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="D" id="radio-4" />
+                                        <span class="question_label">D) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceD)</span>
+                                    </label>
+                                }
+                                else if (Model.Question.QuestionType == CandidateAssessments.Models.QuestionTypes.TrueFalse)
+                                {
+
+                                    <label class="container-fluid list-group-item" for="radio-1">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="A" id="radio-1" />
+                                        <span class="question_label"></span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
+                                    </label>
+                                    <label class="container-fluid list-group-item" for="radio-2">
+                                        <input type="radio" class="quiz-radio" name="Answer" value="B" id="radio-2" />
+                                        <span class="question_label"></span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
+                                    </label>
+                                }
+                                else
+                                { 
+                                    <input class="container-fluid form-control" id="fillin" name="Answer" type="text" />
+
+                                }
                             </div>
                         </blockquote>
                     </div>
                     <div class="dl-horizontal card-footer">
                         <span class="col-lg-1">
-                        &nbsp;
-                    </span>
+                            &nbsp;
+                        </span>
                         <span class="col-lg-offset-10 col-lg-1">
-                        <input type="submit" display="inline-block" id="AnswerSubmit"class="btn btn-default hidden" value='@(Model.NextQuestionId == 0 ? "Done" : "Next")' />
-                    </span>
+                            <input type="submit" display="inline-block" id="AnswerSubmit" class="btn btn-default hidden" value='@(Model.NextQuestionId == 0 ? "Done" : "Next")' />
+                        </span>
 
                     </div>
                 </div>
