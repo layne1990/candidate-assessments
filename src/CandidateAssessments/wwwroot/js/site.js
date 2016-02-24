@@ -14,20 +14,7 @@
         }
     })
 });
-function changeQtype() {
-    var select = $("#QuestionType option:selected").val();
 
-    $("#offForTrueFalse").show();
-    $("#offForFillInBlank").show();
-    $("#onTrueFalse").hide();
-    if (select == "FillInBlank") {
-        $("#offForFillInBlank").hide();
-    } else if (select == "TrueFalse") {
-        $("#onTrueFalse").show();
-        $("#offForTrueFalse").hide();
-
-    }
-}
 $(function () {
     $("#fillin").on('keyup', function () {
         $('#AnswerSubmit').removeClass('hidden');
