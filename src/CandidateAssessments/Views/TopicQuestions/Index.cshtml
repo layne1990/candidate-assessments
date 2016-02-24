@@ -50,7 +50,8 @@
 
                 <div class="question col-xs-12 ">
                     <div class="card">
-                        <h3 class="card-header">
+                        @* Handles inactive cards headers being red *@
+                        <h3 class='card-header @(item.IsActive ? "card-primary" : "card-danger")'>
                             <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
                         </h3>
                         @{
