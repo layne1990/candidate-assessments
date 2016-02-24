@@ -129,6 +129,11 @@ textarea {
     border-color: #d9534f;
 }
 
+.card-inactive {
+    background-color: rgba(217, 83, 79, 0.58);
+    border-color: rgba(217, 83, 79, 0.58);
+}
+
 .card-primary-outline {
     background-color: transparent;
     border-color: #0275d8;
