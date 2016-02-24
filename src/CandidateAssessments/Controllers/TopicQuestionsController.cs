@@ -4,9 +4,12 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using CandidateAssessments.Models;
 using System.Collections.Generic;
+using Microsoft.AspNet.Authorization;
 
 namespace WebApplication1.Controllers
 {
+
+    [Authorize(Roles = "QuestionManager, Admin")]
     public class TopicQuestionsController : Controller
     {
         private AssessmentContext _context;
