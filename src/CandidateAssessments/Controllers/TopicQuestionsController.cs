@@ -143,9 +143,25 @@ namespace WebApplication1.Controllers
         {
             TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
             var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
+
+            // if the topic has questions
             if (top.Questions != null)
-                top.Questions.Remove(topicQuestion);
-            _context.TopicQuestions.Remove(topicQuestion);
+            {
+                // if the question has no answers, remove it
+                // TODO: find a better way to see if a quesion has been answered.
+                if (topicQuestion.ASelected + topicQuestion.BSelected + topicQuestion.CSelected + topicQuestion.DSelected == 0)
+                {
+                    top.Questions.Remove(topicQuestion);
+                    _context.TopicQuestions.Remove(topicQuestion);
+                }
+                // otherwise, just make the question inactive
+                else
+                {
+                    topicQuestion.IsActive = false;
+                }
+                    
+            }
+
             _context.SaveChanges();
             return RedirectToAction("Index", new { TopicId = top.TopicId });
         }

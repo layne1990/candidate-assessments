@@ -21,7 +21,7 @@
                 <div class="input-group">
                     <input type="text" id="QuestionSearch" class="form-control" style="max-width: 400px;" placeholder="Search">
                     <span class="input-group-btn">
-                        <button type="button"  id="QuestionSearchBtn" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                        <button type="button" id="QuestionSearchBtn" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
             </div>
@@ -35,52 +35,57 @@
     </div>
 </nav>
 
+<div>
+    @Html.ActionLink("Back to Topics", "Index", "Topic")
+</div>
+
+
 <div class="card-deck-wrapper">
     <div class="card-deck row">
 
         @{
-            foreach (var item in Model)
-            {
-                
+        foreach (var item in Model)
+        {
 
-                <div class="question col-xs-12 ">
-                    <div class="card">
-                        <h3 class="card-header">
-                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
-                        </h3>
-                        <div class="card-block">
-                            <blockquote class="card-blockquote">
-                                <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                                <ul class="list-group list-unstyled">
-                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
-                                        <span class="question_label">A)</span>
-                                        <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
-                                        <span class="badge navbar-right">50%</span>
-                                    </li>
-                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
-                                        <span class="question_label">B)</span>
-                                        <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
-                                        <span class="badge navbar-right">50%</span>
-                                    </li>
-                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
-                                        <span class="question_label">C)</span>
-                                        <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span>
-                                        <span class="badge navbar-right">50%</span>
-                                    </li>
-                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
-                                        <span class="question_label">D)</span>
-                                        <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span>
-                                        <span class="badge navbar-right">50%</span>
-                                    </li>
-                                </ul>
-                            </blockquote>
-                        </div>
-                        <div class="card-footer text-muted">
-                            &nbsp; <a class="pull-right" asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
-                        </div>
-                    </div>
+
+        <div class="question col-xs-12 ">
+            <div class="card">
+                <h3 class="card-header">
+                    <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                </h3>
+                <div class="card-block">
+                    <blockquote class="card-blockquote">
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                        <ul class="list-group list-unstyled">
+                            <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
+                                <span class="question_label">A)</span>
+                                <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
+                                <span class="badge navbar-right">50%</span>
+                            </li>
+                            <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
+                                <span class="question_label">B)</span>
+                                <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
+                                <span class="badge navbar-right">50%</span>
+                            </li>
+                            <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
+                                <span class="question_label">C)</span>
+                                <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span>
+                                <span class="badge navbar-right">50%</span>
+                            </li>
+                            <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
+                                <span class="question_label">D)</span>
+                                <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span>
+                                <span class="badge navbar-right">50%</span>
+                            </li>
+                        </ul>
+                    </blockquote>
                 </div>
-            }
+                <div class="card-footer text-muted">
+                    &nbsp; <a class="pull-right" asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                </div>
+            </div>
+        </div>
+        }
         }
     </div>
 </div>
