@@ -38,30 +38,34 @@
         <div class="list-group">
             @foreach (var item in Model)
             {
-            <div class="list-group-item assessments">
-                <h4 class="list-group-item-heading CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</h4>
+            <div class="list-group-item assessments assessment-list">
+                <h3 class="list-group-item-heading CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</h3>
                 <div>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    @Html.DisplayNameFor(model => model.CreatedDate):
                     @Html.DisplayFor(modelItem => item.CreatedDate)
                 </div>
                 <div>
-                    @Html.DisplayNameFor(modelItem => item.ExpirationDate)
+                    @Html.DisplayNameFor(modelItem => item.ExpirationDate):
                     @Html.DisplayFor(modelItem => item.ExpirationDate)
                 </div>
                 <div>
                     @qs.Where(x => x.AssessmentId == item.AssessmentId).Count() quizzes assigned
                 </div>
 
-                <div class="list-group">
+                <div class="list-group list-inline row">
                     @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
                     {
-                    <div class="list-group-item">
-                        <h5 class="tNames">@quiz.Topic.Name</h5>
+                    <div class="list-group-item col-md-4 quiz-items">
+                        <h4 class="tNames">@quiz.Topic.Name</h4>
                         @if (quiz.TimeCompleted != null)
                         {
                         var percent = (Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 2) * 100);
-                        <span class='label @(percent > 70 ? "label-success" : "label-danger")'>@percent %</span>
-                        <div>
+                        <div style="font-size:1em;"class='label @(percent > 70 ? "label-success" : "label-danger")'>@percent %</div>
+                            var TimeTaken = quiz.TimeCompleted.Subtract(quiz.TimeStarted);
+                            TimeTaken = TimeTaken.ToString(@"hh\:mm\:ss");
+
+                        <span>&nbsp;Time Taken: @TimeTaken</span>
+                        <div class="full-result">
                             <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
                                 Full Results <span class="glyphicon glyphicon-edit"></span>
                             </a>
