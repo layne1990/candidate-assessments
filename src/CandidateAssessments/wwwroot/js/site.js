@@ -36,14 +36,14 @@ $(document).ready(function () {
 
 $("#AssessSearchBtn").on("click", function () {
     var g = $('#AssessSearch').val().toLowerCase();
-    $(".CandidateName").each(function () {
+    $(".assessments").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
 $("#AssessSearch").on("keyup", function () {
     var g = $(this).val().toLowerCase();
-    $(".CandidateName").each(function () {
+    $(".assessments").each(function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
@@ -53,6 +53,11 @@ $(function () {
     $(".CandidateName").each(function () {
         tags.push(this.innerText)
     });
+    $(".tNames").each(function () {
+        if (tags.indexOf(this.innerText) == -1)
+            tags.push(this.innerText)
+    });
+    
     $("#AssessSearch").autocomplete({
         source: tags
     });
