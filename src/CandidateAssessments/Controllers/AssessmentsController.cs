@@ -104,7 +104,6 @@ namespace WebApplication1.Controllers
                 _context.Assessments.Add(assessment);
                 _context.SaveChanges();
 
-                // TODO: This should add random questions to the quizes.
                 foreach (Quiz q in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
                 {
                     int i = 1;
@@ -135,6 +134,10 @@ namespace WebApplication1.Controllers
                         qq.NextQuestionId = nextId;
                         nextId = qq.QuizQuestionId;
                     }
+
+                    if (q.Questions.Count < q.NumberOfQuestions)
+                        q.NumberOfQuestions = q.Questions.Count;
+
                 }
 
                 _context.SaveChanges();
@@ -202,6 +205,12 @@ namespace WebApplication1.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             Assessment assessment = _context.Assessments.Single(m => m.AssessmentId == id);
+
+            foreach (Quiz quiz in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
+            {
+                _context.Quizes.Remove(quiz);
+            }
+
             _context.Assessments.Remove(assessment);
             _context.SaveChanges();
             return RedirectToAction("Index");
