@@ -9,7 +9,7 @@
         if (select == "FillInBlank") {
             $("#MCQuestions").hide();
         } else if (select == "TrueFalse") {
-            $("#MCQuestions").show();
+            $("#onTrueFalse").show();
             $("#offForTrueFalse").hide();
             $('#trueLabel').text('True');
             $('#falseLabel').text('False');
