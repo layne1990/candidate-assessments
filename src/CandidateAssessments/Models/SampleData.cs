@@ -40,8 +40,8 @@ namespace CandidateAssessments.Models
                         context.TopicQuestions.Add(
                         new TopicQuestion()
                         {
-                            QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0,lorem.Length)),
-                            ChoiceA = "This is choice A" +lorem.Substring(random.Next(0,100), random.Next(0, 50)),
+                            QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
+                            ChoiceA = "This is choice A" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
                             ChoiceB = "This is choice B" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
                             ChoiceC = "This is choice C" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
                             ChoiceD = "This is choice D" + lorem.Substring(random.Next(0, 100), random.Next(0, 50)),
@@ -49,6 +49,7 @@ namespace CandidateAssessments.Models
                             QuestionType = QuestionTypes.MultipleChoice,
                             IsActive = true,
                             Topic = t,
+                            CSelected = 3
                         });
                     }
                     
