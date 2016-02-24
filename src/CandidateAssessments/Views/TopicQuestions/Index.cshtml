@@ -3,6 +3,7 @@
 @using System.ComponentModel
 @using System.Net.Mime
 @using System.Threading.Tasks
+@using Remotion.Linq.Parsing.Structure.NodeTypeProviders
 @model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
 @{
@@ -46,8 +47,6 @@
         @{
             foreach (var item in Model)
             {
-
-
                 <div class="question col-xs-12 ">
                     <div class="card">
                         <h3 class="card-header">
@@ -66,28 +65,33 @@
                                     <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">A)</span>
                                         <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
-                                        <span class="badge navbar-right">@percentA%</span>
+                                        <span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
                                     </li>
                                     <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">B)</span>
                                         <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
-                                        <span class="badge navbar-right">@percentB%</span>
+                                        <span class="badge navbar-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
                                     </li>
                                     <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">C)</span>
                                         <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span>
-                                        <span class="badge navbar-right">@percentC%</span>
+                                        <span class="badge navbar-right">@(double.IsNaN(percentC) ? 0 : percentC)%</span>
                                     </li>
                                     <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
                                         <span class="question_label">D)</span>
                                         <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span>
-                                        <span class="badge navbar-right">@percentD%</span>
+                                        <span class="badge navbar-right">@(double.IsNaN(percentD) ? 0 : percentD)%</span>
                                     </li>
                                 </ul>
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
-                            &nbsp; <a class="pull-right" asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                            &nbsp;
+                            <div class="pull-right">
+                                <a asp-action="Details" asp-route-id="@item.TopicQuestionId">Details</a>
+                                &nbsp;| &nbsp;<a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a>
+                                &nbsp;| &nbsp;<a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
