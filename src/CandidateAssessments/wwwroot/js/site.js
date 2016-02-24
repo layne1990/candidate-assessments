@@ -1,22 +1,24 @@
 ﻿$(function () {
     $("#QuestionType").change(function () {
         var select = $("#QuestionType option:selected").val();
-        $('#trueLabel').text('Choice A');
-        $('#falseLabel').text('Choice B');
-        $("#MCQuestions").show();
+       
         $("#offForTrueFalse").show();
-
+        $("#offForFillInBlank").show();
+        $("#onTrueFalse").hide();
         if (select == "FillInBlank") {
-            $("#MCQuestions").hide();
+            $("#offForFillInBlank").hide();
         } else if (select == "TrueFalse") {
-            $("#MCQuestions").show();
+            $("#onTrueFalse").show();
             $("#offForTrueFalse").hide();
-            $('#trueLabel').text('True');
-            $('#falseLabel').text('False');
+       
         }
     })
 });
-
+$(function () {
+    $("#fillin").on('keyup', function () {
+        $('#AnswerSubmit').removeClass('hidden');
+    })
+})
 $(document).ready(function () {
     var $options = $("label.list-group-item");
 
