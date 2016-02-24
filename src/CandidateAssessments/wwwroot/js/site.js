@@ -34,7 +34,22 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    var $options = $(".checkbox");
 
+    $options.click(function (e) {
+        var $checked = $('div.checkbox-group.required :checkbox:checked').length > 0;
+        console.log($checked);
+        if ($checked) {
+            $('#AssessmentCreate').removeClass('hidden');
+        }
+        else {
+            $('#AssessmentCreate').addClass('hidden');
+        }
+            
+
+    });
+});
 
 
 $("#AssessSearchBtn").on("click", function () {
