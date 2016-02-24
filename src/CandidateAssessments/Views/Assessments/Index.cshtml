@@ -56,7 +56,7 @@
                     @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
                     {
                     <div class="list-group-item">
-                        <h5>@quiz.Topic.Name</h5>
+                        <h5 class="tNames">@quiz.Topic.Name</h5>
                         @if (quiz.TimeCompleted != null)
                         {
                         var percent = (Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 2) * 100);
