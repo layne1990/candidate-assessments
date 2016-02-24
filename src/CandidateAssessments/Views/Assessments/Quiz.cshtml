@@ -4,72 +4,91 @@
     ViewData["Title"] = "Quiz Results";
 }
 
-<h3>@Model.Topic.Name Quiz Results</h3>
-<h4>@Model.NumberOfQuestions questions in this quiz</h4>
+<nav class="navbar navbar-full navbar-default" id="pageNav">
+    <div class="container-fluid">
+        <div class="col-md-3 col-xs-4">
+            <span class="navbar-brand navbar-brand-custom">@Model.Topic.Name Quiz Results</span>
+        </div>
+        <div class="col-md-4 col-md-offset-5 col-xs-4 col-xs-offset-4">
+            @{
+                var useThis = "00:00:00";
+                //var name = CandidateAssessments.Models.Assessment.Where(x => x.AssessmentId);
+                if (Model.TimeCompleted.HasValue && Model.TimeStarted.HasValue)
+                {
+                    var complete = Model.TimeCompleted.Value;
+                    var started = Model.TimeStarted.Value;
+                    var timeTaken = complete.Subtract(started);
+                    useThis = timeTaken.ToString(@"hh\:mm\:ss");
+                }
+                <span class="navbar-brand navbar-right navbar-brand-custom">@Model.NumberOfQuestions Questions | Completed in @useThis</span>}
+        </div>
+    </div>
+</nav>
+
 <a asp-action="Index" asp-route-id="@Model.AssessmentId">Back to Assessment</a>
 
 
 <div class="card-deck-wrapper">
     <div class="card-deck row">
-        @foreach(var question in Model.Questions)
+        @foreach (var question in Model.Questions)
         {
-        var item = question.Question;
+            var item = question.Question;
 
-        <div class="question col-xs-12">
-            <div class="card">
-                <h3 class="card-header">
-                    <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
-                </h3>
-                @{
-                    var percentA = (Math.Round((double)item.ASelected / (double)item.TimesAnswered, 2) * 100);
-                    var percentB = (Math.Round((double)item.BSelected / (double)item.TimesAnswered, 2) * 100);
-                    var percentC = (Math.Round((double)item.CSelected / (double)item.TimesAnswered, 2) * 100);
-                    var percentD = (Math.Round((double)item.DSelected / (double)item.TimesAnswered, 2) * 100);
-                }
-                
-                <div class="card-block">
-                    <blockquote class="card-blockquote">
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
-                        <ul class="list-group list-unstyled">
-                            @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
-                            {
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge pull-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
-                                </li>
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : (question.Answer == "B" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label">B)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge pull-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
-                                </li>
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : (question.Answer == "C" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label">C)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span><span class="badge pull-right">@(double.IsNaN(percentC) ? 0 : percentC)%</span>
-                                </li>
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : (question.Answer == "D" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label">D)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span><span class="badge pull-right">@(double.IsNaN(percentD) ? 0 : percentD)%</span>
-                                </li>
-                            }
-                            else if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.TrueFalse)
-                            {
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge pull-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
-                                </li>
-                                <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : (question.Answer == "B" ? "list-group-item-danger" : "list-group-item-default"))'>
-                                    <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge pull-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
-                                </li>
+            <div class="question col-xs-12">
+                <div class="card">
+                    <h3 class="card-header">
+                        <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
+                    </h3>
+                    @{
+                        var percentA = (Math.Round((double)item.ASelected / (double)item.TimesAnswered, 2) * 100);
+                        var percentB = (Math.Round((double)item.BSelected / (double)item.TimesAnswered, 2) * 100);
+                        var percentC = (Math.Round((double)item.CSelected / (double)item.TimesAnswered, 2) * 100);
+                        var percentD = (Math.Round((double)item.DSelected / (double)item.TimesAnswered, 2) * 100);
+                    }
 
-                            }
-                            else
-                            {
+                    <div class="card-block">
+                        <blockquote class="card-blockquote">
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                            <ul class="list-group list-unstyled">
+                                @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
+                                {
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label">A)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge pull-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
+                                    </li>
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : (question.Answer == "B" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label">B)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge pull-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
+                                    </li>
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : (question.Answer == "C" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label">C)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span><span class="badge pull-right">@(double.IsNaN(percentC) ? 0 : percentC)%</span>
+                                    </li>
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : (question.Answer == "D" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label">D)</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span><span class="badge pull-right">@(double.IsNaN(percentD) ? 0 : percentD)%</span>
+                                    </li>
+                                }
+                                else if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.TrueFalse)
+                                {
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : (question.Answer == "A" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span><span class="badge pull-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
+                                    </li>
+                                    <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : (question.Answer == "B" ? "list-group-item-danger" : "list-group-item-default"))'>
+                                        <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span><span class="badge pull-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
+                                    </li>
 
-                                <li class='container-fluid list-group-item'>
-                                    <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span><span class="badge pull-right"></span>
-                                </li>
-                            }
-                        </ul>
+                                }
+                                else
+                                {
 
-                    </blockquote>
+                                    <li class='container-fluid list-group-item'>
+                                        <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span><span class="badge pull-right"></span>
+                                    </li>
+                                }
+                            </ul>
+
+                        </blockquote>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        }
+                        }
     </div>
 </div>

@@ -369,3 +369,9 @@ div.question {
 .assessment-list{
     margin-bottom:40px;
 }
+
+.navbar-brand-custom {
+    padding: 15px 0; 
+    margin-left: -15px; 
+    color: black !important;
+}
