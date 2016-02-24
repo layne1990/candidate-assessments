@@ -348,8 +348,8 @@ textarea {
     display: block;
 }
 
-div.question:nth-child(odd) {
-    //clear: both;
+div.question {
+ margin-bottom:20px;
 }
 
 input[type="radio"],
