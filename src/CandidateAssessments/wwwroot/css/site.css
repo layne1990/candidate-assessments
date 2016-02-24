@@ -9,7 +9,6 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -349,10 +348,21 @@ textarea {
 }
 
 div.question {
- margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 input[type="radio"],
 .input-label {
     display: none;
+}
+
+.quiz-items {
+    border-color: white;
+    height: 125px;
+}
+.full-result{
+    margin-top:15px;
+}
+.assessment-list{
+    margin-bottom:40px;
 }
