@@ -148,8 +148,7 @@ namespace WebApplication1.Controllers
             if (top.Questions != null)
             {
                 // if the question has no answers, remove it
-                // TODO: find a better way to see if a quesion has been answered.
-                if (topicQuestion.ASelected + topicQuestion.BSelected + topicQuestion.CSelected + topicQuestion.DSelected == 0)
+                if (topicQuestion.TimesAnswered == 0)
                 {
                     top.Questions.Remove(topicQuestion);
                     _context.TopicQuestions.Remove(topicQuestion);

@@ -16,6 +16,7 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.TopicQuestionId)
+        @* TODO: add HiddenFor other fields in TopicQuestion *@
 
         <div class="form-group">
             @Html.LabelFor(model => model.QuestionType, htmlAttributes: new { @class = "control-label col-md-2" })

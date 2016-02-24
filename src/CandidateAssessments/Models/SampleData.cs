@@ -49,7 +49,8 @@ namespace CandidateAssessments.Models
                             QuestionType = QuestionTypes.MultipleChoice,
                             IsActive = true,
                             Topic = t,
-                            CSelected = 3
+                            CSelected = 3,
+                            TimesAnswered = 3
                         });
                     }
                     
