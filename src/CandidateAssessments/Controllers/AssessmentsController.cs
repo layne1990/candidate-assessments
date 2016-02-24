@@ -135,6 +135,10 @@ namespace WebApplication1.Controllers
                         qq.NextQuestionId = nextId;
                         nextId = qq.QuizQuestionId;
                     }
+
+                    if (q.Questions.Count < q.NumberOfQuestions)
+                        q.NumberOfQuestions = q.Questions.Count;
+
                 }
 
                 _context.SaveChanges();
