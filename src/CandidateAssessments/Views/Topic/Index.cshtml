@@ -1,27 +1,4 @@
 ﻿@model IEnumerable<CandidateAssessments.Models.Topic>
-
-
-<style>
-    .TopicLink, .TopicLink:hover, .TopicLink:active {
-        text-decoration: none;
-        color: black;
-    }
-
-    .bubble {
-        background-color: #ff4d4d;
-        width: 50%;
-        padding: 30px;
-        margin: 30px;
-        font-size: 28px;
-        border-radius: 10px;
-        border: solid;
-        border-color: white;
-    }
-
-        .bubble:hover {
-            border-color: black;
-        }
-</style>
 <!--
     Navbar for Search and CreateNew
 -->
@@ -51,31 +28,44 @@
 </nav>
 
 @{ IEnumerable<dynamic> qs = ViewBag.Questions;}
-<ul class="list-unstyled col-md-offset-3">
-    @foreach (var item in Model)
-    {
-        <li class="TopicItems">
-            <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
-                <div class="bubble col-md-offset-4 danger">
-                    <h3 class="text-center">
-
-                        <span class="TopicNames"> @item.Name</span>&nbsp;&nbsp;@qs.Where(x => x.TopicId == item.TopicId).Count() Questions
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </h3>
+<div class="card-deck-wrapper">
+    <div class="card-deck">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="topic col-xs-4 col-xs-offset-4 ">
+                        <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                            <div class="card topic-card">
+                                <h3 class="card-header row">
+                                    <span class="col-xs-6 col-xs-offset-3 text-center">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                </h3>
+                                <div class="card-block">
+                                    <blockquote class="card-blockquote">
+                                        <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </a>
-        </li>
-
-    }
-    <li>
-        <a class="TopicLink" href="/TopicQuestions/">
-            <div class="bubble col-md-offset-4">
-                <h3 class="text-center">
-                    All&nbsp;&nbsp;@qs.Count() Questions
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </h3>
+            }
+            <div class="row">
+                <div class="topic col-xs-4 col-xs-offset-4 ">
+                    <a class="TopicLink" href="/TopicQuestions/">
+                        <div class="card topic-card">
+                            <h3 class="card-header row">
+                                <span class="col-xs-6 col-xs-offset-3 text-center">All Topics</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                            </h3>
+                            <div class="card-block">
+                                <blockquote class="card-blockquote">
+                                    <p class="card-text text-center">@qs.Count() Questions</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </a>
-    </li>
-
-</ul>
+        }
+    </div>
+</div>

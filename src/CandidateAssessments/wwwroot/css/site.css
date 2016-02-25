@@ -352,9 +352,18 @@ textarea {
     display: block;
 }
 
-div.question {
+div.question, div.topic{
     margin-bottom: 20px;
 }
+
+.topic-card:hover{
+    background-color: #ddffff
+}
+
+.topic-card:hover .card-header{
+    background-color: #a0f5f5;
+}
+
 .quiz-radio, .input-label {
     display: none;
 }
@@ -384,3 +393,8 @@ div.question {
 .text-underline:hover {
     text-decoration: underline;
 }
+
+.TopicLink, .TopicLink:hover, .TopicLink:active {
+        text-decoration: none;
+        color: black;
+    }
