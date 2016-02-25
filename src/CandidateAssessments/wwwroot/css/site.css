@@ -374,4 +374,13 @@ div.question {
     padding: 15px 0; 
     margin-left: -15px; 
     color: black !important;
+
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.text-underline:hover {
+    text-decoration: underline;
 }

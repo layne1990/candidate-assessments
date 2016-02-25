@@ -66,6 +66,16 @@ $("#AssessSearch").on("keyup", function () {
         $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
+$("#AssessSearch").ready( function () {
+    var id = '';
+    id = $('#user-name').text();
+    if (id != '') {
+        $("#AssessSearch").val(id)
+        $("#AssessSearchBtn").trigger("click");
+
+    }
+});
+
 $(function () {
     var tags = [];
     $(".CandidateName").each(function () {

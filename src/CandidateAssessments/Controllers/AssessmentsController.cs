@@ -20,11 +20,21 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Assessments
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
+            if (id != null)
+            {
+                ViewBag.id = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
+            }
+            else {
+                ViewBag.id = null;
+                //ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
+                //return View(_context.Assessments.Where(x => x.AssessmentId == id).ToList());
+            }
             ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
             return View(_context.Assessments.ToList());
         }
+
         // GET: Assessments/Code/5
         public IActionResult Code(int? id)
         {
@@ -54,7 +64,7 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.assessment = _context.Assessments.Where(m => m.AssessmentId == quiz.AssessmentId).FirstOrDefault();
             return View(quiz);
         }
 
