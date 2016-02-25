@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
             List<TopicQuestion> assessmentContext; 
             if (TopicId != null)
             {
-                assessmentContext = _context.TopicQuestions.Where(tq=>tq.TopicId==TopicId).Include(t => t.Topic).ToList();
+                assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId).Include(t => t.Topic).ToList();
             }
             else {
                 assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
@@ -152,11 +152,33 @@ namespace WebApplication1.Controllers
             TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
             var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
 
+            // only get quizzes with the same topic
+            var QuizQuestions = _context.Quizes.Where(x => x.TopicId == topicQuestion.TopicId).Include(x => x.Questions);
+            var included = false;
+
+            // for each quiz of this topic
+            foreach (var quiz in QuizQuestions)
+            {
+                // for each question in that quiz
+                foreach(var question in quiz.Questions)
+                {
+                    // this question is included in a quiz somewhere
+                    if(question.TopicQuestionId == topicQuestion.TopicQuestionId)
+                    {
+                        included = true;
+                        break;
+                    }
+                }
+                // weve already found one
+                if (included)
+                    break;
+            }
+
             // if the topic has questions
             if (top.Questions != null)
             {
-                // if the question has no answers, remove it
-                if (topicQuestion.TimesAnswered == 0)
+                // if the question isnt included in any quiz
+                if (!included)
                 {
                     top.Questions.Remove(topicQuestion);
                     _context.TopicQuestions.Remove(topicQuestion);
