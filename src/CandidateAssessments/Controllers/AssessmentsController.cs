@@ -71,7 +71,7 @@ namespace WebApplication1.Controllers
         // GET: Assessments/Create
         public IActionResult Create()
         {
-            ViewBag.Topics = _context.Topics.ToList();
+            ViewBag.Topics = _context.Topics.Where(x => x.Questions.Where(y => y.IsActive == true).Count() != 0);
 
             return View();
         }
