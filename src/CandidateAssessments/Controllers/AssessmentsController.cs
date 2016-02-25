@@ -5,9 +5,11 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using CandidateAssessments.Models;
 using System.Collections.Generic;
+using Microsoft.AspNet.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Recruiter, Admin")]
     public class AssessmentsController : Controller
     {
         private AssessmentContext _context;

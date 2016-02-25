@@ -16,7 +16,7 @@ namespace CandidateAssessments.Models
 
         public int AssessmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter a candidate name")]
         [Display(Name = "Candidate Name")]
         [MaxLength(128)]
         public string CandidateName { get; set; }

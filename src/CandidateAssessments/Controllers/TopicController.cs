@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using CandidateAssessments.Models;
+using Microsoft.AspNet.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CandidateAssessments.Controllers
 {
+    [Authorize(Roles = "QuestionManager, Admin")]
     public class TopicController : Controller
     {
         private AssessmentContext _db;
