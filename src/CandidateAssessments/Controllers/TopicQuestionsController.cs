@@ -9,7 +9,7 @@ using Microsoft.AspNet.Authorization;
 namespace WebApplication1.Controllers
 {
 
-    [Authorize(Roles = "QuestionManager, Admin")]
+    [Authorize(Roles = "QuestionManager,Admin")]
     public class TopicQuestionsController : Controller
     {
         private AssessmentContext _context;

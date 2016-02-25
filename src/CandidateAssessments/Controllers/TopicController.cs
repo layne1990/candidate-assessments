@@ -10,7 +10,7 @@ using Microsoft.AspNet.Authorization;
 
 namespace CandidateAssessments.Controllers
 {
-    [Authorize(Roles = "QuestionManager, Admin")]
+    [Authorize(Roles = "QuestionManager,Admin")]
     public class TopicController : Controller
     {
         private AssessmentContext _db;

@@ -9,7 +9,7 @@ using Microsoft.AspNet.Authorization;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize(Roles = "Recruiter, Admin")]
+    [Authorize(Roles = "Admin,Recruiter")]
     public class AssessmentsController : Controller
     {
         private AssessmentContext _context;
