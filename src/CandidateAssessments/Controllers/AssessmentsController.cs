@@ -155,8 +155,9 @@ namespace WebApplication1.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Code", new { id = assessment.AssessmentId });
             }
+
             // pass TopicList to ViewBag for Create View
-            ViewBag.TopicList = _context.Topics.ToList();
+            ViewBag.Topics = _context.Topics.Where(x => x.Questions.Where(y => y.IsActive == true).Count() != 0);
             return View(assessment);
         }
 

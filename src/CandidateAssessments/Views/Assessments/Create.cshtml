@@ -62,11 +62,11 @@
 
         <div class="checkbox-group required">
 
-            @foreach (var Topic in ViewBag.Topics)
+            @foreach (var t in ViewBag.Topics)
             {
                 <div class="col-md-10">
-                    <label class="col-md-2 control-label">@Topic.Name</label>
-                    <input class ="checkbox" type="checkbox" name="Topics" value=@Topic.TopicId />
+                    <label class="col-md-2 control-label">@t.Name</label>
+                    <input class ="checkbox" type="checkbox" name="Topics" value=@t.TopicId />
                 </div>
             }
         </div>
