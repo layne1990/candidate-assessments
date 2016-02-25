@@ -33,12 +33,12 @@
         @{
             foreach (var item in Model)
             {
-                <div class="row">
+                <div class="row TopicItems">
                     <div class="topic col-xs-4 col-xs-offset-4 ">
                         <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                             <div class="card topic-card">
                                 <h3 class="card-header row">
-                                    <span class="col-xs-6 col-xs-offset-3 text-center">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                    <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                 </h3>
                                 <div class="card-block">
                                     <blockquote class="card-blockquote">
@@ -55,7 +55,7 @@
                     <a class="TopicLink" href="/TopicQuestions/">
                         <div class="card topic-card">
                             <h3 class="card-header row">
-                                <span class="col-xs-6 col-xs-offset-3 text-center">All Topics</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">All Topics</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                             </h3>
                             <div class="card-block">
                                 <blockquote class="card-blockquote">
