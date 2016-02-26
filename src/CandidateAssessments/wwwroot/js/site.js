@@ -5,8 +5,10 @@
         $("#offForTrueFalse").show();
         $("#offForFillInBlank").show();
         $("#onTrueFalse").hide();
+        $("#onForFill").hide();
         if (select == "FillInBlank") {
             $("#offForFillInBlank").hide();
+            $("#onForFill").show();
         } else if (select == "TrueFalse") {
             $("#onTrueFalse").show();
             $("#offForTrueFalse").hide();
