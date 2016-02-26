@@ -5,9 +5,13 @@
         $("#offForTrueFalse").show();
         $("#offForFillInBlank").show();
         $("#onTrueFalse").hide();
+        $("#onForFill").hide();
+        $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
         if (select == "FillInBlank") {
             $("#offForFillInBlank").hide();
+            $("#onForFill").show();
         } else if (select == "TrueFalse") {
+            $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
             $("#onTrueFalse").show();
             $("#offForTrueFalse").hide();
        

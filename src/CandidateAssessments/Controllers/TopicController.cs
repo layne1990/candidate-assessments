@@ -45,5 +45,40 @@ namespace CandidateAssessments.Controllers
 
             return View(topic);
         }
+
+        // GET: Topics/Delete/5
+        [ActionName("Delete")]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var qs = _db.TopicQuestions.Where(x => x.TopicId == id);
+            if (qs.Count() != 0)
+            {
+                return HttpNotFound();
+            }
+          Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
+            if (topic == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(topic);
+        }
+
+        // POST: Topics/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+
+            Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
+
+            _db.Topics.Remove(topic);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
