@@ -7,17 +7,20 @@
 <h2>@ViewData["Title"]</h2>
 
 @using (Html.BeginForm())
-{   
+{
     @Html.AntiForgeryToken()
 
-    <fieldset>
-        <legend>Topic</legend>
+    <div class="form-horizontal">
+        <h4>Topic</h4>
 
-        <div class="editor-label">
-            @Html.LabelFor(topic => topic.Name)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(topic => topic.Name)
+
+
+        <div class="form-group">
+            @Html.LabelFor(topic => topic.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(topic => topic.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(topic => topic.Name, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
@@ -25,8 +28,9 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+    </div>
 
-    </fieldset>
+
 }
 <!--form asp-controller="Topic" asp-action="Create" method="post" class="form-horizontal" role="form">
     <div class="form-horizontal">
