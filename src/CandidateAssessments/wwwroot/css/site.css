@@ -335,6 +335,10 @@ textarea {
     font-weight: bold;
 }
 
+.card > h4 {
+    margin: 0 !important;
+}
+
 .card > .dl-horizontal {
     margin: 0 !important;
     padding: 7.500px 0;
@@ -352,7 +356,7 @@ textarea {
     display: block;
 }
 
-div.question, div.topic{
+div.question, div.topic, div.assessments{
     margin-bottom: 20px;
 }
 
@@ -369,7 +373,7 @@ div.question, div.topic{
 }
 
 .quiz-items {
-    border-color: white;
+    border-color: black;
     height: 125px;
 }
 .full-result{
@@ -398,3 +402,8 @@ div.question, div.topic{
         text-decoration: none;
         color: black;
     }
+
+.CandidateName{
+    font-weight: bold;
+    font-size: 24px;
+}

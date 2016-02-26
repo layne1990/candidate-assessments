@@ -35,33 +35,88 @@
 
 @{ IEnumerable<dynamic> qs = ViewBag.Quizzes; }
 
-<!--
+<!-- New Card!!!!! -->
+
 <div class="card-deck-wrapper">
     <div class="card-deck">
      @{
             foreach (var item in Model)
             {
                 <div class="row">
-                    <div class="assessments col-xs-4 col-xs-offset-4 ">
+                    <div class="assessments col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</span>
 
-                            <div class="card topic-card">
-                                <h3 class="card-header row">
-                                    <span class="col-xs-6 col-xs-offset-3 text-center"></span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
-                                </h3>
+                                    <ul class="pull-right text-right list-unstyled">
+                                        <li>@Html.DisplayNameFor(model => model.CreatedDate):@Html.DisplayFor(modelItem => item.CreatedDate)</li>
+                                        <li>@Html.DisplayNameFor(modelItem => item.ExpirationDate):@Html.DisplayFor(modelItem => item.ExpirationDate)</li>
+                                    </ul>
+                                </div>
+
                                 <div class="card-block">
                                     <blockquote class="card-blockquote">
-                                        <p class="card-text text-center">Questions</p>
+                                        <p class="row"><span class="card-text col-xs-12">Quizzes Assigned: @qs.Where(x => x.AssessmentId == item.AssessmentId).Count()</span></p>
+
+                                        <div class="card-deck-wrapper">
+                                            <div class="card-deck">
+                                                <div class="row">
+                                                    @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
+                                                {
+                                                    <div class="col-xs-4">
+                                                        <div class="card quiz-items">
+                                                            <h4 class="card-header tNames">@quiz.Topic.Name</h4>
+                                                            @if (quiz.TimeCompleted != null)
+                                                            {
+                                                                var percent = (Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 2) * 100);
+                                                                <div style="font-size:1em;" class='label @(percent > 70 ? "label-success" : "label-danger")'>@percent %</div>
+                                                                var TimeTaken = quiz.TimeCompleted.Subtract(quiz.TimeStarted);
+                                                                TimeTaken = TimeTaken.ToString(@"hh\:mm\:ss");
+
+                                                                <span>&nbsp;Time Taken: @TimeTaken</span>
+                                                                <div class="full-result">
+                                                                    <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                                                                        Full Results <span class="glyphicon glyphicon-edit"></span>
+                                                                    </a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-danger">
+                                                                    Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            </div>
+                                            </div>
+                                            
                                     </blockquote>
+                                    
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <span class="pull-right">
+                                                <a class="btn btn-info" asp-action="Code" asp-route-id="@item.AssessmentId">Code</a>&nbsp;
+                                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AssessmentId">Delete</a>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                     </div>
                 </div>
             }
         }
     </div>
 </div>
-    -->
+
+
+<!--Old Card-->
+<!--
 <div class="list-group">
     @foreach (var item in Model)
             {
@@ -114,8 +169,8 @@
         </div>
     }
 </div>
-
-
+    -->
+<!-- Used to store the name of a candidate when page is passed a CandidateID-->
 <div id='user-name' style='display:none;'>
     @if (ViewBag.id != null)
             {@ViewBag.id.CandidateName}
