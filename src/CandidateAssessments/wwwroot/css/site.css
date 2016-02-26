@@ -374,7 +374,7 @@ div.question, div.topic, div.assessments{
 
 .quiz-items {
     border-color: black;
-    height: 125px;
+    min-height: 137.2px;
 }
 .full-result{
     margin-top:15px;
@@ -403,7 +403,7 @@ div.question, div.topic, div.assessments{
         color: black;
     }
 
-.CandidateName{
+.CandidateName, .TopicNames{
     font-weight: bold;
     font-size: 24px;
 }
