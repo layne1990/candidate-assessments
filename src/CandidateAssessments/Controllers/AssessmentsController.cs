@@ -203,7 +203,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            Assessment assessment = _context.Assessments.Single(m => m.AssessmentId == id);
+            Assessment assessment = _context.Assessments.SingleOrDefault(m => m.AssessmentId == id);
             if (assessment == null)
             {
                 return HttpNotFound();

@@ -140,7 +140,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
+            TopicQuestion topicQuestion = _context.TopicQuestions.SingleOrDefault(m => m.TopicQuestionId == id);
             if (topicQuestion == null)
             {
                 return HttpNotFound();
