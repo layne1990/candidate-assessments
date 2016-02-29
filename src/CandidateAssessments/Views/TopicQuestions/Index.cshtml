@@ -1,9 +1,4 @@
-@using System
-@using System.Collections.Generic
-@using System.ComponentModel
-@using System.Net.Mime
-@using System.Threading.Tasks
-@using Remotion.Linq.Parsing.Structure.NodeTypeProviders
+
 @model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
 @{
@@ -47,7 +42,7 @@
         @{
             foreach (var item in Model)
             {
-                <div class="question col-xs-12 ">
+                <div class="question col-xs-12 page-item">
                     <div class="card">
                         @* Handles inactive cards headers being red *@
                         <h3 class='card-header @(item.IsActive ? "card-default" : "card-inactive")'>
@@ -113,7 +108,7 @@
                         <div class="card-footer text-muted">
                             &nbsp;
                             <div class="pull-right">
-                               <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a>
+                                <a asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a>
                                 &nbsp;| &nbsp;<a asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
                             </div>
                         </div>
@@ -123,3 +118,13 @@
         }
     </div>
 </div>
+@{var pages = Math.Ceiling(Model.ToList().Count() / 10.0);}
+
+<ul class="pagination pagination-lg">
+    <li><a id="leftArrow" href="#">&laquo;</a></li>
+    @for (int i = 1; i <= pages; i++)
+    {
+        <li><a class="pageNumber" href="#">@i</a></li>
+    }
+    <li><a id="rightArrow" href="#">&raquo;</a></li>
+</ul>

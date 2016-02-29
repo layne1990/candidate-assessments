@@ -1,4 +1,8 @@
-﻿$(function () {
+﻿var page = 1;
+
+
+
+$(function () {
     $("#QuestionType").change(function () {
         var select = $("#QuestionType option:selected").val();
        
@@ -133,6 +137,9 @@ $("#QuestionSearch").on("keyup", function () {
         var s = $(this).text().toLowerCase();
         $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
+    if ($("#QuestionSearch").val() == "") {
+        paging(page)
+    }
 });
 $(function () {
     var tags = [];
@@ -155,3 +162,35 @@ $("#QuestionSearchBtn").on("click", function () {
         $(this).closest('.question')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
     });
 });
+
+$(paging(1))
+
+$(".pageNumber").click(function () {
+   paging(this.innerText)
+
+})
+$('#leftArrow').click(function () {
+    if (page > 1)
+        paging(page - 1);
+});
+$('#rightArrow').click(function () {
+    if (page < Math.ceil($('.page-item').length / 10))
+            paging(page + 1);
+});
+
+function paging(start) {
+    var max = (start * 10) - 1;
+    var min = max - 9;
+    page = start;
+    $('.page-item').each(function (i, item) {
+
+        if (i < min || i > max)
+            $(item).hide();
+        else
+            $(item).show();
+    })
+
+
+
+}
+
