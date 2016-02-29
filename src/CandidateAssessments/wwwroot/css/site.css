@@ -373,9 +373,20 @@ div.question, div.topic, div.assessments{
 }
 
 .quiz-items {
-    border-color: black;
-    min-height: 137.2px;
+    border-radius:8px;
 }
+.quiz-header {
+        border-radius: 8px 8px 0 0 !important;
+        font-weight:bold;
+}
+.quiz-block {
+    padding:1.25rem 0 1.25rem 0;
+    min-height: 123.2px;
+}
+.quiz-col{
+    padding: 0 7.5px 7.5px 7.5px;
+}
+
 .full-result{
     margin-top:15px;
 }
@@ -406,4 +417,10 @@ div.question, div.topic, div.assessments{
 .CandidateName, .TopicNames{
     font-weight: bold;
     font-size: 24px;
+}
+
+.center-text-trick {
+  height: 100px;
+  line-height: 85px;
+  white-space: nowrap;
 }
