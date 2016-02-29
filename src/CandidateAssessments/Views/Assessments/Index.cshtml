@@ -63,19 +63,29 @@
                                             <div class="row">
                                                 @foreach (var quiz in @qs.Where(x => x.AssessmentId == item.AssessmentId))
                                                 {
-                                                    <div class="col-xs-4">
+                                                    <div class="col-xs-4 col-md-3">
                                                         <div class="card quiz-items">
-                                                            <h4 class="card-header tNames">@quiz.Topic.Name</h4>
-                                                            <div class="card-block">
+                                                            <h4 class="card-header quiz-header tNames text-center">@quiz.Topic.Name</h4>
+                                                            <div class="card-block quiz-block">
                                                                 @if (quiz.TimeCompleted != null)
                                                                 {
                                                                     var percent = (Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 2) * 100);
-                                                                    <div style="font-size:1em;" class='label @(percent > 70 ? "label-success" : "label-danger")'>@percent %</div>
+
                                                                     var TimeTaken = quiz.TimeCompleted.Subtract(quiz.TimeStarted);
                                                                     TimeTaken = TimeTaken.ToString(@"hh\:mm\:ss");
 
-                                                                    <span>&nbsp;Time Taken: @TimeTaken</span>
-                                                                    <div class="full-result">
+                                                                    <div>
+                                                                        <span class="col-xs-7 col-lg-6 text-right quiz-col">Score:</span>
+                                                                        <span class="col-xs-5 col-lg-6 text-center quiz-col">
+                                                                            <span style="font-size:1em;" class='label @(percent > 70 ? "label-success" : "label-danger")'>@percent %</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="col-xs-7 col-lg-6 text-right quiz-col">Time Taken:</span>
+                                                                        <span class="col-xs-5 col-lg-6 text-center quiz-col">@TimeTaken</span>
+                                                                    </div>
+
+                                                                    <div class="full-result text-center">
                                                                         <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
                                                                             Full Results <span class="glyphicon glyphicon-edit"></span>
                                                                         </a>
@@ -83,8 +93,10 @@
                                                                 }
                                                                 else
                                                                 {
-                                                                    <div class="text-danger">
-                                                                        Incomplete <span class="glyphicon glyphicon-remove-circle"></span>
+                                                                    <div class="text-center center-text-trick">
+                                                                        <span style="font-size:1em;" class="label label-danger">
+                                                                            <span>Incomplete</span> <span class="glyphicon glyphicon-remove-circle" style="vertical-align:text-top;"></span>
+                                                                        </span>
                                                                     </div>
                                                                 }
                                                             </div>
