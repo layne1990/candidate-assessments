@@ -37,9 +37,15 @@ namespace CandidateAssessments.Controllers
         {
             if(ModelState.IsValid)
             {
-                _db.Topics.Add(topic);
-                topic.Questions = new List<TopicQuestion>();
-                _db.SaveChanges();
+                if (_db.Topics.Where(x => x.Name == topic.Name).Count() != 0)
+                {
+                    ViewBag.message = "A Topic With this name already exsits";
+                    return View(topic);
+                }
+                    _db.Topics.Add(topic);
+                    topic.Questions = new List<TopicQuestion>();
+                    _db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
