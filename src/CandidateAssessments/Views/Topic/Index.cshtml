@@ -33,22 +33,53 @@
         @{
             foreach (var item in Model)
             {
-                <div class="row TopicItems">
-                    <div class="topic col-xs-4 col-xs-offset-4 ">
-                        <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                @if (qs.Where(x => x.TopicId == item.TopicId).Count() == 0)
+                {
+                   
+
+                    <div class="row TopicItems">
+                        <div class="topic col-xs-4 col-xs-offset-4 ">
+
                             <div class="card topic-card">
+                             
                                 <h3 class="card-header row">
-                                    <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                    <a class="pull-left col-md-1" href="/Topic/delete/@item.TopicId"><span class="btn btn-danger glyphicon glyphicon-remove"></span></a>
+                                    <span class="col-xs-6 col-xs-offset-2 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                 </h3>
-                                <div class="card-block">
-                                    <blockquote class="card-blockquote">
-                                        <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
-                                    </blockquote>
-                                </div>
+                                <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                                    <div class="card-block">
+                                        <blockquote class="card-blockquote">
+                                            <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
+                                        </blockquote>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                         
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+
+
+                    <div class="row TopicItems">
+                        <div class="topic col-xs-4 col-xs-offset-4 ">
+                            <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                                <div class="card topic-card">
+                                    <h3 class="card-header row">
+                                        <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                    </h3>
+                                    <div class="card-block">
+                                        <blockquote class="card-blockquote">
+                                            <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                }
             }
             <div class="row">
                 <div class="topic col-xs-4 col-xs-offset-4 ">
