@@ -16,20 +16,32 @@ namespace WebApplication1.Controllers
 
         public TopicQuestionsController(AssessmentContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: TopicQuestions
-        public IActionResult Index(int? TopicId)
+        public IActionResult Index(string searchParam, int? TopicId)
         {
-            List<TopicQuestion> assessmentContext; 
+            List<TopicQuestion> assessmentContext;
+            List<TopicQuestion> names;
             if (TopicId != null)
             {
                 assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId).Include(t => t.Topic).ToList();
+               
             }
             else {
                 assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
             }
+            names = assessmentContext;
+            if (searchParam != null)
+            {
+                assessmentContext = assessmentContext.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
+                x.ChoiceB.ToLower().Contains(searchParam.ToLower()) || x.ChoiceC.ToLower().Contains(searchParam.ToLower()) || x.ChoiceD.ToLower().Contains(searchParam.ToLower()) ||
+               x.Topic.Name.ToLower().Contains(searchParam.ToLower())).ToList();
+            }
+
+
+            ViewBag.names = names;
             ViewBag.TopicId = TopicId;
             return View(assessmentContext);
         }
@@ -54,7 +66,7 @@ namespace WebApplication1.Controllers
         // GET: TopicQuestions/Create
         public IActionResult Create(int? id)
         {
-            
+
             ViewBag.TopicList = _context.Topics.ToList();
             ViewBag.TopicId = id;
             return View();
@@ -67,12 +79,12 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-               var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
+                var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
                 topicQuestion.Topic = top;
                 //not sure when topic.Questions gets initiated
                 if (top.Questions == null)
                     top.Questions = new List<TopicQuestion>();
-               top.Questions.Add(topicQuestion); 
+                top.Questions.Add(topicQuestion);
                 _context.TopicQuestions.Add(topicQuestion);
                 if (topicQuestion.QuestionType == QuestionTypes.TrueFalse)
                 {
@@ -113,7 +125,7 @@ namespace WebApplication1.Controllers
                 // if topic was changes need to remove question from original topic list
                 var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
                 topicQuestion.Topic = top;
-                
+
                 //not sure when topic.Questions gets initiated
                 if (top.Questions == null)
                     top.Questions = new List<TopicQuestion>();
@@ -165,10 +177,10 @@ namespace WebApplication1.Controllers
             foreach (var quiz in QuizQuestions)
             {
                 // for each question in that quiz
-                foreach(var question in quiz.Questions)
+                foreach (var question in quiz.Questions)
                 {
                     // this question is included in a quiz somewhere
-                    if(question.TopicQuestionId == topicQuestion.TopicQuestionId)
+                    if (question.TopicQuestionId == topicQuestion.TopicQuestionId)
                     {
                         included = true;
                         break;
@@ -193,7 +205,7 @@ namespace WebApplication1.Controllers
                 {
                     topicQuestion.IsActive = false;
                 }
-                    
+
             }
 
             _context.SaveChanges();

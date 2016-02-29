@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using CandidateAssessments.Models;
 using Microsoft.AspNet.Authorization;
+using System.Globalization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +22,15 @@ namespace CandidateAssessments.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(String searchParam)
         {
+            var list = _db.Topics.ToList();
+            var names = list;
+            if (searchParam != null)
+                list=list.Where(x => x.Name.ToLower().Contains(searchParam.ToLower())).ToList();
             ViewBag.Questions = _db.TopicQuestions.ToList();
-            return View(_db.Topics.ToList());
+            ViewBag.names = names;
+            return View(list);
         }
 
         public IActionResult Create()
