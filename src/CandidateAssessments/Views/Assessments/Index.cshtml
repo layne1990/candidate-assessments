@@ -43,7 +43,7 @@
         @{
             foreach (var item in Model)
             {
-                
+
                 <div class="row">
                     <div class="assessments col-xs-12">
                         <div class="card">
@@ -131,73 +131,74 @@
 </div>
 
 @{var pages = Math.Ceiling(ViewBag.count / 5.0);}
+@if (pages > 1)
+{
+    <ul class="pagination pagination-lg">
 
-<ul class="pagination pagination-lg">
-
-    <li><a  href="/Assessments/?page=1&searchParam=@ViewBag.search">&laquo;</a></li>
-    @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
-    <li><a href="/Assessments/?page=@back&searchParam=@ViewBag.search">&lsaquo;</a></li>
-    @{
-        var DisplayDots = true;
-        var start = 1;
-        var end = pages;
-        if (ViewBag.page < 4)
-        {
-            if (pages > 5)
+        <li><a href="/Assessments/?page=1&searchParam=@ViewBag.search">&laquo;</a></li>
+        @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
+        <li><a href="/Assessments/?page=@back&searchParam=@ViewBag.search">&lsaquo;</a></li>
+        @{
+            var DisplayDots = true;
+            var start = 1;
+            var end = pages;
+            if (ViewBag.page < 4)
             {
-                end = 5;
+                if (pages > 5)
+                {
+                    end = 5;
+                }
+                else
+                {
+                    DisplayDots = false;
+
+                }
+
             }
             else
             {
-                DisplayDots = false;
+                if (ViewBag.Page > (pages - 3))
+                {
+                    start = (int)pages - 4;
+                    DisplayDots = false;
 
+                }
+                else {
+                    start = ViewBag.page - 2;
+                    end = ViewBag.page + 2;
+                }
             }
 
+
         }
-        else
+        @for (int i = start; i <= end; i++)
         {
-            if (ViewBag.Page > (pages - 3))
+            @if (ViewBag.page == i)
             {
-                start = (int)pages - 4;
-                DisplayDots = false;
+                <li class="active"><span>@i</span></li>
 
             }
             else {
-                start = ViewBag.page - 2;
-                end = ViewBag.page + 2;
+                <li><a href="/Assessments/?page=@i&searchParam=@ViewBag.search">@i</a></li>
             }
+
         }
-
-
-    }
-    @for (int i = start; i <= end; i++)
-    {
-        @if (ViewBag.page == i)
+        @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
+        @if (DisplayDots)
         {
-            <li class="active"><span>@i</span></li>
+            var skip = next + 4;
+            if (skip > pages)
+            {
+                skip = pages;
 
+            }
+
+            <li><a href="/Assessments/?page=@skip &searchParam=@ViewBag.search">...</a></li>
         }
-        else {
-            <li><a href="/Assessments/?page=@i&searchParam=@ViewBag.search">@i</a></li>
-        }
-
-    }
-    @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
-    @if (DisplayDots)
-    {
-        var skip = next + 4;
-        if (skip > pages)
-        {
-            skip = pages;
-
-        }
-
-        <li><a href="/Assessments/?page=@skip &searchParam=@ViewBag.search">...</a></li>
-    }
-    <li><a href="/Assessments/?page=@next&searchParam=@ViewBag.search">&rsaquo;</a></li>
-    <li><a id="rightArrow" href="/Assessments/?page=@pages&searchParam=@ViewBag.search">&raquo;</a></li>
-</ul>
-
+        <li><a href="/Assessments/?page=@next&searchParam=@ViewBag.search">&rsaquo;</a></li>
+        <li><a id="rightArrow" href="/Assessments/?page=@pages&searchParam=@ViewBag.search">&raquo;</a></li>
+    </ul>
+            }
 
 
 <script>

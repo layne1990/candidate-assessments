@@ -54,9 +54,12 @@ namespace WebApplication1.Controllers
             end = (end > assessmentContext.Count()) ? assessmentContext.Count() : end;
             int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
             var output = new List<TopicQuestion>();
-            for (int i = start; i < end; i++)
+            if (assessmentContext.Count() != 0)
             {
-                output.Add(assessmentContext[i]);
+                for (int i = start; i < end; i++)
+                {
+                    output.Add(assessmentContext[i]);
+                }
             }
             ViewBag.count = assessmentContext.Count();
             ViewBag.search = searchParam;
