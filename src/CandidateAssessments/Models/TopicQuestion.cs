@@ -25,12 +25,16 @@ namespace CandidateAssessments.Models
         public QuestionTypes QuestionType { get; set; }
 
         // Used for multiple choice questions
+        [Required]
         [Display(Name = "Choice A")]
         public string ChoiceA { get; set; }
+        [Required]
         [Display(Name = "Choice B")]
         public string ChoiceB { get; set; }
+        [Required]
         [Display(Name = "Choice C")]
         public string ChoiceC { get; set; }
+        [Required]
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
         public int TimesAnswered { get; set; }

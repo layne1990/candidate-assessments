@@ -104,11 +104,7 @@ namespace WebApplication1.Controllers
                     top.Questions = new List<TopicQuestion>();
                 top.Questions.Add(topicQuestion);
                 _context.TopicQuestions.Add(topicQuestion);
-                if (topicQuestion.QuestionType == QuestionTypes.TrueFalse)
-                {
-                    topicQuestion.ChoiceA = "True";
-                    topicQuestion.ChoiceB = "False";
-                }
+
                 _context.SaveChanges();
                 return RedirectToAction("Index", new { TopicId = top.TopicId });
             }
