@@ -13,11 +13,5 @@ namespace CandidateAssessments.Controllers
             Response.StatusCode = 404;
             return View();
         }
-
-        public ActionResult ResourceDeleted()
-        {
-            Response.StatusCode = 418;
-            return View();
-        }
     }
 }
