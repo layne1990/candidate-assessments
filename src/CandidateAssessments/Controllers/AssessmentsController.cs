@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
             var list = _context.Assessments.ToList();
             var topics = _context.Topics.ToList();
             var names = new List<Assessment>(list);
-           // topics = list[0].Quizes.Where(y => y.Topic.Name.ToLower().Contains(searchParam.ToLower()));
+          
             if (searchParam != null)
             {
                 list = list.Where(x => x.CandidateName.ToLower().Contains(searchParam.ToLower())).ToList();
@@ -47,9 +47,12 @@ namespace WebApplication1.Controllers
             end = (end > list.Count()) ? list.Count() : end;
             int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
             var output = new List<Assessment>();
-            for (int i = start; i < end; i++)
+            if (list.Count() != 0)
             {
-                output.Add(list[i]);
+                for (int i = start; i < end; i++)
+                {
+                    output.Add(list[i]);
+                }
             }
             ViewBag.count = list.Count();
             ViewBag.search = searchParam;

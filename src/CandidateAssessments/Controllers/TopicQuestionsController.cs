@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
             else {
                 assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
             }
-            names = assessmentContext;
+            names = new List<TopicQuestion>(assessmentContext);
             if (searchParam != null)
             {
                 assessmentContext = assessmentContext.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||

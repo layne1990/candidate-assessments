@@ -22,15 +22,40 @@ namespace CandidateAssessments.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index(String searchParam)
+        public IActionResult Index(String searchParam, int? page)
         {
+            if (searchParam != null && page == 0)
+            {
+                page = 1;
+            }
+
             var list = _db.Topics.ToList();
-            var names = list;
+            var names = new List<Topic>(list);
             if (searchParam != null)
                 list=list.Where(x => x.Name.ToLower().Contains(searchParam.ToLower())).ToList();
             ViewBag.Questions = _db.TopicQuestions.ToList();
             ViewBag.names = names;
-            return View(list);
+
+
+
+
+            var pageSize = 5;
+            int pageNumber = (page ?? 1);
+            int end = pageSize * pageNumber;
+            end = (end > list.Count()) ? list.Count() : end;
+            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
+            var output = new List<Topic>();
+            if (list.Count() != 0)
+            {
+                for (int i = start; i < end; i++)
+                {
+                    output.Add(list[i]);
+                }
+            }
+            ViewBag.count = list.Count();
+            ViewBag.search = searchParam;
+            ViewBag.page = pageNumber;
+            return View(output);
         }
 
         public IActionResult Create()
