@@ -424,3 +424,8 @@ div.question, div.topic, div.assessments{
   line-height: 85px;
   white-space: nowrap;
 }
+.active-hover{
+    background-color:#337AB7;
+    color:white; 
+    border-color:#337AB7;
+}

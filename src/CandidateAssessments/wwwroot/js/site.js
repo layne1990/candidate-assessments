@@ -3,7 +3,7 @@
 
 
 $(function () {
-  
+
 
 
     $("#QuestionType").change(function () {
@@ -49,7 +49,14 @@ $(function () {
     })
     $(document).ready(function () {
         var $options = $("label.list-group-item");
-
+        $options.hover(
+                    function () {
+                         $(this).addClass('active-hover');
+                    },
+                    function () {
+                         $(this).removeClass('active-hover');
+                     }
+                   );
         $options.click(function (e) {
             var $current = $(this);
 
@@ -78,7 +85,7 @@ $(function () {
         });
     });
 
-   
+
 });
 $.widget("ui.autocomplete", $.ui.autocomplete, {
     _resizeMenu: function () {
