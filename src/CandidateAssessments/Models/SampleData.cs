@@ -56,14 +56,24 @@ namespace CandidateAssessments.Models
                     
                 }
                 context.SaveChanges();
-                
+
                 // Assessments
+
+                //Uncomment to add 50 assessments
+                /*List<Assessment> toAdd = new List<Assessment>();
+                for (int i = 0; i < 50; i++)
+                {
+                    toAdd.Add(new Assessment { CandidateName = "Candidate"+i, AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) });
+                }
+                context.Assessments.AddRange(toAdd);*/
+
                 context.Assessments.AddRange(
                     new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
                     new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
                     // Expired assessment
                     new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now }
                 );
+                
                 context.SaveChanges();
 
                 // Quizes                
