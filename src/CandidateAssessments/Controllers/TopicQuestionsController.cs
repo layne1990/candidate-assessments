@@ -47,6 +47,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.names = names;
             ViewBag.TopicId = TopicId;
+
             var pageSize = 5;
             int pageNumber = (page ?? 1);
             int end = pageSize * pageNumber;

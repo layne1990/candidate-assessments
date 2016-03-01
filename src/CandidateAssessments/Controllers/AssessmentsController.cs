@@ -20,8 +20,13 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Assessments
-        public IActionResult Index(String searchParam)
+        public IActionResult Index(String searchParam, int? page)
         {
+            if (searchParam != null && page == 0)
+            {
+                page = 1;
+            }
+
             var list = _context.Assessments.ToList();
             var topics = _context.Topics.ToList();
             var names = new List<Assessment>(list);
@@ -33,7 +38,23 @@ namespace WebApplication1.Controllers
 
             ViewBag.names = names;
             ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
-            return View(list);
+
+
+
+            var pageSize = 5;
+            int pageNumber = (page ?? 1);
+            int end = pageSize * pageNumber;
+            end = (end > list.Count()) ? list.Count() : end;
+            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
+            var output = new List<Assessment>();
+            for (int i = start; i < end; i++)
+            {
+                output.Add(list[i]);
+            }
+            ViewBag.count = list.Count();
+            ViewBag.search = searchParam;
+            ViewBag.page = pageNumber;
+            return View(output);
         }
 
         // GET: Assessments/Code/5
