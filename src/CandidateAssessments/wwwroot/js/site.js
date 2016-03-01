@@ -63,49 +63,4 @@ $(function () {
     });
 
 
- 
-
-
-
-
-
-
-
-
-    $(paging(1))
-
-    $(".pageNumber").click(function () {
-        paging(this.innerText * 1)
-
-    })
-    $('#leftArrow').click(function () {
-        if (page > 1) {
-            paging(page - 1);
-
-        }
-
-    });
-    $('#rightArrow').click(function () {
-        if (page < Math.ceil($('.page-item').length / 10))
-            paging(page + 1);
-    });
-
-    function paging(start) {
-        var max = (start * 10) - 1;
-        var min = max - 9;
-        page = start;
-        $('.pageNumber').removeClass("active");
-        $($('.pageNumber')[start - 1]).addClass("active");
-        $('.page-item').each(function (i, item) {
-
-            if (i < min || i > max)
-                $(item).hide();
-            else
-                $(item).show();
-        })
-
-
-
-    }
-
 });

@@ -20,14 +20,18 @@ namespace WebApplication1.Controllers
         }
 
         // GET: TopicQuestions
-        public IActionResult Index(string searchParam, int? TopicId)
+        public IActionResult Index(string searchParam, int? TopicId, int? page)
         {
+            if (searchParam != null && page==0)
+            {
+                page = 1;
+            }
             List<TopicQuestion> assessmentContext;
             List<TopicQuestion> names;
             if (TopicId != null)
             {
                 assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId).Include(t => t.Topic).ToList();
-               
+
             }
             else {
                 assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
@@ -43,7 +47,20 @@ namespace WebApplication1.Controllers
 
             ViewBag.names = names;
             ViewBag.TopicId = TopicId;
-            return View(assessmentContext);
+            var pageSize = 5;
+            int pageNumber = (page ?? 1);
+            int end = pageSize * pageNumber;
+            end = (end > assessmentContext.Count()) ? assessmentContext.Count() : end;
+            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
+            var output = new List<TopicQuestion>();
+            for (int i = start; i < end; i++)
+            {
+                output.Add(assessmentContext[i]);
+            }
+            ViewBag.count = assessmentContext.Count();
+            ViewBag.search = searchParam;
+            ViewBag.page = pageNumber;
+            return View(output);
         }
 
         // GET: TopicQuestions/Details/5
