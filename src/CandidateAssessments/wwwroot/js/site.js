@@ -78,15 +78,16 @@ $(function () {
         });
     });
 
-    $.widget("ui.autocomplete", $.ui.autocomplete, {
-        _resizeMenu: function () {
-        
-            this.menu.element.css('max-height', '300px');
-            this.menu.element.css('overflow-y', 'auto');
-            this.menu.element.css('overflow-x', 'hidden');
-            this._super();
-          
-        }
-
-    })
+   
 });
+$.widget("ui.autocomplete", $.ui.autocomplete, {
+    _resizeMenu: function () {
+
+        this.menu.element.css('max-height', '300px');
+        this.menu.element.css('overflow-y', 'auto');
+        this.menu.element.css('overflow-x', 'hidden');
+        this._super();
+
+    }
+
+})
