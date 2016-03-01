@@ -3,7 +3,7 @@
 
 
 $(function () {
-    var page = 1;
+  
 
 
     $("#QuestionType").change(function () {
@@ -63,45 +63,7 @@ $(function () {
     });
 
 
-    $("#AssessSearchBtn").on("click", function () {
-        var g = $('#AssessSearch').val().toLowerCase();
-        $(".assessments").each(function () {
-            var s = $(this).text().toLowerCase();
-            $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
-        });
-    });
-    $("#AssessSearch").on("keyup", function () {
-        var g = $(this).val().toLowerCase();
-        $(".assessments").each(function () {
-            var s = $(this).text().toLowerCase();
-            $(this).closest('.assessments')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
-        });
-    });
-    $("#AssessSearch").ready(function () {
-        var id = '';
-        id = $('#user-name').text();
-        if (id != '') {
-            $("#AssessSearch").val(id)
-            $("#AssessSearchBtn").trigger("click");
-
-        }
-    });
-
-    $(function () {
-        var tags = [];
-        $(".CandidateName").each(function () {
-            tags.push(this.innerText)
-        });
-        $(".tNames").each(function () {
-            if (tags.indexOf(this.innerText) == -1)
-                tags.push(this.innerText)
-        });
-
-        $("#AssessSearch").autocomplete({
-            source: tags
-        });
-    })
-
+ 
 
 
 

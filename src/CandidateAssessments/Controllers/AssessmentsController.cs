@@ -20,19 +20,20 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Assessments
-        public IActionResult Index(int? id)
+        public IActionResult Index(String searchParam)
         {
-            if (id != null)
+            var list = _context.Assessments.ToList();
+            var topics = _context.Topics.ToList();
+            var names = new List<Assessment>(list);
+           // topics = list[0].Quizes.Where(y => y.Topic.Name.ToLower().Contains(searchParam.ToLower()));
+            if (searchParam != null)
             {
-                ViewBag.id = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
+                list = list.Where(x => x.CandidateName.ToLower().Contains(searchParam.ToLower())).ToList();
             }
-            else {
-                ViewBag.id = null;
-                //ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
-                //return View(_context.Assessments.Where(x => x.AssessmentId == id).ToList());
-            }
+
+            ViewBag.names = names;
             ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
-            return View(_context.Assessments.ToList());
+            return View(list);
         }
 
         // GET: Assessments/Code/5
@@ -122,7 +123,7 @@ namespace WebApplication1.Controllers
                     var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId && x.IsActive == true).ToList();
                     Random rand = new Random();
                     var QsUsed = new List<int>();
-                    while (QsUsed.Count < NumQuestions && QsUsed.Count!=List.Count)
+                    while (QsUsed.Count < NumQuestions && QsUsed.Count != List.Count)
                     {
                         int r = rand.Next(0, List.Count());
                         if (!QsUsed.Contains(r))
@@ -138,7 +139,7 @@ namespace WebApplication1.Controllers
                             QsUsed.Add(r);
                         }
                     }
-                 
+
                     _context.SaveChanges();
                     int nextId = 0;
                     foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
