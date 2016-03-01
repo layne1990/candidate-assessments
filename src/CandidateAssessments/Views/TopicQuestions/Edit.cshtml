@@ -81,6 +81,10 @@
                     <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "A", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) True</label>
                     <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "B", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) False</label>
                     @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(x => x.ChoiceA)
+                    @Html.HiddenFor(x => x.ChoiceB)
+                    @Html.HiddenFor(x => x.ChoiceC)
+                    @Html.HiddenFor(x => x.ChoiceD)
                 </div>
             </div>
         }
@@ -140,6 +144,10 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.CorrectAnswer, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(x => x.ChoiceA)
+                    @Html.HiddenFor(x => x.ChoiceB)
+                    @Html.HiddenFor(x => x.ChoiceC)
+                    @Html.HiddenFor(x => x.ChoiceD)
                 </div>
             </div>
 
