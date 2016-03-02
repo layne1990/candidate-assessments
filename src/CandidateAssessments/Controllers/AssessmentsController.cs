@@ -145,6 +145,10 @@ namespace WebApplication1.Controllers
                 {
                     int i = 1;
                     var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId && x.IsActive == true).ToList();
+                    if (List.Count() < q.NumberOfQuestions)
+                    {
+                        q.NumberOfQuestions = List.Count();
+                    }
                     Random rand = new Random();
                     var QsUsed = new List<int>();
                     while (QsUsed.Count < NumQuestions && QsUsed.Count != List.Count)
