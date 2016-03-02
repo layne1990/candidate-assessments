@@ -427,13 +427,13 @@ div.question, div.topic, div.assessments{
   white-space: nowrap;
 }
 .active-hover{
-    background-color:#6aa8ff ;
+    background-color:rgba(0, 44, 106, 0.40);
     color:white; 
-    border-color:#6aa8ff ;
+    border-color:#99AAC3;
 }
 
 .active-RDA{
-    background-color:#002c6a;
+        background-color:#002C6A;
     color:white; 
     border-color:#002C6A;
 }
