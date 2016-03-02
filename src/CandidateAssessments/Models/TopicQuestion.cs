@@ -5,7 +5,7 @@ namespace CandidateAssessments.Models
 {
    
    
-    public enum QuestionTypes {[Display(Name = "Multiple choice")]MultipleChoice, [Display(Name = "True or False")]TrueFalse, [Display(Name = "Fill In the Blank")]FillInBlank }
+    public enum QuestionTypes {[Display(Name = "Multiple choice")]MultipleChoice, [Display(Name = "True or False")]TrueFalse, [Display(Name = "Fill in the Blank")]FillInBlank }
    
     public class TopicQuestion
     {
