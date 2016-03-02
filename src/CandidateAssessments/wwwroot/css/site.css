@@ -361,11 +361,13 @@ div.question, div.topic, div.assessments{
 }
 
 .topic-card:hover{
-    background-color: #ddffff
+    background-color: rgba(235,127,127, 0.4);
+    
 }
 
 .topic-card:hover .card-header{
-    background-color: #a0f5f5;
+    background-color:rgba(215, 0, 0, 0.40);
+    border-color:rgba(215, 0, 0, 0.40);
 }
 
 .quiz-radio, .input-label {
@@ -425,7 +427,70 @@ div.question, div.topic, div.assessments{
   white-space: nowrap;
 }
 .active-hover{
-    background-color:#337AB7;
+    background-color:#6aa8ff ;
     color:white; 
-    border-color:#337AB7;
+    border-color:#6aa8ff ;
+}
+
+.active-RDA{
+    background-color:#002c6a;
+    color:white; 
+    border-color:#002C6A;
+}
+.btn-info {
+  color: #ffffff;
+  background-color: #4084cc;
+  border-color: #3377bf;
+}
+.btn-info:focus,
+.btn-info.focus {
+  color: #ffffff;
+  background-color: #2e6bab;
+  border-color: #18395b;
+}
+.btn-info:hover {
+  color: #ffffff;
+  background-color: #2e6bab;
+  border-color: #26598f;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: #2e6bab;
+  border-color: #26598f;
+}
+.btn-info:active:hover,
+.btn-info.active:hover,
+.open > .dropdown-toggle.btn-info:hover,
+.btn-info:active:focus,
+.btn-info.active:focus,
+.open > .dropdown-toggle.btn-info:focus,
+.btn-info:active.focus,
+.btn-info.active.focus,
+.open > .dropdown-toggle.btn-info.focus {
+  color: #ffffff;
+  background-color: #26598f;
+  border-color: #18395b;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  background-image: none;
+}
+.btn-info.disabled:hover,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info:hover,
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
+fieldset[disabled] .btn-info:focus,
+.btn-info.disabled.focus,
+.btn-info[disabled].focus,
+fieldset[disabled] .btn-info.focus {
+  background-color: #4084cc;
+  border-color: #3377bf;
+}
+.btn-info .badge {
+  color: #4084cc;
+  background-color: #ffffff;
 }

@@ -60,8 +60,8 @@ $(function () {
         $options.click(function (e) {
             var $current = $(this);
 
-            $options.removeClass("active");
-            $current.addClass("active");
+            $options.removeClass("active-RDA");
+            $current.addClass("active-RDA");
             $("input", $current).prop("checked", true);
             $('#AnswerSubmit').removeClass('hidden');
 
