@@ -39,25 +39,25 @@
                 @if (qs.Where(x => x.TopicId == item.TopicId).Count() == 0)
                 {
 
-
+                    <a class="col-md-1 col-md-offset-3" href="/Topic/delete/@item.TopicId" style="bottom: -24px;"><span class="btn btn-danger glyphicon glyphicon-minus"></span></a>
                     <div class="row TopicItems">
-                        <div class="topic col-xs-4 col-xs-offset-4 ">
+                        <div class="topic col-xs-4  ">
+                            <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                                <div class="card topic-card" style="left: -5px;">
 
-                            <div class="card topic-card">
+                                    <h3 class="card-header row">
 
-                                <h3 class="card-header row">
-                                    <a class="pull-left col-md-1" href="/Topic/delete/@item.TopicId"><span class="btn btn-danger glyphicon glyphicon-remove"></span></a>
-                                    <span class="col-xs-6 col-xs-offset-2 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
-                                </h3>
-                                <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                                        <span class="col-xs-6 col-xs-offset-2 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                    </h3>
+
                                     <div class="card-block">
                                         <blockquote class="card-blockquote">
                                             <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
                                         </blockquote>
                                     </div>
-                                </a>
-                            </div>
 
+                                </div>
+                            </a>
                         </div>
                     </div>
                 }
