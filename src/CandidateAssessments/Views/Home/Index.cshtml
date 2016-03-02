@@ -2,8 +2,8 @@
 <br />
 <div class="row">
     @if (User.IsInRole("Admin") || User.IsInRole("Recruiter")) { 
-    <div class="col-md-6">
-        <div class="jumbotron">
+    <div class="col-md-12">
+        <div class="jumbotron text-center">
             <h2>Assessments</h2>
             <p>Create or review candidate assessments</p>
             <p><a class="btn btn-primary btn-lg" href="/Assessments" role="button">Let's Go!</a></p>
@@ -15,8 +15,8 @@
 
 @if (User.IsInRole("Admin") || User.IsInRole("QuestionManager"))
 {
-    <div class="col-md-6">
-        <div class="jumbotron">
+    <div class="col-md-12">
+        <div class="jumbotron text-center">
             <h2>Questions</h2>
             <p>Manage the topics and the pools of questions for each topic.</p>
             <p><a class="btn btn-primary btn-lg" href="/Topic" role="button">Let's Go!</a></p>

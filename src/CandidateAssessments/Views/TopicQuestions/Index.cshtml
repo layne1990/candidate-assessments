@@ -39,8 +39,9 @@
 
 <div class="card-deck-wrapper">
     <div class="card-deck row">
-
+        
         @{
+            var count = (ViewBag.page-1)*5;
             foreach (var item in Model)
             {
 
@@ -48,7 +49,7 @@
                     <div class="card">
                         @* Handles inactive cards headers being red *@
                         <h3 class='card-header @(item.IsActive ? "card-default" : "card-inactive")'>
-                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => item.TopicQuestionId)</span>
+                            <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@(++count)</span>
                         </h3>
                         @{
                             var percentA = (Math.Round((double)item.ASelected / (double)item.TimesAnswered, 2) * 100);
