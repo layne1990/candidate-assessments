@@ -1,15 +1,15 @@
 ﻿
 <br />
 <div class="row">
-    @if (User.IsInRole("Admin") || User.IsInRole("Recruiter")) { 
+  
     <div class="col-md-12">
         <div class="jumbotron text-center">
             <h1>RDA Candidate Assessment</h1>
-            <p>This is a tool for assessing potential hire's knowledge of languages and technologies.</p>
+            <p>This is a tool for assessing a potential candidate's knowledge of computer languages and technologies.</p>
 
             @if (User.IsInRole("Admin") || User.IsInRole("Recruiter")) {
                 <h2>Assessments</h2>
-                <p>Create or review candidate assessments</p>
+                <p>Create or review candidate assessments.</p>
                 <p><a class="btn btn-primary btn-lg" href="/Assessments" role="button">Let's Go!</a></p>
             }
 
@@ -22,5 +22,5 @@
 
         </div>
     </div>
-    }
+  
 </div>
