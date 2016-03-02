@@ -129,7 +129,11 @@
         }
     </div>
 </div>
+@if (ViewBag.search != null)
+{
+    <a class="btn btn-default" asp-action="index">All Assessments</a>
 
+}
 @{var pages = Math.Ceiling(ViewBag.count / 5.0);}
 @if (pages > 1)
 {
