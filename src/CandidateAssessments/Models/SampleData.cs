@@ -35,10 +35,10 @@ namespace CandidateAssessments.Models
                 // Topic Questions
                 foreach (Topic t in context.Topics)
                 {
-    
-                    for(int i = 1; i<4; i++)
+
+                    for (int i = 1; i < 4; i++)
                     {
-                        
+
                         context.TopicQuestions.Add(
                         new TopicQuestion()
                         {
@@ -53,7 +53,7 @@ namespace CandidateAssessments.Models
                             Topic = t
                         });
                     }
-               
+
                     for (int i = 1; i < 4; i++)
                     {
 
@@ -69,10 +69,10 @@ namespace CandidateAssessments.Models
                             QuestionType = QuestionTypes.TrueFalse,
                             IsActive = true,
                             Topic = t,
-                          
+
                         });
                     }
-                 
+
                     for (int i = 1; i < 4; i++)
                     {
 
@@ -105,12 +105,12 @@ namespace CandidateAssessments.Models
                 context.Assessments.AddRange(toAdd);*/
 
                 context.Assessments.AddRange(
-                    new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7) },
-                    new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7) },
+                    new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
+                    new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
                     // Expired assessment
-                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now }
+                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now, User = "user1@laynerdacorp232.onmicrosoft.com" }
                 );
-                
+
                 context.SaveChanges();
 
                 // Quizes                
@@ -124,9 +124,9 @@ namespace CandidateAssessments.Models
                             Assessment = a,
                             Topic = t,
                             NumberOfQuestions = 9,
-                            NumberCorrect =  0,
+                            NumberCorrect = 0,
                             TimeLimit = 10,
-                            TimeStarted =  null,
+                            TimeStarted = null,
                             TimeCompleted = null,
                         });
                     }
@@ -141,25 +141,25 @@ namespace CandidateAssessments.Models
                     foreach (TopicQuestion tq in context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
                     {
 
-                       
-                            // Unanswered questions
 
-                            context.QuizQuestions.Add(
-                            new QuizQuestion()
-                            {
-                                Quiz = q,
-                                QuestionNumber = i++,
-                                NextQuestionId = 0,
-                                Question = tq,
-                            });
-                        
-                        
+                        // Unanswered questions
+
+                        context.QuizQuestions.Add(
+                        new QuizQuestion()
+                        {
+                            Quiz = q,
+                            QuestionNumber = i++,
+                            NextQuestionId = 0,
+                            Question = tq,
+                        });
+
+
                     }
                     context.SaveChanges();
 
                     // Fill in the next question id
                     int nextId = 0;
-                    foreach(QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
+                    foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
                     {
                         qq.NextQuestionId = nextId;
                         nextId = qq.QuizQuestionId;
@@ -167,7 +167,7 @@ namespace CandidateAssessments.Models
                     context.SaveChanges();
 
                 }
-                
+
 
 
             }

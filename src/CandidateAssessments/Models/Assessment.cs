@@ -37,5 +37,6 @@ namespace CandidateAssessments.Models
 
         [Display(Name = "Quizes")]
         public List<Quiz> Quizes { get; set; }
+        public String User { get; set; }
     }
 }

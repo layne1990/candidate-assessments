@@ -20,17 +20,26 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Assessments
-        public IActionResult Index(String searchParam, int? page)
+        public IActionResult Index(String searchParam, int? page, Boolean? users)
         {
             if (searchParam != null && page == 0)
             {
                 page = 1;
             }
-
-            var list = _context.Assessments.ToList();
+            List<Assessment> list;
+            if (users==true)
+            {
+                list = _context.Assessments.Where(x => x.User == User.Identity.Name).ToList();
+            }
+            else
+            {
+                users = false;
+                list = _context.Assessments.ToList();
+            }
+        
             var topics = _context.Topics.ToList();
             var names = new List<Assessment>(list);
-          
+
             if (searchParam != null)
             {
                 list = list.Where(x => x.CandidateName.ToLower().Contains(searchParam.ToLower())).ToList();
@@ -54,6 +63,7 @@ namespace WebApplication1.Controllers
                     output.Add(list[i]);
                 }
             }
+            ViewBag.users = users;
             ViewBag.count = list.Count();
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
@@ -96,7 +106,7 @@ namespace WebApplication1.Controllers
         // GET: Assessments/Create
         public IActionResult Create()
         {
-            ViewBag.Topics = _context.Topics.Where(x => x.Active==true && x.Questions.Where(y => y.IsActive == true).Count() != 0);
+            ViewBag.Topics = _context.Topics.Where(x => x.Active == true && x.Questions.Where(y => y.IsActive == true).Count() != 0);
 
             return View();
         }
@@ -108,6 +118,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (TimeLimit <= 0)
                 {
                     TimeLimit = 10;
@@ -124,7 +135,7 @@ namespace WebApplication1.Controllers
                 assessment.AccessCode = Guid.NewGuid().ToString();
                 assessment.CreatedDate = DateTime.Now;
                 assessment.ExpirationDate = DateTime.Now.AddDays(NumDays);
-
+                assessment.User = User.Identity.Name;
                 foreach (string TopicIdString in Topics)
                 {
                     int TopicIdInt = int.Parse(TopicIdString);
