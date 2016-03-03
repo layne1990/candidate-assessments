@@ -43,7 +43,11 @@
         <div class="question col-xs-12">
             <div class="card">
                 <h3 class="card-header">
-                    <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span><span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
+                    <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
+                    
+                    <span class="label label-warning">Unanswered</span>
+                    
+                    <span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
                 </h3>
                 @{
                     var percentA = (Math.Round((double)item.ASelected / (double)item.TimesAnswered, 2) * 100);
