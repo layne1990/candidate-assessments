@@ -8,12 +8,12 @@
 <script src="~/js/site.min.js"></script>
 
 <h2>Edit</h2>
+<h3 class="text-danger">This is for use of typographical errors, or to clarify the question only. Please do not change the nature of the question as it will alter statistics.</h3>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>TopicQuestion</h4>
         <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
