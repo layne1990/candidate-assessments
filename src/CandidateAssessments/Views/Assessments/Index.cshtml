@@ -86,12 +86,6 @@
                                                                         <span class="col-xs-7 col-lg-6 text-right quiz-col">Time Taken:</span>
                                                                         <span class="col-xs-5 col-lg-6 text-center quiz-col">@TimeTaken</span>
                                                                     </div>
-
-                                                                    <div class="full-result text-center">
-                                                                        <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
-                                                                            Full Results <span class="glyphicon glyphicon-edit"></span>
-                                                                        </a>
-                                                                    </div>
                                                                 }
                                                                 else
                                                                 {
@@ -101,6 +95,11 @@
                                                                         </span>
                                                                     </div>
                                                                 }
+                                                                <div class="full-result text-center">
+                                                                    <a asp-action="Quiz" class="btn btn-default" asp-route-id="@quiz.QuizId">
+                                                                        Full Results <span class="glyphicon glyphicon-edit"></span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
