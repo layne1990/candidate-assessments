@@ -35,8 +35,10 @@ namespace CandidateAssessments.Models
                 // Topic Questions
                 foreach (Topic t in context.Topics)
                 {
+    
                     for(int i = 1; i<4; i++)
                     {
+                        
                         context.TopicQuestions.Add(
                         new TopicQuestion()
                         {
@@ -48,12 +50,47 @@ namespace CandidateAssessments.Models
                             CorrectAnswer = "C",
                             QuestionType = QuestionTypes.MultipleChoice,
                             IsActive = true,
-                            Topic = t,
-                            CSelected = 3,
-                            TimesAnswered = 3
+                            Topic = t
                         });
                     }
-                    
+               
+                    for (int i = 1; i < 4; i++)
+                    {
+
+                        context.TopicQuestions.Add(
+                        new TopicQuestion()
+                        {
+                            QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
+                            ChoiceA = "True",
+                            ChoiceB = "False",
+                            ChoiceC = "Placeholder",
+                            ChoiceD = "Placeholder",
+                            CorrectAnswer = "A",
+                            QuestionType = QuestionTypes.TrueFalse,
+                            IsActive = true,
+                            Topic = t,
+                          
+                        });
+                    }
+                 
+                    for (int i = 1; i < 4; i++)
+                    {
+
+                        context.TopicQuestions.Add(
+                        new TopicQuestion()
+                        {
+                            QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
+                            ChoiceA = "Placeholder",
+                            ChoiceB = "Placeholder",
+                            ChoiceC = "Placeholder",
+                            ChoiceD = "Placeholder",
+                            CorrectAnswer = "Answer",
+                            QuestionType = QuestionTypes.FillInBlank,
+                            IsActive = true,
+                            Topic = t
+                        });
+                    }
+
                 }
                 context.SaveChanges();
 
@@ -68,8 +105,8 @@ namespace CandidateAssessments.Models
                 context.Assessments.AddRange(toAdd);*/
 
                 context.Assessments.AddRange(
-                    new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
-                    new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(5) },
+                    new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7) },
+                    new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7) },
                     // Expired assessment
                     new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now }
                 );
@@ -86,11 +123,11 @@ namespace CandidateAssessments.Models
                         {
                             Assessment = a,
                             Topic = t,
-                            NumberOfQuestions = 20,
-                            NumberCorrect = t.TopicId % 2 == 0 ? 15 : 0,
+                            NumberOfQuestions = 9,
+                            NumberCorrect =  0,
                             TimeLimit = 10,
-                            TimeStarted = t.TopicId % 2 == 0 ? (DateTime?)DateTime.Now.AddDays(-1) : null,
-                            TimeCompleted = t.TopicId % 2 == 0 ? (DateTime?)DateTime.Now.AddDays(-1).AddMinutes(8) : null,
+                            TimeStarted =  null,
+                            TimeCompleted = null,
                         });
                     }
 
@@ -104,25 +141,7 @@ namespace CandidateAssessments.Models
                     foreach (TopicQuestion tq in context.TopicQuestions.Where(x => x.TopicId == q.TopicId))
                     {
 
-                        if(tq.TopicId % 2 == 0)
-                        {
-
-                            // Answered questions
-                            context.QuizQuestions.Add(
-                            new QuizQuestion()
-                            {
-                                Answer = "C",
-                                TimeAnswered = DateTime.Now,
-                                TimePresented = DateTime.Now.AddMinutes(-1),
-                                Quiz = q,
-                                QuestionNumber = i++,
-                                NextQuestionId = 0,
-                                Question = tq,
-                            });
-
-                        }
-                        else
-                        {
+                       
                             // Unanswered questions
 
                             context.QuizQuestions.Add(
@@ -133,7 +152,7 @@ namespace CandidateAssessments.Models
                                 NextQuestionId = 0,
                                 Question = tq,
                             });
-                        }
+                        
                         
                     }
                     context.SaveChanges();
