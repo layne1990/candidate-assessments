@@ -22,18 +22,28 @@ namespace CandidateAssessments.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index(String searchParam, int? page)
+        public IActionResult Index(String searchParam, int? page, Boolean? inactive)
         {
             if (searchParam != null && page == 0)
             {
                 page = 1;
             }
+            List<Topic> list;
+            if (inactive !=null)
+            {
+                list = _db.Topics.Where(x => x.Active == false).ToList();
+                ViewBag.Questions = _db.TopicQuestions.Where(x => x.Topic.Active == false).ToList();
 
-            var list = _db.Topics.ToList();
+            }
+            else {
+                inactive = false;
+                 list = _db.Topics.Where(x => x.Active == true).ToList();
+                ViewBag.Questions = _db.TopicQuestions.Where(x => x.Topic.Active == true).ToList();
+            }
             var names = new List<Topic>(list);
             if (searchParam != null)
                 list=list.Where(x => x.Name.ToLower().Contains(searchParam.ToLower())).ToList();
-            ViewBag.Questions = _db.TopicQuestions.ToList();
+       
             ViewBag.names = names;
 
 
@@ -55,6 +65,7 @@ namespace CandidateAssessments.Controllers
             ViewBag.count = list.Count();
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
+            ViewBag.inactive = inactive;
             return View(output);
         }
 
@@ -73,6 +84,7 @@ namespace CandidateAssessments.Controllers
                     ViewBag.message = "A Topic With this name already exsits";
                     return View(topic);
                 }
+                topic.Active = true;
                     _db.Topics.Add(topic);
                     topic.Questions = new List<TopicQuestion>();
                     _db.SaveChanges();
@@ -114,6 +126,33 @@ namespace CandidateAssessments.Controllers
             Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
 
             _db.Topics.Remove(topic);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+       
+        // POST: Topics/Inactive/5
+        [HttpPost, ActionName("Inactive")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Inactive(int id)
+        {
+
+            Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
+            topic.Active = false;
+            _db.Update(topic);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // POST: Topics/Inactive/5
+        [HttpPost, ActionName("Active")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Active(int id)
+        {
+
+            Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
+            topic.Active = true;
+            _db.Update(topic);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

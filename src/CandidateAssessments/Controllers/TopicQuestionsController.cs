@@ -30,11 +30,12 @@ namespace WebApplication1.Controllers
             List<TopicQuestion> names;
             if (TopicId != null)
             {
-                assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId).Include(t => t.Topic).ToList();
+                assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId ).Include(t => t.Topic).ToList();
+
 
             }
             else {
-                assessmentContext = _context.TopicQuestions.Include(t => t.Topic).ToList();
+                assessmentContext = _context.TopicQuestions.Where(x=>x.Topic.Active== true).Include(t => t.Topic).ToList();
             }
             names = new List<TopicQuestion>(assessmentContext);
             if (searchParam != null)

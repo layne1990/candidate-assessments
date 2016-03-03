@@ -25,9 +25,9 @@ namespace CandidateAssessments.Models
 
                 // Topics
                 context.Topics.AddRange(
-                    new Topic { Name = "C#" },
-                    new Topic { Name = "SQL" },
-                    new Topic { Name = "JavaScript" }
+                    new Topic { Name = "C#", Active = true },
+                    new Topic { Name = "SQL", Active = true },
+                    new Topic { Name = "JavaScript", Active = true }
                 );
 
                 context.SaveChanges();

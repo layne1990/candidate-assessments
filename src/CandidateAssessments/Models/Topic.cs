@@ -12,7 +12,7 @@ namespace CandidateAssessments.Models
         [Required]
         [MaxLength(128)]
         public string Name { get; set; }
-
+        public Boolean Active { get; set; }
         public List<TopicQuestion> Questions { get; set; }
 
     }

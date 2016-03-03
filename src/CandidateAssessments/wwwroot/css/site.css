@@ -437,3 +437,13 @@ div.question, div.topic, div.assessments{
     color:white; 
     border-color:#002C6A;
 }
+#x{
+    visibility: hidden;
+   font-size: 20px;
+}
+#deactivate{
+    padding-top:2px;
+    padding-bottom:1px;
+    padding-left:5px;
+    padding-right:5px;
+}

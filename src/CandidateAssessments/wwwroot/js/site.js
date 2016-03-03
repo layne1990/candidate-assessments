@@ -1,9 +1,18 @@
 ﻿
 
 
-
 $(function () {
 
+    $('#deactivate').click(
+  function () {
+      if ($('#x').css('visibility') == 'hidden') {
+          $('#x').css('visibility', 'visible');
+          $('.deacBtn').show();
+      } else {
+          $('#x').css('visibility', 'hidden');
+          $('.deacBtn').hide();
+      }
+  });
 
 
     $("#QuestionType").change(function () {
@@ -51,11 +60,11 @@ $(function () {
         var $options = $("label.list-group-item");
         $options.hover(
                     function () {
-                         $(this).addClass('active-hover');
+                        $(this).addClass('active-hover');
                     },
                     function () {
-                         $(this).removeClass('active-hover');
-                     }
+                        $(this).removeClass('active-hover');
+                    }
                    );
         $options.click(function (e) {
             var $current = $(this);
