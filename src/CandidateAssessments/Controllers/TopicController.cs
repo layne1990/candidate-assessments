@@ -154,7 +154,7 @@ namespace CandidateAssessments.Controllers
             topic.Active = true;
             _db.Update(topic);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { inactive = true });
         }
     }
 }
