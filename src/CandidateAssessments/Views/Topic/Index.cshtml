@@ -48,15 +48,7 @@
     <div class="card-deck">
         @{
 
-            @if (!ViewBag.inactive)
-            {
-                <div class="col-md-offset-1 row">
-                    <div class="btn btn-default" id="deactivate"><span class="glyphicon glyphicon-remove" style="" id="x"></span></div>
-                    <label>
-                        &nbsp;Deactive Topics
-                    </label>
-                </div>
-            }
+
             foreach (var item in Model)
             {
                 @if (qs.Where(x => x.TopicId == item.TopicId).Count() == 0)
@@ -86,159 +78,182 @@
                 }
                 else
                 {
+                    @if (!ViewBag.inactive)
+                    {
+                        <form method="post" action="/Topic/inactive/@item.TopicId">
+                            @Html.AntiForgeryToken()
 
 
-
-                    <div class="row TopicItems">
-                        <div class="topic col-xs-4 col-xs-offset-4 ">
-                            <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
-                                <div class="card topic-card">
-                                    <h3 class="card-header row">
-                                        <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
-                                    </h3>
-                                    <div class="card-block">
-                                        <blockquote class="card-blockquote">
-                                            <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        @if (!ViewBag.inactive)
-                        {
-                            <form method="post" action="/Topic/inactive/@item.TopicId">
-                                @Html.AntiForgeryToken()
-                                <input class="btn btn-default btn-warning deacBtn" type="submit" style="display:none;" value="Deactivate" />
-                                
-                            </form>
-                        }
-                        else
-                        {
-                            <form method="post" action="/Topic/active/@item.TopicId">
-                                @Html.AntiForgeryToken()
-                                <input class="btn btn-default btn-success" type="submit"  value="Activate" />
-
-                            </form>
-                        }
-                        </div>
-
-
-
-                        }
-                        }
-                        @if (!ViewBag.inactive)
-                        {
-                            <div class="row">
+                            <div class="row TopicItems">
                                 <div class="topic col-xs-4 col-xs-offset-4 ">
-                                    <a class="TopicLink" href="/TopicQuestions/">
+                                    <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                                         <div class="card topic-card">
                                             <h3 class="card-header row">
-                                                <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">All Questions</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                                <label for="mySubmit" class="btn btn-warning pull-left col-md-2"><span class="glyphicon glyphicon-ban-circle"></span></label>
+                                                <input id="mySubmit" type="submit" class="hidden" />
+                                                <span class="text-center col-md-6 col-md-offset-1">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                             </h3>
+
                                             <div class="card-block">
                                                 <blockquote class="card-blockquote">
-                                                    <p class="card-text text-center">@qs.Count() Questions</p>
+                                                    <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
                                                 </blockquote>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
+
+
                             </div>
-                        }
-                        }
+
+                        </form>
+                    }
+                    else
+                    {
+
+                        <form method="post" action="/Topic/active/@item.TopicId">
+                            @Html.AntiForgeryToken()
+
+
+                            <div class="row TopicItems">
+                                <div class="topic col-xs-4 col-xs-offset-4 ">
+                                    <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
+                                        <div class="card topic-card">
+                                            <h3 class="card-header row">
+                                                <label for="mySubmit" class="btn btn-success pull-left col-md-2"><span class="glyphicon glyphicon-ok-circle"></span></label>
+                                                <input id="mySubmit" type="submit" class="hidden" />
+                                                <span class="text-center col-md-6 col-md-offset-1">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                            </h3>
+
+                                            <div class="card-block">
+                                                <blockquote class="card-blockquote">
+                                                    <p class="card-text text-center">@qs.Where(x => x.TopicId == item.TopicId).Count() Questions</p>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+
+                            </div>
+
+                        </form>
+                    }
+                }
+            }
+            @if (!ViewBag.inactive)
+            {
+                <div class="row">
+                    <div class="topic col-xs-4 col-xs-offset-4 ">
+                        <a class="TopicLink" href="/TopicQuestions/">
+                            <div class="card topic-card">
+                                <h3 class="card-header row">
+                                    <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">All Questions</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                </h3>
+                                <div class="card-block">
+                                    <blockquote class="card-blockquote">
+                                        <p class="card-text text-center">@qs.Count() Questions</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                @{var pages = Math.Ceiling(ViewBag.count / 5.0);}
-                    @if (pages > 1)
-                    {
-                        <ul class="pagination pagination-lg">
+            }
+        }
+    </div>
+</div>
+@{var pages = Math.Ceiling(ViewBag.count / 5.0);}
+@if (pages > 1)
+{
+    <ul class="pagination pagination-lg">
 
-                            <li><a href="/Topic/?page=1&searchParam=@ViewBag.search">&laquo;</a></li>
-                            @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
-                            <li><a href="/Topic/?page=@back&searchParam=@ViewBag.search">&lsaquo;</a></li>
-                            @{
-                                var DisplayDots = true;
-                                var start = 1;
-                                var end = pages;
-                                if (ViewBag.page < 4)
-                                {
-                                    if (pages > 5)
-                                    {
-                                        end = 5;
-                                    }
-                                    else
-                                    {
-                                        DisplayDots = false;
+        <li><a href="/Topic/?page=1&searchParam=@ViewBag.search">&laquo;</a></li>
+        @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
+        <li><a href="/Topic/?page=@back&searchParam=@ViewBag.search">&lsaquo;</a></li>
+        @{
+            var DisplayDots = true;
+            var start = 1;
+            var end = pages;
+            if (ViewBag.page < 4)
+            {
+                if (pages > 5)
+                {
+                    end = 5;
+                }
+                else
+                {
+                    DisplayDots = false;
 
-                                    }
+                }
 
-                                }
-                                else
-                                {
-                                    if (ViewBag.Page > (pages - 3))
-                                    {
-                                        start = (int)pages - 4;
-                                        DisplayDots = false;
+            }
+            else
+            {
+                if (ViewBag.Page > (pages - 3))
+                {
+                    start = (int)pages - 4;
+                    DisplayDots = false;
 
-                                    }
-                                    else {
-                                        start = ViewBag.page - 2;
-                                        end = ViewBag.page + 2;
-                                    }
-                                }
-
-
-                            }
-                            @for (int i = start; i <= end; i++)
-                            {
-                                @if (ViewBag.page == i)
-                                {
-                                    <li class="active"><span>@i</span></li>
-
-                                }
-                                else {
-                                    <li><a href="/Topic/?page=@i&searchParam=@ViewBag.search">@i</a></li>
-                                }
-
-                            }
-                            @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
-                            @if (DisplayDots)
-                            {
-                                var skip = next + 4;
-                                if (skip > pages)
-                                {
-                                    skip = pages;
-
-                                }
-
-                                <li><a href="/Topic/?page=@skip &searchParam=@ViewBag.search">...</a></li>
-                            }
-                            <li><a href="/Topic/?page=@next&searchParam=@ViewBag.search">&rsaquo;</a></li>
-                            <li><a id="rightArrow" href="/Topic/?page=@pages&searchParam=@ViewBag.search">&raquo;</a></li>
-                        </ul>
-                                }
+                }
+                else {
+                    start = ViewBag.page - 2;
+                    end = ViewBag.page + 2;
+                }
+            }
 
 
-                                <script>
-                                    $(function () {
-                                        var names = [];
-                                        @foreach(var item in ViewBag.names)
+        }
+        @for (int i = start; i <= end; i++)
+        {
+            @if (ViewBag.page == i)
+            {
+                <li class="active"><span>@i</span></li>
+
+            }
+            else {
+                <li><a href="/Topic/?page=@i&searchParam=@ViewBag.search">@i</a></li>
+            }
+
+        }
+        @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
+        @if (DisplayDots)
+        {
+            var skip = next + 4;
+            if (skip > pages)
+            {
+                skip = pages;
+
+            }
+
+            <li><a href="/Topic/?page=@skip &searchParam=@ViewBag.search">...</a></li>
+        }
+        <li><a href="/Topic/?page=@next&searchParam=@ViewBag.search">&rsaquo;</a></li>
+        <li><a id="rightArrow" href="/Topic/?page=@pages&searchParam=@ViewBag.search">&raquo;</a></li>
+    </ul>
+            }
+
+
+<script>
+    $(function () {
+        var names = [];
+        @foreach(var item in ViewBag.names)
         {
         <text>names.push('@item.Name');</text>
 
     }
 
-                                        $("#TopicSearch").autocomplete({
-                                            source: names
-                                        });
+        $("#TopicSearch").autocomplete({
+            source: names
+        });
 
 
 
 
 
 
-                                    }
+    }
 
 
-                                    )
-                                </script>
+    )
+</script>
