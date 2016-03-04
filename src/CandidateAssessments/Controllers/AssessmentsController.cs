@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
             ViewBag.count = list.Count();
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
-            output.Reverse();
+           
             return View(output);
         }
 
