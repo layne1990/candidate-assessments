@@ -67,8 +67,8 @@
                                 <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                                     <div class="card topic-card">
                                         <h3 class="card-header row">
-                                            <label for="thisSubmit" class="btn btn-danger pull-left col-md-2"><span class="glyphicon glyphicon-remove"></span></label>
-                                            <input id="thisSubmit" type="submit" class="hidden" />
+                                            <label for="thisSubmit @item.TopicId" class="btn btn-danger pull-left col-md-2"><span class="glyphicon glyphicon-remove"></span></label>
+                                            <input id="thisSubmit @item.TopicId" type="submit" class="hidden" />
                                             <span class="text-center col-md-6 col-md-offset-1">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                         </h3>
 
@@ -99,8 +99,8 @@
                                     <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                                         <div class="card topic-card">
                                             <h3 class="card-header row">
-                                                <label for="mySubmit" class="btn btn-warning pull-left col-md-2"><span class="glyphicon glyphicon-ban-circle"></span></label>
-                                                <input id="mySubmit" type="submit" class="hidden" />
+                                                <label for="mySubmit @item.TopicId" class="btn btn-warning pull-left col-md-2"><span class="glyphicon glyphicon-ban-circle"></span></label>
+                                                <input id="mySubmit @item.TopicId" type="submit" class="hidden" />
                                                 <span class="text-center col-md-6 col-md-offset-1">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                             </h3>
 
@@ -130,8 +130,8 @@
                                     <a class="TopicLink" href="/TopicQuestions/?TopicId=@item.TopicId">
                                         <div class="card topic-card">
                                             <h3 class="card-header row">
-                                                <label for="mySubmit" class="btn btn-success pull-left col-md-2"><span class="glyphicon glyphicon-ok"></span></label>
-                                                <input id="mySubmit" type="submit" class="hidden" />
+                                                <label for="mySubmit @item.TopicId" class="btn btn-success pull-left col-md-2"><span class="glyphicon glyphicon-ok"></span></label>
+                                                <input id="mySubmit @item.TopicId" type="submit" class="hidden" />
                                                 <span class="text-center col-md-6 col-md-offset-1">@Html.DisplayFor(modelItem => item.Name)</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
                                             </h3>
 
