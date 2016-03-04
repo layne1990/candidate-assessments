@@ -167,6 +167,10 @@ namespace CandidateAssessments.Controllers
                 quizQuestion.TimeAnswered = DateTime.Now;
                 quizQuestion.Question.TimesAnswered++;
 
+                // update the total time taken
+                var TimeTaken = quizQuestion.TimeAnswered.Value.Subtract(quizQuestion.TimePresented.Value);
+                quizQuestion.Question.TotalTime = quizQuestion.Question.TotalTime.Value.Add(TimeTaken);
+
                 if (string.Equals(quizQuestion.Answer, quizQuestion.Question.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
                 {
                     quiz.NumberCorrect++;

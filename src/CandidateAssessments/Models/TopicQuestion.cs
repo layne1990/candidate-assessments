@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace CandidateAssessments.Models
@@ -37,6 +38,7 @@ namespace CandidateAssessments.Models
         [Required]
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
+        public TimeSpan? TotalTime { get; set; }
         public int TimesAnswered { get; set; }
         public int ASelected { get; set; }
         public int BSelected { get; set; }
