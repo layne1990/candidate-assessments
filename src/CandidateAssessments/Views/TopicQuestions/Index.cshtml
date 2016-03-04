@@ -41,18 +41,20 @@
     <div class="card-deck row">
         
         @{
-            var count = (ViewBag.page-1)*5;
-            foreach (var item in Model)
-            {
-
-                var AverageTime = System.TimeSpan.FromTicks(item.TotalTime.Value.Ticks / item.TimesAnswered).ToString(@"mm\:ss");
-
+                var count = (ViewBag.page-1)*5;
+                foreach (var item in Model)
+                {
+                    var AverageTime="00:00";
+                    if (item.TimesAnswered > 0)
+                    {
+                         AverageTime = System.TimeSpan.FromTicks(item.TotalTime.Value.Ticks / item.TimesAnswered).ToString(@"mm\:ss");
+                    }
                 <div class="question col-xs-12 page-item">
                     <div class="card">
                         @* Handles inactive cards headers being red *@
                         <h3 class='card-header @(item.IsActive ? "card-default" : "card-inactive")'>
                             <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
-                            <span>Avg Time to Answer: @AverageTime</span>
+                       
                             <span class="pull-right">#@(++count)</span>
                         </h3>
                         @{
@@ -112,9 +114,11 @@
                                 </ul>
                             </blockquote>
                         </div>
-                        <div class="card-footer text-muted">
+                        <div class="card-footer">
                             <div class="row">
+                              
                                 <div class="col-xs-12">
+                                    <span class="pull-left" style="margin-top:5px">Average Time to Answer: @AverageTime</span>
                                     <span class="pull-right">
                                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.TopicQuestionId">Edit</a>&nbsp;
                                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.TopicQuestionId">Delete</a>
