@@ -168,7 +168,14 @@ namespace CandidateAssessments.Controllers
                 quizQuestion.Question.TimesAnswered++;
 
                 if (string.Equals(quizQuestion.Answer, quizQuestion.Question.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
+                {
                     quiz.NumberCorrect++;
+                    if (quizQuestion.Question.QuestionType == QuestionTypes.FillInBlank)
+                    {
+                        quizQuestion.Question.ASelected++;
+                    }
+                }
+                  
 
                 switch (quizQuestion.Answer)
                 {
