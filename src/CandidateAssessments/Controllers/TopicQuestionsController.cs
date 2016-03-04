@@ -103,6 +103,8 @@ namespace WebApplication1.Controllers
             {
                 var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
                 topicQuestion.Topic = top;
+
+                topicQuestion.TotalTime = new System.TimeSpan(0, 0, 0);
                 //not sure when topic.Questions gets initiated
                 if (top.Questions == null)
                     top.Questions = new List<TopicQuestion>();
