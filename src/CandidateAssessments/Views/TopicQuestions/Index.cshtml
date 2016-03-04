@@ -100,8 +100,8 @@
                                     }
                                     else
                                     {
-                                        <li class='container-fluid list-group-item'>
-                                            <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
+                                        <li class='container-fluid list-group-item list-group-item-success'>
+                                            <span class="question_label"></span><span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
                                         </li>
 
                                     }

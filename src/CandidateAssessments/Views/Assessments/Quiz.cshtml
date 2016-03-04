@@ -90,11 +90,11 @@
                             else
                             {
                             <li class='container-fluid list-group-item list-group-item-success'>
-                                <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
+                                <span class="question_label"></span><span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => item.CorrectAnswer)</span>
                             </li>
                             @if (!string.IsNullOrEmpty(question.Answer))
                             {
-                            <li class='container-fluid list-group-item @(string.Equals(question.Answer, item.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase) ? "list-group-item-success" : "list-group-item-danger"))'>
+                            <li class='container-fluid list-group-item @(string.Equals(question.Answer, item.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase) ? "list-group-item-success" : "list-group-item-danger")'>
                                 <span class="question_label"></span> <span class="col-md-9 question_text">@Html.DisplayFor(modelItem => question.Answer)</span>
                             </li>
                             }
