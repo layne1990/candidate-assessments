@@ -102,12 +102,19 @@ namespace CandidateAssessments.Controllers
 
             // Find the first unanswered question and send it to the view
             QuizQuestion question = _db.QuizQuestions.Where(x => x.QuizId == id && x.Answer==null).Include(x => x.Question).ThenInclude(y => y.Topic).OrderBy(x => x.QuestionNumber).FirstOrDefault();
-            
+
             // If no next question, the redirect back to list of quizes
             if (question == null)
+            {
                 return RedirectToAction("assessment");
+            }
+            else
+            {
+                question.TimePresented = DateTime.Now;
+                _db.SaveChanges();
+            }
 
-           var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
+            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
             ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
             ViewBag.TimeLimit = quiz.TimeLimit;
             ViewBag.QTopic = _db.Topics.Where(x => x.TopicId == quiz.TopicId).Include(x => x.Name);

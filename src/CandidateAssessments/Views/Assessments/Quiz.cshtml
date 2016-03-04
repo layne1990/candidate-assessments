@@ -49,6 +49,13 @@
                     {
                     <span class="label label-warning">Unanswered</span>
                     }
+                    else
+                    {
+                        var Presented = question.TimePresented.Value;
+                        var Answered  = question.TimeAnswered.Value;
+                        var TimeTaken = Answered.Subtract(Presented);
+                        <span>Time Taken: @TimeTaken.ToString(@"hh\:mm\:ss")</span>
+                    }
                     <span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
                 </h3>
                 @{
