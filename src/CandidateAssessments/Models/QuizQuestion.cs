@@ -11,7 +11,7 @@ namespace CandidateAssessments.Models
 
         public String Answer { get; set; }
 
-        public DateTime TimePresented { get; set; }
+        public DateTime? TimePresented { get; set; }
         public DateTime? TimeAnswered { get; set; }
 
         public int QuizId { get; set; }
