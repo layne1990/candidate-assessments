@@ -134,12 +134,15 @@ namespace CandidateAssessments.Controllers
         // POST: Topics/Inactive/5
         [HttpPost, ActionName("Inactive")]
         [ValidateAntiForgeryToken]
-        public IActionResult Inactive(int id)
+        public IActionResult Inactive(int[] ids)
         {
-
-            Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
-            topic.Active = false;
-            _db.Update(topic);
+            foreach(var i in ids)
+            {
+                Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == i);
+                topic.Active = false;
+                _db.Update(topic);
+            }
+           
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
