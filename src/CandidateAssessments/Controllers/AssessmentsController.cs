@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
             ViewBag.count = list.Count();
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
-           
+            ViewBag.qq = _context.QuizQuestions.ToList();
             return View(output);
         }
 
