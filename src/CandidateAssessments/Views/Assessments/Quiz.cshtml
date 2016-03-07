@@ -38,13 +38,13 @@
     <div class="card-deck row">
         @foreach (var question in Model.Questions)
         {
-        var item = question.Question;
+            var item = question.Question;
 
         <div class="question col-xs-12">
             <div class="card">
                 <h3 class="card-header">
                     <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
-
+                    @{ TimeSpan TimeTaken=new TimeSpan();}
                     @if (question.TimeAnswered == null)
                     {
                     <span class="label label-warning">Unanswered</span>
@@ -53,8 +53,8 @@
                     {
                         var Presented = question.TimePresented.Value;
                         var Answered  = question.TimeAnswered.Value;
-                        var TimeTaken = Answered.Subtract(Presented);
-                        <span class="col-md-offset-1">Time Taken: @TimeTaken.ToString(@"mm\:ss")</span>
+                         TimeTaken = Answered.Subtract(Presented);
+                       
                     }
                     <span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
                 </h3>
@@ -109,6 +109,15 @@
                         </ul>
 
                     </blockquote>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <h4><span class="pull-left" style="margin-bottom:5px"><span class="glyphicon glyphicon-time"></span> @TimeTaken.ToString(@"mm\:ss")</span></h4>
+                       
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
