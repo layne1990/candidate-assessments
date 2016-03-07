@@ -3,17 +3,7 @@
 
 $(function () {
 
-    $('#deactivate').click(
-  function () {
-      if ($('#x').css('visibility') == 'hidden') {
-          $('#x').css('visibility', 'visible');
-          $('.deacBtn').show();
-      } else {
-          $('#x').css('visibility', 'hidden');
-          $('.deacBtn').hide();
-      }
-  });
-
+  
 
     $("#QuestionType").change(function () {
         var select = $("#QuestionType option:selected").val();
@@ -94,7 +84,11 @@ $(function () {
         });
     });
 
-
+    $(".hoverBtn").hover(function () {
+        $(".card").toggleClass("topic-card");
+    }, function () {
+        $(".card").toggleClass("topic-card");
+    })
 });
 $.widget("ui.autocomplete", $.ui.autocomplete, {
     _resizeMenu: function () {
