@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
             ViewBag.names = names;
             ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
 
-            list.Reverse();
+            
 
             var pageSize = 5;
             int pageNumber = (page ?? 1);
@@ -68,6 +68,7 @@ namespace WebApplication1.Controllers
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
             ViewBag.qq = _context.QuizQuestions.ToList();
+            output = output.OrderByDescending(x => x.CreatedDate).ToList();
             return View(output);
         }
 

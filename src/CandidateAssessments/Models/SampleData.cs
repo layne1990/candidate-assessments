@@ -27,7 +27,8 @@ namespace CandidateAssessments.Models
                 context.Topics.AddRange(
                     new Topic { Name = "C#", Active = true },
                     new Topic { Name = "SQL", Active = true },
-                    new Topic { Name = "JavaScript", Active = true }
+                    new Topic { Name = "JavaScript", Active = true },
+                      new Topic { Name = "HTML", Active = true }
                 );
 
                 context.SaveChanges();
@@ -108,10 +109,11 @@ namespace CandidateAssessments.Models
                 context.Assessments.AddRange(toAdd);*/
 
                 context.Assessments.AddRange(
+
                     new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
                     new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
-                    // Expired assessment
-                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now, User = "user1@laynerdacorp232.onmicrosoft.com" }
+                     // Expired assessment
+                     new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now, User = "user1@laynerdacorp232.onmicrosoft.com" }
                 );
 
                 context.SaveChanges();
