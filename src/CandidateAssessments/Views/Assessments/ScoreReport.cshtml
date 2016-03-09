@@ -1,0 +1,33 @@
+﻿@model CandidateAssessments.Models.Assessment
+@using CandidateAssessments.Models
+@{
+    ViewData["Title"] = "Score Report";
+}
+
+<h1 class="col-md-offset-3">@Model.CandidateName Score Report</h1>
+@{ List<Quiz> quizzes = ViewBag.quizzes;}
+@foreach (var quiz in quizzes)
+{
+   <h4> @quiz.Topic.Name</h4>
+    <table class="table ">
+      
+        <tr>
+            <th>Question ID</th>
+            <th>
+                Question Time
+            </th>
+            <th>
+                Correct
+            </th>
+        </tr>
+        @foreach (var q in quiz.Questions)
+        {
+            <tr>
+                <td></td>
+                <td>@q.TimePresented</td>
+            </tr>
+
+        }
+    </table>
+
+}

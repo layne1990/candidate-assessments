@@ -71,7 +71,21 @@ namespace WebApplication1.Controllers
             output = output.OrderByDescending(x => x.CreatedDate).ToList();
             return View(output);
         }
-
+        // GET: Assessments/ScoreReport/5
+        public IActionResult ScoreReport(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
+            if (assessment == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.quizzes =_context.Quizes.Where(x=>x.AssessmentId== id).Include(x=>x.Questions).Include(x=>x.Topic).ToList();
+            return View(assessment);
+        }
         // GET: Assessments/Code/5
         public IActionResult Code(int? id)
         {
