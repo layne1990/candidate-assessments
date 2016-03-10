@@ -221,11 +221,13 @@
 
 <script>
     $(function () {
-        var names = [];
+        var names = ['Easy', 'Medium', 'Hard'];
         @foreach (var item in ViewBag.names)
         {
             var label = (item.QuestionText.Length < 30) ? item.QuestionText : item.QuestionText.Substring(0, 30) + "...";
-        <text>names.push({ label: '@label', value: "@item.QuestionText" });
+        <text>
+        names.push({ label: '@label', value: "@item.QuestionText" });
+        names.push('@item.TopicQuestionId');
         if (names.indexOf('@item.Topic.Name') == -1)
             names.push('@item.Topic.Name');
         </text>
