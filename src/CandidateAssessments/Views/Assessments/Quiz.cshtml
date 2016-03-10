@@ -47,7 +47,7 @@
                     @{ TimeSpan TimeTaken=new TimeSpan();}
                     @if (question.TimeAnswered == null)
                     {
-                    <span class="label label-warning">Unanswered</span>
+                    <span class="label label-warning ">Unanswered</span>
                     }
                     else
                     {
@@ -56,6 +56,7 @@
                          TimeTaken = Answered.Subtract(Presented);
                        
                     }
+                  
                     <span class="pull-right">#@Html.DisplayFor(modelItem => question.QuestionNumber)</span>
                 </h3>
                 @{
@@ -114,6 +115,20 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h4><span class="pull-left" style="margin-bottom:5px"><span class="glyphicon glyphicon-time"></span> @TimeTaken.ToString(@"mm\:ss")</span></h4>
+                            @if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Easy)
+                            {
+                                <h4 class="pull-right text-success">@item.DifficultyLevel</h4>
+                            }
+                            else if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Medium)
+                            {
+
+                                <h4 class="pull-right" style="color:#e7c713">@item.DifficultyLevel</h4>
+                            }
+                            else
+                            {
+                                <h4 class="pull-right text-danger">@item.DifficultyLevel</h4>
+
+                            }
                         </div>
                     </div>
                 </div>

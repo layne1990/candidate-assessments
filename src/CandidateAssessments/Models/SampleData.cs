@@ -146,7 +146,7 @@ namespace CandidateAssessments.Models
                         {
                             Assessment = a,
                             Topic = t,
-                            NumberOfQuestions = 9,
+                            NumberOfQuestions = 10,
                             NumberCorrect = 0,
                             TimeLimit = 10,
                             TimeStarted = null,

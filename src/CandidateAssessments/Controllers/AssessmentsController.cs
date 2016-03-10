@@ -56,6 +56,7 @@ namespace WebApplication1.Controllers
             end = (end > list.Count()) ? list.Count() : end;
             int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
             var output = new List<Assessment>();
+            list = list.OrderByDescending(x => x.CreatedDate).ToList();
             if (list.Count() != 0)
             {
                 for (int i = start; i < end; i++)
@@ -68,7 +69,7 @@ namespace WebApplication1.Controllers
             ViewBag.search = searchParam;
             ViewBag.page = pageNumber;
             ViewBag.qq = _context.QuizQuestions.ToList();
-            output = output.OrderByDescending(x => x.CreatedDate).ToList();
+        
             return View(output);
         }
         // GET: Assessments/ScoreReport/5
@@ -135,7 +136,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                
                 if (TimeLimit <= 0)
                 {
                     TimeLimit = 10;
@@ -148,6 +149,8 @@ namespace WebApplication1.Controllers
                 {
                     NumDays = 7;
                 }
+               
+              
                 // Generate the times and Access Code
                 assessment.AccessCode = Guid.NewGuid().ToString();
                 assessment.CreatedDate = DateTime.Now;
@@ -175,31 +178,83 @@ namespace WebApplication1.Controllers
 
                 foreach (Quiz q in _context.Quizes.Where(q => q.AssessmentId == assessment.AssessmentId).ToList())
                 {
-                    int i = 1;
                     var List = _context.TopicQuestions.Where(x => x.TopicId == q.TopicId && x.IsActive == true).ToList();
                     if (List.Count() < q.NumberOfQuestions)
                     {
-                        q.NumberOfQuestions = List.Count();
+                       
+                        NumQuestions = List.Count();
                     }
+                    int NumEasy = (int) Math.Ceiling(NumQuestions * 0.1);
+                    int NumHard = (int) Math.Ceiling(NumQuestions * 0.3);
+                  
+                    var EasyList = List.Where(x => x.DifficultyLevel == DifficultyLevels.Easy).ToList();
+                    var MediumList = List.Where(x => x.DifficultyLevel == DifficultyLevels.Medium).ToList();
+                    var HardList = List.Where(x => x.DifficultyLevel == DifficultyLevels.Hard).ToList();
+                    var QuizList = new List<TopicQuestion>();
                     Random rand = new Random();
                     var QsUsed = new List<int>();
-                    while (QsUsed.Count < NumQuestions && QsUsed.Count != List.Count)
+                    while (QsUsed.Count < NumEasy && QsUsed.Count != EasyList.Count)
                     {
-                        int r = rand.Next(0, List.Count());
+                        int r = rand.Next(0, EasyList.Count());
+
                         if (!QsUsed.Contains(r))
                         {
-                            _context.QuizQuestions.Add(
+                            QuizList.Add(EasyList[r]);
+                            QsUsed.Add(r);
+
+                        }
+
+                    }
+                    QsUsed = new List<int>();
+                    while (QsUsed.Count < NumHard && QsUsed.Count != HardList.Count)
+                    {
+                        int r = rand.Next(0, HardList.Count());
+
+                        if (!QsUsed.Contains(r))
+                        {
+                            QuizList.Add(HardList[r]);
+                            QsUsed.Add(r);
+
+                        }
+
+                    }
+                    QsUsed = new List<int>();
+                    int total = NumQuestions - QuizList.Count;
+                    while (QsUsed.Count < total && QsUsed.Count != MediumList.Count)
+                    {
+                        int r = rand.Next(0, MediumList.Count());
+
+                        if (!QsUsed.Contains(r))
+                        {
+                            QuizList.Add(MediumList[r]);
+                            QsUsed.Add(r);
+
+                        }
+
+                    }
+                    QsUsed = new List<int>();
+                    int i = 1;
+                
+                    while (QsUsed.Count < NumQuestions && QsUsed.Count != QuizList.Count)
+                    {
+                        int r = rand.Next(0, QuizList.Count());
+                       
+                        if (!QsUsed.Contains(r))
+                        {
+                            
+                        
+                           _context.QuizQuestions.Add(
                         new QuizQuestion()
                         {
                             Quiz = q,
                             QuestionNumber = i++,
                             NextQuestionId = 0,
-                            Question = List[r],
+                            Question = QuizList[r],
                         });
                             QsUsed.Add(r);
                         }
                     }
-
+                    q.NumberOfQuestions = QuizList.Count;
                     _context.SaveChanges();
                     int nextId = 0;
                     foreach (QuizQuestion qq in q.Questions.OrderByDescending(x => x.QuestionNumber))
@@ -208,8 +263,7 @@ namespace WebApplication1.Controllers
                         nextId = qq.QuizQuestionId;
                     }
 
-                    if (q.Questions.Count < q.NumberOfQuestions)
-                        q.NumberOfQuestions = q.Questions.Count;
+                    
 
                 }
 
