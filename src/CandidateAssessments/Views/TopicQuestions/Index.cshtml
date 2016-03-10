@@ -39,24 +39,38 @@
 
 <div class="card-deck-wrapper">
     <div class="card-deck row">
-        
+
         @{
-                var count = (ViewBag.page-1)*5;
-                foreach (var item in Model)
+
+            foreach (var item in Model)
+            {
+                var AverageTime = "00:00";
+                if (item.TimesAnswered > 0)
                 {
-                    var AverageTime="00:00";
-                    if (item.TimesAnswered > 0)
-                    {
-                         AverageTime = System.TimeSpan.FromTicks(item.TotalTime.Value.Ticks / item.TimesAnswered).ToString(@"mm\:ss");
-                    }
+                    AverageTime = System.TimeSpan.FromTicks(item.TotalTime.Value.Ticks / item.TimesAnswered).ToString(@"mm\:ss");
+                }
                 <div class="question col-xs-12 page-item">
                     <div class="card">
                         @* Handles inactive cards headers being red *@
                         <h3 class='card-header @(item.IsActive ? "card-default" : "card-inactive")'>
                             <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
-                       
-                            <span class="pull-right">#@(++count)</span>
+                            @if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Easy)
+                            {
+                                <span class="col-md-offset-9 text-success">@item.DifficultyLevel</span>
+                            }
+                            else if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Medium)
+                            {
+
+                                <span class="col-md-offset-9 text-warning">@item.DifficultyLevel</span>
+                            }
+                            else
+                            {
+                                <span class="col-md-offset-9 text-danger">@item.DifficultyLevel</span>
+
+                            }
+                            <span class="pull-right">ID:@item.TopicQuestionId</span>
                         </h3>
+
                         @{
                             var percentA = (Math.Round((double)item.ASelected / (double)item.TimesAnswered, 2) * 100);
                             var percentB = (Math.Round((double)item.BSelected / (double)item.TimesAnswered, 2) * 100);
@@ -116,7 +130,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                              
+
                                 <div class="col-xs-12">
                                     <span class="pull-left" style="margin-top:5px">Average Time to Answer: @AverageTime</span>
                                     <span class="pull-right">
@@ -201,7 +215,7 @@
         <li><a id="rightArrow" href="/TopicQuestions/?page=@pages&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">&raquo;</a></li>
     </ul>
 
-}
+            }
 
 
 

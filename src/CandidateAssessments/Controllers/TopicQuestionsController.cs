@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
             names = new List<TopicQuestion>(assessmentContext);
             if (searchParam != null)
             {
-                assessmentContext = assessmentContext.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
+                assessmentContext = assessmentContext.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || x.TopicQuestionId.ToString().Contains(searchParam.ToLower()) || x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
                 x.ChoiceB.ToLower().Contains(searchParam.ToLower()) || x.ChoiceC.ToLower().Contains(searchParam.ToLower()) || x.ChoiceD.ToLower().Contains(searchParam.ToLower()) ||
                x.Topic.Name.ToLower().Contains(searchParam.ToLower())).ToList();
             }

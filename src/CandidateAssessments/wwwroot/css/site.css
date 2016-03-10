@@ -437,6 +437,12 @@ div.question, div.topic, div.assessments{
     color:white; 
     border-color:#002C6A;
 }
-
+.reportTable td {
+        border-top: none !important;
+    }
+.reportTable th{
+     border-top: none !important;
+    background-color:#F2F2F2;
+}
 
 

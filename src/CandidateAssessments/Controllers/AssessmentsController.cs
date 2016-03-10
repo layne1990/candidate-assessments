@@ -84,6 +84,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
             ViewBag.quizzes =_context.Quizes.Where(x=>x.AssessmentId== id).Include(x=>x.Questions).Include(x=>x.Topic).ToList();
+            ViewBag.questions = _context.TopicQuestions.ToList();
             return View(assessment);
         }
         // GET: Assessments/Code/5

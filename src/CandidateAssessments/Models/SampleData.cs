@@ -52,6 +52,7 @@ namespace CandidateAssessments.Models
                             CorrectAnswer = "C",
                             QuestionType = QuestionTypes.MultipleChoice,
                             IsActive = true,
+                            DifficultyLevel = DifficultyLevels.Medium,
                             Topic = t
                         });
                     }
@@ -71,6 +72,7 @@ namespace CandidateAssessments.Models
                             CorrectAnswer = "A",
                             QuestionType = QuestionTypes.TrueFalse,
                             IsActive = true,
+                            DifficultyLevel = DifficultyLevels.Hard,
                             Topic = t,
 
                         });
@@ -91,9 +93,25 @@ namespace CandidateAssessments.Models
                             CorrectAnswer = "Answer",
                             QuestionType = QuestionTypes.FillInBlank,
                             IsActive = true,
+                            DifficultyLevel = DifficultyLevels.Medium,
                             Topic = t
                         });
                     }
+                    context.TopicQuestions.Add(
+                      new TopicQuestion()
+                      {
+                          QuestionText = "This is question " + 10.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
+                          ChoiceA = "Placeholder",
+                          ChoiceB = "Placeholder",
+                          ChoiceC = "Placeholder",
+                          ChoiceD = "Placeholder",
+                          TotalTime = new TimeSpan(0, 0, 0),
+                          CorrectAnswer = "Answer",
+                          QuestionType = QuestionTypes.FillInBlank,
+                          IsActive = true,
+                          DifficultyLevel = DifficultyLevels.Easy,
+                          Topic = t
+                      });
 
                 }
                 context.SaveChanges();

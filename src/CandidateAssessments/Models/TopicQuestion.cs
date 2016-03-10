@@ -7,7 +7,7 @@ namespace CandidateAssessments.Models
    
    
     public enum QuestionTypes {[Display(Name = "Multiple choice")]MultipleChoice, [Display(Name = "True or False")]TrueFalse, [Display(Name = "Fill in the Blank")]FillInBlank }
-   
+   public enum DifficultyLevels {Easy,Medium,Hard }
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
@@ -24,7 +24,8 @@ namespace CandidateAssessments.Models
         public bool IsActive { get; set; }
         [Display(Name = "Question Type")]
         public QuestionTypes QuestionType { get; set; }
-
+        [Display(Name = "Difficulty Level")]
+        public DifficultyLevels DifficultyLevel { get; set; }
         // Used for multiple choice questions
         [Required]
         [Display(Name = "Choice A")]
