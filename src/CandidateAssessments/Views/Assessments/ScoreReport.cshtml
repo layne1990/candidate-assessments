@@ -2,48 +2,43 @@
 
 @using CandidateAssessments.Models
 <style>
-    @@media print{
-        h2{
-           text-align:center;
+    @@media print {
+        h2 {
+            text-align: center;
         }
-        dl{
-             text-align:center;
 
+        dl {
+            text-align: center;
         }
-    #print{
-        display:none !important;
+
+        #print {
+            display: none !important;
+        }
+
+        .reportTable th {
+            border-top: none !important;
+            background-color: #F2F2F2 !important;
+            -webkit-print-color-adjust: exact;
+        }
     }
-    .reportTable th{
-     border-top: none !important;
-    background-color:#F2F2F2 !important;
-    -webkit-print-color-adjust: exact; 
-}
-
-
-
-      
-    } 
 </style>
 @{
     ViewData["Title"] = "Score Report";
-    List<Quiz> quizzes = ViewBag.quizzes;
-    quizzes = quizzes.OrderBy(x => x.TimeStarted).ToList();
-    List<TopicQuestion> questions = ViewBag.questions;
     List<Double> Scores = new List<double>();
 }
-<span class="btn btn-primary pull-right" id="print"  style="margin-top:20px; "onclick="window.print();return false;">Print Report</span>
-<h2  class="col-md-offset-4">@Model.CandidateName Score Report</h2>
-<dl class="col-md-offset-4 dl-horizontal">
-    <dt>Date Started:</dt>
-    <dd>@quizzes[0].TimeStarted</dd>
-    <dt>Date Ended:</dt>
-    <dd>@quizzes[quizzes.Count-1].TimeCompleted</dd>
-</dl>
+<span class="btn btn-primary pull-right" id="print" style="margin-top:20px; " onclick="window.print();return false;">Print Report</span>
+<h2 class="col-md-offset-4">@Model.CandidateName Score Report</h2>
 
-@foreach (var quiz in quizzes)
+@foreach (var quiz in Model.Quizes)
 {
     <h3 style="margin-top:40px;">@quiz.Topic.Name</h3>
-    
+
+    <dl class="col-md-offset-4 dl-horizontal">
+        <dt>Date Started:</dt>
+        <dd>@quiz.TimeStarted</dd>
+        <dt>Date Ended:</dt>
+        <dd>@quiz.TimeCompleted</dd>
+    </dl>
     <table class="table reportTable table-condensed" style="border:none;">
 
         <tr>
@@ -53,7 +48,7 @@
         </tr>
         @foreach (var q in quiz.Questions)
         {
-            var TopicQ = questions.SingleOrDefault(x => x.TopicQuestionId == q.TopicQuestionId);
+            var TopicQ = q.Question;
             var TimeTaken = new TimeSpan();
             if (q.TimePresented != null && q.TimePresented != null)
             {
@@ -68,7 +63,7 @@
                     @if (string.Equals(q.Answer, TopicQ.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
                     {
 
-                       <span class="text-success glyphicon glyphicon-ok"></span>
+                        <span class="text-success glyphicon glyphicon-ok"></span>
 
                     }
                     else
@@ -81,10 +76,10 @@
             </tr>
         }
     </table>
-    var score= Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 3) * 100;
+    var score = Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 3) * 100;
     Scores.Add(score);
 
-  <h4>Score: @(Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 3) * 100)%</h4>
+    <h4>Score: @(Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 3) * 100)%</h4>
 
 }
 

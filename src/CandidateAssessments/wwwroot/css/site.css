@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 0px;
     padding-bottom: 20px;
     min-width: 750px !important;
 }
@@ -376,6 +376,7 @@ div.question, div.topic, div.assessments{
 
 .quiz-items {
     border-radius:8px;
+    min-height: 200px;
 }
 .quiz-header {
         border-radius: 8px 8px 0 0 !important;
@@ -396,11 +397,18 @@ div.question, div.topic, div.assessments{
     margin-bottom:40px;
 }
 
-.navbar-brand-custom {
-    padding: 15px 0; 
-    margin-left: -15px; 
-    color: black !important;
 
+
+.navbar-logo {
+    margin: 15px;
+}
+
+.navbar-brand {
+  padding: 10px;
+}
+
+.navbar-inverse {
+    background-color: #020257; 
 }
 
 .text-underline {

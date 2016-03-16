@@ -20,58 +20,76 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Assessments
-        public IActionResult Index(String searchParam, int? page, Boolean? users)
+        public IActionResult Index(String searchParam, int page=1, Boolean currentUserFilter=false)
         {
-            if (searchParam != null && page == 0)
-            {
-                page = 1;
-            }
-            List<Assessment> list;
-            if (users==true)
-            {
-                list = _context.Assessments.Where(x => x.User == User.Identity.Name).ToList();
-            }
-            else
-            {
-                users = false;
-                list = _context.Assessments.ToList();
-            }
-        
-            var topics = _context.Topics.ToList();
-            var names = new List<Assessment>(list);
-
-            if (searchParam != null)
-            {
-                list = list.Where(x => x.CandidateName.ToLower().Contains(searchParam.ToLower())).ToList();
-            }
-
-            ViewBag.names = names;
-            ViewBag.Quizzes = _context.Quizes.Include(x => x.Topic).ToList();
-
-            
 
             var pageSize = 5;
-            int pageNumber = (page ?? 1);
-            int end = pageSize * pageNumber;
-            end = (end > list.Count()) ? list.Count() : end;
-            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
-            var output = new List<Assessment>();
-            list = list.OrderByDescending(x => x.CreatedDate).ToList();
-            if (list.Count() != 0)
+            
+            var assessmentQuery = _context.Assessments.AsQueryable();
+
+            // Only return assessments created by this user
+            if (currentUserFilter == true)
             {
-                for (int i = start; i < end; i++)
-                {
-                    output.Add(list[i]);
-                }
+                assessmentQuery = assessmentQuery.Where(x => x.User == User.Identity.Name);
             }
-            ViewBag.users = users;
-            ViewBag.count = list.Count();
+
+            // Only return assessments that match the search criteria
+            if (searchParam != null)
+            {
+                assessmentQuery = assessmentQuery.Where(x => x.CandidateName.ToLower().Contains(searchParam.ToLower()));
+            }
+
+            // This code should work, but there is a bug in EF Core pre release.
+
+            //List<Assessment> assessments = assessmentQuery
+            //   .Include(x => x.Quizes).ThenInclude(y => y.Questions)
+            //   .Include(x => x.Quizes).ThenInclude(y => y.Topic)
+            //   .OrderByDescending(x => x.CreatedDate)
+            //   .Skip(pageSize * (page - 1))
+            //   .Take(pageSize)
+            //   .ToList();
+
+            // So to work around the bug, we break it out into 2 separate Linq querries.
+            // (and it actually makes the generated SQL cleaner, the bug nonwithstanding)
+
+            // First get a list of the assessment ids on this page
+            List<int> assessmentIds = assessmentQuery
+               .OrderByDescending(x => x.CreatedDate)
+               .Skip(pageSize * (page - 1))
+               .Take(pageSize)
+               .Select(a => a.AssessmentId)
+               .ToList();
+
+            // Then retrieve just those assessments from the DB
+            List<Assessment> assessments = _context.Assessments.Where(a => assessmentIds.Contains(a.AssessmentId))
+               .Include(x => x.Quizes).ThenInclude(y => y.Questions)
+               .Include(x => x.Quizes).ThenInclude(y => y.Topic)
+               .OrderByDescending(x => x.CreatedDate)
+               .ToList();
+
+
+            var names = new List<Assessment>(assessments);
+
+            ViewBag.names = names;
+            
+            ViewBag.currentUserFilter = currentUserFilter;
+            ViewBag.count = assessmentQuery.Count();
             ViewBag.search = searchParam;
-            ViewBag.page = pageNumber;
-            ViewBag.qq = _context.QuizQuestions.ToList();
+            ViewBag.page = page;
         
-            return View(output);
+            return View(assessments);
         }
+
+        [AllowAnonymous]
+        public JsonResult NameLookup(string term)
+        {
+            List<string> names = _context.Assessments.Where(a => a.CandidateName.Contains(term))
+               .Select(a => a.CandidateName)
+               .ToList();
+
+            return Json(names);
+        }
+
         // GET: Assessments/ScoreReport/5
         public IActionResult ScoreReport(int? id)
         {
@@ -79,13 +97,16 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
+            Assessment assessment = _context.Assessments
+                .Include(x => x.Quizes).ThenInclude(x => x.Questions).ThenInclude(x => x.Question)
+                .Include(x => x.Quizes).ThenInclude(x => x.Topic)
+                .Where(m => m.AssessmentId == id)
+                .FirstOrDefault();
+
             if (assessment == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.quizzes =_context.Quizes.Where(x=>x.AssessmentId== id).Include(x=>x.Questions).Include(x=>x.Topic).ToList();
-            ViewBag.questions = _context.TopicQuestions.ToList();
             return View(assessment);
         }
         // GET: Assessments/Code/5

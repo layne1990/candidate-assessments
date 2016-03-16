@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace CandidateAssessments.Models
 {
@@ -27,5 +28,7 @@ namespace CandidateAssessments.Models
             // So we can quickly find an assessment by the acccess code
             modelBuilder.Entity<Assessment>().HasAlternateKey(a => a.AccessCode);
         }
+
+        
     }
 }
