@@ -1,26 +1,28 @@
 ﻿
 <br />
 <div class="row">
-  
+
     <div class="col-md-12">
         <div class="jumbotron text-center">
-            <h1>RDA Candidate Assessment</h1>
-            <p>This is a tool for assessing a potential candidate's knowledge of computer languages and technologies.</p>
+            <h1>Candidate Assessments</h1>
 
-            @if (User.IsInRole("Admin") || User.IsInRole("Recruiter")) {
-                <h2>Assessments</h2>
-                <p>Create or review candidate assessments.</p>
-                <p><a class="btn btn-primary btn-lg" href="/Assessments" role="button">Let's Go!</a></p>
+            @if (User.IsInRole("Admin") || User.IsInRole("Recruiter"))
+            {
+                <a class="btn btn-lg" href="/Assessments" role="button">
+                    <h2>Assessments</h2>
+                    <p>Create or review candidate assessments.</p>
+                </a>
             }
 
             @if (User.IsInRole("Admin") || User.IsInRole("QuestionManager"))
             {
-            <h2>Questions</h2>
-            <p>Manage the topics and the pools of questions for each topic.</p>
-            <p><a class="btn btn-primary btn-lg" href="/Topic" role="button">Let's Go!</a></p>
+                <a class="btn btn-lg" href="/Topic" role="button">
+                    <h2>Questions</h2>
+                    <p>Manage the topics and the pools of questions for each topic.</p>
+                </a>
             }
 
         </div>
     </div>
-  
+
 </div>

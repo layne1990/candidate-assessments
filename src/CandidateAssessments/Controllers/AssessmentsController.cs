@@ -66,11 +66,6 @@ namespace WebApplication1.Controllers
                .Include(x => x.Quizes).ThenInclude(y => y.Topic)
                .OrderByDescending(x => x.CreatedDate)
                .ToList();
-
-
-            var names = new List<Assessment>(assessments);
-
-            ViewBag.names = names;
             
             ViewBag.currentUserFilter = currentUserFilter;
             ViewBag.count = assessmentQuery.Count();
@@ -133,12 +128,15 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            Quiz quiz = _context.Quizes.Where(m => m.QuizId == id).Include(m => m.Topic).Include(m => m.Questions).ThenInclude(y => y.Question).FirstOrDefault();
+            Quiz quiz = _context.Quizes.Where(m => m.QuizId == id)
+                .Include(m => m.Topic)
+                .Include(m => m.Assessment)
+                .Include(m => m.Questions).ThenInclude(y => y.Question)
+                .FirstOrDefault();
             if (quiz == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.assessment = _context.Assessments.Where(m => m.AssessmentId == quiz.AssessmentId).FirstOrDefault();
             return View(quiz);
         }
 

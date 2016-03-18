@@ -22,51 +22,24 @@ namespace CandidateAssessments.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index(String searchParam, int? page, Boolean? inactive)
+        public IActionResult Index(Boolean? inactive)
         {
-            if (searchParam != null && page == 0)
-            {
-                page = 1;
-            }
-            List<Topic> list;
+            List<Topic> topics;
             if (inactive !=null)
             {
-                list = _db.Topics.Where(x => x.Active == false).ToList();
+                topics = _db.Topics.Where(x => x.Active == false).ToList();
                 ViewBag.Questions = _db.TopicQuestions.Where(x => x.Topic.Active == false).ToList();
 
             }
             else {
                 inactive = false;
-                 list = _db.Topics.Where(x => x.Active == true).ToList();
+                 topics = _db.Topics.Where(x => x.Active == true).ToList();
                 ViewBag.Questions = _db.TopicQuestions.Where(x => x.Topic.Active == true).ToList();
             }
-            var names = new List<Topic>(list);
-            if (searchParam != null)
-                list=list.Where(x => x.Name.ToLower().Contains(searchParam.ToLower())).ToList();
-       
-            ViewBag.names = names;
 
-
-
-
-            var pageSize = 5;
-            int pageNumber = (page ?? 1);
-            int end = pageSize * pageNumber;
-            end = (end > list.Count()) ? list.Count() : end;
-            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
-            var output = new List<Topic>();
-            if (list.Count() != 0)
-            {
-                for (int i = start; i < end; i++)
-                {
-                    output.Add(list[i]);
-                }
-            }
-            ViewBag.count = list.Count();
-            ViewBag.search = searchParam;
-            ViewBag.page = pageNumber;
+            
             ViewBag.inactive = inactive;
-            return View(output);
+            return View(topics);
         }
 
         public IActionResult Create()

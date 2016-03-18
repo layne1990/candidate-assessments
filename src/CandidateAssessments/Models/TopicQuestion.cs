@@ -13,6 +13,7 @@ namespace CandidateAssessments.Models
         public int TopicQuestionId { get; set; }
         [Required]
         [Display(Name = "Question Text")]
+        [DataType(DataType.MultilineText)]
         public string QuestionText { get; set; }
         [Required]
         [Display(Name ="Correct Answer")]

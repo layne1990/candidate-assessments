@@ -19,53 +19,41 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
+
         // GET: TopicQuestions
-        public IActionResult Index(string searchParam, int? TopicId, int? page)
+        public IActionResult Index(string searchParam, int topicId=0, int page=1)
         {
-            if (searchParam != null && page==0)
-            {
-                page = 1;
-            }
-            List<TopicQuestion> assessmentContext;
-            List<TopicQuestion> names;
-            if (TopicId != null)
-            {
-                assessmentContext = _context.TopicQuestions.Where(tq => tq.TopicId == TopicId ).Include(t => t.Topic).ToList();
+            var pageSize = 5;
 
+            // If a topic wasn't provided, then go back to the topic list
+            if (topicId == 0)
+                return RedirectToAction("Index", "Topics");
 
-            }
-            else {
-                assessmentContext = _context.TopicQuestions.Where(x=>x.Topic.Active== true).Include(t => t.Topic).ToList();
-            }
-            names = new List<TopicQuestion>(assessmentContext);
+            var questionQuery = _context.TopicQuestions.Where(x => x.TopicId == topicId);
             if (searchParam != null)
             {
-                assessmentContext = assessmentContext.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || x.TopicQuestionId.ToString().Contains(searchParam.ToLower()) || x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
-                x.ChoiceB.ToLower().Contains(searchParam.ToLower()) || x.ChoiceC.ToLower().Contains(searchParam.ToLower()) || x.DifficultyLevel.ToString().ToLower().Contains(searchParam.ToLower()) || x.ChoiceD.ToLower().Contains(searchParam.ToLower()) ||
-               x.Topic.Name.ToLower().Contains(searchParam.ToLower())).ToList();
+                questionQuery = questionQuery.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || 
+                x.TopicQuestionId.ToString().Contains(searchParam.ToLower()) || 
+                x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
+                x.ChoiceB.ToLower().Contains(searchParam.ToLower()) || 
+                x.ChoiceC.ToLower().Contains(searchParam.ToLower()) || 
+                x.DifficultyLevel.ToString().ToLower().Contains(searchParam.ToLower()) || 
+                x.ChoiceD.ToLower().Contains(searchParam.ToLower()) 
+               );
             }
 
+            var questions = questionQuery.Include(x => x.Topic)
+               .OrderBy(x => x.TopicQuestionId)
+               .Skip(pageSize * (page - 1))
+               .Take(pageSize)
+               .ToList();
 
-            ViewBag.names = names;
-            ViewBag.TopicId = TopicId;
 
-            var pageSize = 5;
-            int pageNumber = (page ?? 1);
-            int end = pageSize * pageNumber;
-            end = (end > assessmentContext.Count()) ? assessmentContext.Count() : end;
-            int start = (end % 5 > 0) ? end - (end % 5) : end - 5;
-            var output = new List<TopicQuestion>();
-            if (assessmentContext.Count() != 0)
-            {
-                for (int i = start; i < end; i++)
-                {
-                    output.Add(assessmentContext[i]);
-                }
-            }
-            ViewBag.count = assessmentContext.Count();
+            ViewBag.count = questionQuery.Count();
             ViewBag.search = searchParam;
-            ViewBag.page = pageNumber;
-            return View(output);
+            ViewBag.page = page;
+            ViewBag.TopicId = topicId;
+            return View(questions);
         }
 
         // GET: TopicQuestions/Details/5
@@ -186,50 +174,25 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
-            var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
-
-            // only get quizzes with the same topic
-            var QuizQuestions = _context.Quizes.Where(x => x.TopicId == topicQuestion.TopicId).Include(x => x.Questions);
-            var included = false;
-
-            // for each quiz of this topic
-            foreach (var quiz in QuizQuestions)
+            TopicQuestion topicQuestion = _context.TopicQuestions.SingleOrDefault(m => m.TopicQuestionId == id);
+            
+            // Check to see if this question has been used on a quiz
+            if(_context.QuizQuestions.Where(q=> q.TopicQuestionId == id).Count() > 0)
             {
-                // for each question in that quiz
-                foreach (var question in quiz.Questions)
-                {
-                    // this question is included in a quiz somewhere
-                    if (question.TopicQuestionId == topicQuestion.TopicQuestionId)
-                    {
-                        included = true;
-                        break;
-                    }
-                }
-                // weve already found one
-                if (included)
-                    break;
+                // Just mark as inactive
+                topicQuestion.IsActive = false;
             }
-
-            // if the topic has questions
-            if (top.Questions != null)
+            else
             {
-                // if the question isnt included in any quiz
-                if (!included)
-                {
-                    top.Questions.Remove(topicQuestion);
-                    _context.TopicQuestions.Remove(topicQuestion);
-                }
-                // otherwise, just make the question inactive
-                else
-                {
-                    topicQuestion.IsActive = false;
-                }
+                // Ok to delete
+                _context.TopicQuestions.Remove(topicQuestion);
 
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", new { TopicId = top.TopicId });
+            
+            
+            return RedirectToAction("Index", new { TopicId = topicQuestion.TopicId });
         }
     }
 }

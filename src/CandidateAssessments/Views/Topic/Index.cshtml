@@ -9,7 +9,7 @@
     <div class="container-fluid">
         @if (ViewBag.inactive)
         {
-            <div class="col-md-2">
+            <div class="col-xs-2">
                 <span class="navbar-brand navbar-brand-custom">Inactive Topics</span>
             </div>
             <div class="col-md-2 navbar-btn">
@@ -19,29 +19,19 @@
         }
         else
         {
-            <div class="col-md-2">
+            <div class="col-xs-2">
                 <span class="navbar-brand navbar-brand-custom">Active Topics</span>
             </div>
-            <div class="col-md-2 navbar-btn">
+            <div class="col-xs-2 navbar-btn">
          
                 <a href="/Topic/?inactive=true" class="btn btn-primary">View Inactive Topics</a>
             </div>
 
         }
-        <form class="col-md-5 col-md-offset-1" method="get" asp-action="index">
-            <div class="nav navbar-btn" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="searchParam" style="max-width: 400px;" id="TopicSearch" placeholder="Search">
-                    <span class="input-group-btn">
-                        <button type="submit" id="TopicSearchBtn" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>
-            </div>
-        </form>
 
-        <div class="col-md-2 col-xs-2">
+        <div class="col-xs-2 pull-right">
             <form class="nav navbar-btn navbar-right" method="get" asp-action="Create" asp-route-id="@ViewBag.TopicId">
-                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
             </form>
         </div>
     </div>
@@ -151,119 +141,7 @@
                     }
                 }
             }
-            @if (!ViewBag.inactive)
-            {
-                <div class="row">
-                    <div class="topic col-xs-4 col-xs-offset-4 ">
-                        <a class="TopicLink" href="/TopicQuestions/">
-                            <div class="card topic-card">
-                                <h3 class="card-header row topicHeader">
-                                    <span class="col-xs-6 col-xs-offset-3 text-center TopicNames">All Questions</span><span class="glyphicon glyphicon-chevron-right pull-right"></span>
-                                </h3>
-                                <div class="card-block">
-                                    <blockquote class="card-blockquote">
-                                        <p class="card-text text-center">@qs.Count() Questions</p>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
         }
     </div>
 </div>
-@{var pages = Math.Ceiling(ViewBag.count / 5.0);}
-@if (pages > 1)
-{
-    <ul class="pagination pagination-lg">
 
-        <li><a href="/Topic/?page=1&searchParam=@ViewBag.search">&laquo;</a></li>
-        @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
-        <li><a href="/Topic/?page=@back&searchParam=@ViewBag.search">&lsaquo;</a></li>
-        @{
-            var DisplayDots = true;
-            var start = 1;
-            var end = pages;
-            if (ViewBag.page < 4)
-            {
-                if (pages > 5)
-                {
-                    end = 5;
-                }
-                else
-                {
-                    DisplayDots = false;
-
-                }
-
-            }
-            else
-            {
-                if (ViewBag.Page > (pages - 3))
-                {
-                    start = (int)pages - 4;
-                    DisplayDots = false;
-
-                }
-                else {
-                    start = ViewBag.page - 2;
-                    end = ViewBag.page + 2;
-                }
-            }
-
-
-        }
-        @for (int i = start; i <= end; i++)
-        {
-            @if (ViewBag.page == i)
-            {
-                <li class="active"><span>@i</span></li>
-
-            }
-            else {
-                <li><a href="/Topic/?page=@i&searchParam=@ViewBag.search">@i</a></li>
-            }
-
-        }
-        @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
-        @if (DisplayDots)
-        {
-            var skip = next + 4;
-            if (skip > pages)
-            {
-                skip = pages;
-
-            }
-
-            <li><a href="/Topic/?page=@skip &searchParam=@ViewBag.search">...</a></li>
-        }
-        <li><a href="/Topic/?page=@next&searchParam=@ViewBag.search">&rsaquo;</a></li>
-        <li><a id="rightArrow" href="/Topic/?page=@pages&searchParam=@ViewBag.search">&raquo;</a></li>
-    </ul>
-            }
-
-
-<script>
-    $(function () {
-        var names = [];
-        @foreach(var item in ViewBag.names)
-        {
-        <text>names.push('@item.Name');</text>
-
-    }
-
-        $("#TopicSearch").autocomplete({
-            source: names
-        });
-
-
-
-
-
-
-    }
-
-
-    )
-</script>

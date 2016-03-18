@@ -6,7 +6,7 @@
 
 @{
     var useThis = "00:00:00";
-    var name = ViewBag.assessment.CandidateName;
+    var name = Model.Assessment.CandidateName;
     if (Model.TimeCompleted.HasValue && Model.TimeStarted.HasValue)
     {
         var complete = Model.TimeCompleted.Value;

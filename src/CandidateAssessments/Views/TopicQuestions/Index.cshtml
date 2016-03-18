@@ -1,9 +1,6 @@
 
 @model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
 <nav class="navbar navbar-full navbar-default" id="pageNav">
     <div class="container-fluid">
@@ -31,7 +28,7 @@
 
         <div class="col-md-2 col-xs-2">
             <form class="nav navbar-btn navbar-right" method="get" asp-action="Create" asp-route-id="@ViewBag.TopicId">
-                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
             </form>
         </div>
     </div>
@@ -45,27 +42,31 @@
             foreach (var item in Model)
             {
                 var AverageTime = "00:00";
-                if (item.TimesAnswered > 0)
+                if (item.TimesAnswered > 0 && item.TotalTime.HasValue)
                 {
                     AverageTime = System.TimeSpan.FromTicks(item.TotalTime.Value.Ticks / item.TimesAnswered).ToString(@"mm\:ss");
                 }
                 <div class="question col-xs-12 page-item">
                     <div class="card">
-                        @* Handles inactive cards headers being red *@
-                        <h3 class='card-header @(item.IsActive ? "card-default" : "card-inactive")'>
+                        <h3 class='card-header card-default'>
                             <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
+                            @if(!item.IsActive)
+                            {
+                                <span class="label label-danger">Inactive</span>
+
+                            }
                             @if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Easy)
                             {
-                                <span class="col-md-offset-9 text-success">@item.DifficultyLevel</span>
+                                <span class="col-md-offset-7 text-success">@item.DifficultyLevel</span>
                             }
                             else if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Medium)
                             {
 
-                                <span class="col-md-offset-9 text" style="color:#e7c713">@item.DifficultyLevel</span>
+                                <span class="col-md-offset-7 text" style="color:#e7c713">@item.DifficultyLevel</span>
                             }
                             else
                             {
-                                <span class="col-md-offset-9 text-danger">@item.DifficultyLevel</span>
+                                <span class="col-md-offset-7 text-danger">@item.DifficultyLevel</span>
 
                             }
                             <span class="pull-right">ID:@item.TopicQuestionId</span>
@@ -217,25 +218,3 @@
 
             }
 
-
-
-<script>
-    $(function () {
-        var names = ['Easy', 'Medium', 'Hard'];
-        @foreach (var item in ViewBag.names)
-        {
-            var label = (item.QuestionText.Length < 30) ? item.QuestionText : item.QuestionText.Substring(0, 30) + "...";
-        <text>
-        names.push({ label: '@label', value: "@item.QuestionText" });
-        names.push('@item.TopicQuestionId');
-        if (names.indexOf('@item.Topic.Name') == -1)
-            names.push('@item.Topic.Name');
-        </text>
-
-    }
-
-        $("#QuestionSearch").autocomplete({
-            source: names
-        });
-    })
-</script>

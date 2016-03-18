@@ -78,50 +78,63 @@
                                                         <div class="card quiz-items">
                                                             <h4 class="card-header quiz-header tNames text-center">@quiz.Topic.Name</h4>
                                                             <div class="card-block quiz-block">
-                                                                @if (quiz.TimeCompleted.HasValue)
+                                                                @if (!quiz.TimeStarted.HasValue)
+                                                                {
+                                                                <div class="text-center col-md-12">
+                                                                    <div style="font-size:1em;padding-bottom:10px" class="text-warning">
+                                                                        Not Started
+
+                                                                    </div>
+                                                                </div>
+                                                                }
+                                                                else if (quiz.TimeCompleted.HasValue || DateTime.Now.Subtract(quiz.TimeStarted.Value).TotalMinutes > quiz.TimeLimit)
                                                                 {
                                                                     var percent = (Math.Round((double)quiz.NumberCorrect / quiz.NumberOfQuestions, 2) * 100);
+                                                                    string TimeTaken;
 
-                                                                    var TimeTaken = quiz.TimeCompleted.Value.Subtract(quiz.TimeStarted.Value).ToString(@"mm\:ss");
+                                                                    if (quiz.TimeCompleted.HasValue)
+                                                                    {
+                                                                        TimeTaken = quiz.TimeCompleted.Value.Subtract(quiz.TimeStarted.Value).ToString(@"mm\:ss");
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        TimeTaken = quiz.TimeLimit.ToString() + ":00";
+                                                                    }
+
+
+                                                                    var unanswered = quiz.Questions.Where(x => string.IsNullOrEmpty(x.Answer)).Count();
 
                                                                     <div class="text-center col-md-12">
-                                                                        <div style="font-size:1em;" class="text-success">
+                                                                        <p style="font-size:1em;" class="text-success">
                                                                             Complete
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <span class="col-xs-4 col-lg-4 text-left quiz-col">Score:</span>
-                                                                        <span class="col-xs-8 col-lg-8 text-center quiz-col">
-                                                                            <span> @quiz.NumberCorrect/@quiz.NumberOfQuestions</span>
-                                                                            (<span style="font-size:1em;" class='@(percent > 70 ? "text-success" : "text-danger")'>@percent %</span>)
-                                                                        </span>
-
-
-                                                                        <div>
-                                                                            <span class="col-xs-7 col-lg-6 text-left quiz-col">Time taken:</span>
-                                                                            <span class="col-xs-5 col-lg-6 text-center quiz-col">@TimeTaken</span>
-                                                                        </div>
+                                                                        </p>
+                                                                        <p class="score">
+                                                                            @percent%
+                                                                        </p>
+                                                                        <p class="text-muted">
+                                                                            (@quiz.NumberCorrect / @quiz.NumberOfQuestions)
+                                                                            @if (unanswered > 0)
+                                                                            {
+                                                                                <span>@unanswered unanswered</span>
+                                                                            }
+                                                                        </p>
+                                                                        <p>
+                                                                            <span class="glyphicon glyphicon-time"></span>
+                                                                            <span>@TimeTaken</span>
+                                                                        </p>
                                                                     </div>
                                                                 }
-                                                                else if (quiz.TimeStarted.HasValue)
+                                                                else
                                                                 {
                                                                     <div class="text-center col-md-12">
                                                                         <div style="font-size:1em;" class="text-danger">
-                                                                            Incomplete
+                                                                            In Progress
 
                                                                         </div>
                                                                     </div>
                                                                     <span class="col-xs-7 col-lg-6 text-right quiz-col"></span>
                                                                     <span class="col-xs-5 col-lg-6 text-center quiz-col"></span>
-
-                                                                    <div style="vertical-align:central">
-                                                                        <span class="col-xs-7  text-right quiz-col">Completed:</span>
-                                                                        <span class="col-xs-5  text-center quiz-col">
-                                                                            <span>
-                                                                                @quiz.Questions.Where(x => x.TimeAnswered != null).Count() / @quiz.NumberOfQuestions
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
+                                                                    
                                                                     <span class="col-xs-7 col-lg-6 text-right quiz-col">Time left:</span>
                                                                     @if (quiz.TimeStarted != null)
                                                                     {
@@ -137,15 +150,6 @@
                                                                         <span class="col-xs-5 col-lg-6 text-center quiz-col">@quiz.TimeLimit:00</span>
                                                                     }
 
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="text-center col-md-12">
-                                                                        <div style="font-size:1em;padding-bottom:10px" class="text-warning">
-                                                                            Not Started
-
-                                                                        </div>
-                                                                    </div>
                                                                 }
 
                                                                 <div class="full-result text-center">

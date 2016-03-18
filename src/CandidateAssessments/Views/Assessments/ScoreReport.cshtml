@@ -50,7 +50,7 @@
         {
             var TopicQ = q.Question;
             var TimeTaken = new TimeSpan();
-            if (q.TimePresented != null && q.TimePresented != null)
+            if (q.TimePresented.HasValue  && q.TimeAnswered.HasValue)
             {
                 var Presented = q.TimePresented.Value;
                 var Answered = q.TimeAnswered.Value;
