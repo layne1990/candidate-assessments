@@ -89,13 +89,9 @@
                 @Html.LabelFor(model => model.CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
 
-                    <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "A", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) True</label>
-                    <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "B", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) False</label>
+                    <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "T", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) True</label>
+                    <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "F", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) False</label>
                     @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(x => x.ChoiceA)
-                    @Html.HiddenFor(x => x.ChoiceB)
-                    @Html.HiddenFor(x => x.ChoiceC)
-                    @Html.HiddenFor(x => x.ChoiceD)
                 </div>
             </div>
         }
@@ -148,7 +144,7 @@
 
 
         }
-        else
+        else if (Model.QuestionType == QuestionTypes.FillInBlank)
         {
             <div class="form-group">
                 @Html.LabelFor(model => model.CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })

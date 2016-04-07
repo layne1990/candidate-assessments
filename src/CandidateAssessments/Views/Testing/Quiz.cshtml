@@ -47,16 +47,22 @@
                                 {
 
                                     <label class="container-fluid list-group-item" for="radio-1">
-                                        <input type="radio" class="quiz-radio" name="Answer" value="A" id="radio-1" />
-                                        <span class="question_label"></span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
+                                        <input type="radio" class="quiz-radio" name="Answer" value="T" id="radio-1" />
+                                        <span class="question_label"></span><span class="col-md-9 question_text">True</span>
                                     </label>
                                     <label class="container-fluid list-group-item" for="radio-2">
-                                        <input type="radio" class="quiz-radio" name="Answer" value="B" id="radio-2" />
-                                        <span class="question_label"></span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
+                                        <input type="radio" class="quiz-radio" name="Answer" value="F" id="radio-2" />
+                                        <span class="question_label"></span><span class="col-md-9 question_text">False</span>
                                     </label>
                                 }
+                                else if (Model.Question.QuestionType == CandidateAssessments.Models.QuestionTypes.Essay)
+                                {
+
+                                    <textarea class="container-fluid form-control" id="fillin" name="Answer"  rows="20" type="text" ></textarea>
+
+                                }
                                 else
-                                { 
+                                {
                                     <input class="container-fluid form-control" id="fillin" name="Answer" type="text" />
 
                                 }

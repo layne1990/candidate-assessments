@@ -93,17 +93,16 @@
                 @Html.ValidationMessageFor(model => model.QuestionText, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group" hidden id="onTrueFalse">
+        <div class="form-group" hidden id="trueFalseAnswer">
             @Html.LabelFor(model => model.CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "A", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) True</label>
-                <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "B", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) False</label>
+                <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "T", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) True</label>
+                <label>@Html.RadioButtonFor(m => m.CorrectAnswer, "F", new { htmlAttributes = new { @class = "form-control", @name = "correctAnswer" } }) False</label>
                 @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div id="offForTrueFalse">
-            <div id="offForFillInBlank">
+            <div id="multipleChoiceAnswer">
                 <div class="form-group">
                     @Html.LabelFor(model => model.CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -146,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group" hidden id="onForFill">
+            <div class="form-group" hidden id="fillInBlankAnswer">
                 @Html.LabelFor(model => model.CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.CorrectAnswer, new { htmlAttributes = new { @class = "form-control" } })
@@ -154,7 +153,6 @@
                 </div>
             </div>
 
-        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

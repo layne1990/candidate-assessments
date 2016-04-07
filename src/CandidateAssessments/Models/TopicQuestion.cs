@@ -6,8 +6,18 @@ namespace CandidateAssessments.Models
 {
    
    
-    public enum QuestionTypes {[Display(Name = "Multiple choice")]MultipleChoice, [Display(Name = "True or False")]TrueFalse, [Display(Name = "Fill in the Blank")]FillInBlank }
-   public enum DifficultyLevels {Easy,Medium,Hard }
+    public enum QuestionTypes {
+        [Display(Name = "Multiple choice")]
+        MultipleChoice,
+        [Display(Name = "True or False")]
+        TrueFalse,
+        [Display(Name = "Fill in the Blank")]
+        FillInBlank,
+        [Display(Name = "Essay")]
+        Essay
+    }
+
+    public enum DifficultyLevels {Easy,Medium,Hard }
     public class TopicQuestion
     {
         public int TopicQuestionId { get; set; }
@@ -15,7 +25,6 @@ namespace CandidateAssessments.Models
         [Display(Name = "Question Text")]
         [DataType(DataType.MultilineText)]
         public string QuestionText { get; set; }
-        [Required]
         [Display(Name ="Correct Answer")]
         [MaxLength(50)]
         public string CorrectAnswer { get; set; }
@@ -28,16 +37,12 @@ namespace CandidateAssessments.Models
         [Display(Name = "Difficulty Level")]
         public DifficultyLevels DifficultyLevel { get; set; }
         // Used for multiple choice questions
-        [Required]
         [Display(Name = "Choice A")]
         public string ChoiceA { get; set; }
-        [Required]
         [Display(Name = "Choice B")]
         public string ChoiceB { get; set; }
-        [Required]
         [Display(Name = "Choice C")]
         public string ChoiceC { get; set; }
-        [Required]
         [Display(Name = "Choice D")]
         public string ChoiceD { get; set; }
         public TimeSpan? TotalTime { get; set; }

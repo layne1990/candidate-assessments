@@ -50,10 +50,9 @@
                     <div class="card">
                         <h3 class='card-header card-default'>
                             <span class="cardHeader">@Html.DisplayFor(modelItem => item.Topic.Name)</span>
-                            @if(!item.IsActive)
+                            @if (!item.IsActive)
                             {
                                 <span class="label label-danger">Inactive</span>
-
                             }
                             @if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Easy)
                             {
@@ -61,14 +60,13 @@
                             }
                             else if (item.DifficultyLevel == CandidateAssessments.Models.DifficultyLevels.Medium)
                             {
-
                                 <span class="col-md-offset-7 text" style="color:#e7c713">@item.DifficultyLevel</span>
                             }
                             else
                             {
                                 <span class="col-md-offset-7 text-danger">@item.DifficultyLevel</span>
-
                             }
+
                             <span class="pull-right">ID:@item.TopicQuestionId</span>
                         </h3>
 
@@ -108,14 +106,14 @@
                                     else if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.TrueFalse)
                                     {
 
-                                        <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
+                                        <li class='container-fluid list-group-item @(item.CorrectAnswer == "T" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label"></span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">True</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
                                         </li>
-                                        <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
+                                        <li class='container-fluid list-group-item @(item.CorrectAnswer == "F" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label"></span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">False</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
                                         </li>
                                     }

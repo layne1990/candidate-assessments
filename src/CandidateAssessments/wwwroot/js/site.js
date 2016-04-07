@@ -3,40 +3,26 @@
 
 $(function () {
 
-  
+
 
     $("#QuestionType").change(function () {
-        var select = $("#QuestionType option:selected").val();
-
-        $('#ChoiceA').val("");
-        $('#ChoiceB').val("");
-        $('#ChoiceC').val("");
-        $('#ChoiceD').val("");
+        var questionType = $("#QuestionType option:selected").val();
 
         $("[id^='Choice']").val("");
         $("[id$='-error']").text("");
 
-        $("#offForTrueFalse").show();
-        $("#offForFillInBlank").show();
-        $("#onTrueFalse").hide();
-        $("#onForFill").hide();
+        $("#trueFalseAnswer").hide();
+        $("#fillInBlankAnswer").hide();
+        $("#multipleChoiceAnswer").hide();
+
         $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
-        if (select == "FillInBlank") {
 
-            $("[id^='Choice']").val("placeholder");
-
-            $("#offForFillInBlank").hide();
-            $("#onForFill").show();
-        } else if (select == "TrueFalse") {
-            $('#ChoiceA').val("True");
-            $('#ChoiceB').val("False");
-            $('#ChoiceC').val("placeholder");
-            $('#ChoiceD').val("placeholder");
-
-            $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
-            $("#onTrueFalse").show();
-            $("#offForTrueFalse").hide();
-
+        if (questionType == "FillInBlank") {
+            $("#fillInBlankAnswer").show();
+        } else if (questionType == "TrueFalse") {
+            $("#trueFalseAnswer").show();
+        } else if (selquestionTypeect == "MultipleChoice") {
+            $("#multipleChoiceAnswer").show();
         }
     })
 

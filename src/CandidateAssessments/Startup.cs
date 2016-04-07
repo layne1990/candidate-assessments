@@ -20,7 +20,6 @@ namespace CandidateAssessments
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
@@ -42,7 +41,7 @@ namespace CandidateAssessments
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=CandidateAssessment.Dev;Trusted_Connection=True;";
+            string connection = Configuration["Database:Connection"];           
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -96,8 +95,12 @@ namespace CandidateAssessments
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Only while in development
-            SampleData.Initialize(app.ApplicationServices);
+
+            if (env.IsDevelopment())
+            {
+                // Only while in development
+                SampleData.Initialize(app.ApplicationServices);
+            }
         }
 
         // Entry point for the application.

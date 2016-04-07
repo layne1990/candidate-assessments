@@ -186,7 +186,13 @@ namespace CandidateAssessments.Controllers
                     case "A":
                         quizQuestion.Question.ASelected++;
                         break;
+                    case "T":
+                        quizQuestion.Question.ASelected++;
+                        break;
                     case "B":
+                        quizQuestion.Question.BSelected++;
+                        break;
+                    case "F":
                         quizQuestion.Question.BSelected++;
                         break;
                     case "C":

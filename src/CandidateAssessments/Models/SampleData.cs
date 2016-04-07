@@ -64,12 +64,8 @@ namespace CandidateAssessments.Models
                         new TopicQuestion()
                         {
                             QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
-                            ChoiceA = "True",
-                            ChoiceB = "False",
-                            ChoiceC = "Placeholder",
-                            ChoiceD = "Placeholder",
                             TotalTime = new TimeSpan(0, 0, 0),
-                            CorrectAnswer = "A",
+                            CorrectAnswer = "T",
                             QuestionType = QuestionTypes.TrueFalse,
                             IsActive = true,
                             DifficultyLevel = DifficultyLevels.Hard,
@@ -85,10 +81,6 @@ namespace CandidateAssessments.Models
                         new TopicQuestion()
                         {
                             QuestionText = "This is question " + i.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
-                            ChoiceA = "Placeholder",
-                            ChoiceB = "Placeholder",
-                            ChoiceC = "Placeholder",
-                            ChoiceD = "Placeholder",
                             TotalTime = new TimeSpan(0, 0, 0),
                             CorrectAnswer = "Answer",
                             QuestionType = QuestionTypes.FillInBlank,
@@ -101,13 +93,19 @@ namespace CandidateAssessments.Models
                       new TopicQuestion()
                       {
                           QuestionText = "This is question " + 10.ToString() + ". " + lorem.Substring(0, random.Next(0, lorem.Length)),
-                          ChoiceA = "Placeholder",
-                          ChoiceB = "Placeholder",
-                          ChoiceC = "Placeholder",
-                          ChoiceD = "Placeholder",
                           TotalTime = new TimeSpan(0, 0, 0),
                           CorrectAnswer = "Answer",
                           QuestionType = QuestionTypes.FillInBlank,
+                          IsActive = true,
+                          DifficultyLevel = DifficultyLevels.Easy,
+                          Topic = t
+                      });
+                    context.TopicQuestions.Add(
+                      new TopicQuestion()
+                      {
+                          QuestionText = "This is an essay question ",
+                          TotalTime = new TimeSpan(0, 0, 0),
+                          QuestionType = QuestionTypes.Essay,
                           IsActive = true,
                           DifficultyLevel = DifficultyLevels.Easy,
                           Topic = t
