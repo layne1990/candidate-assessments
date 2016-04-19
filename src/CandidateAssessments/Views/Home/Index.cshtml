@@ -3,12 +3,12 @@
 <div class="row">
 
     <div class="col-md-12">
-        <div class="jumbotron text-center">
-            <h1>Candidate Assessments</h1>
+        <div class="text-center">
+            <h2>Welcome to the RDA Candidate Assessment Tool</h2>
 
             @if (User.IsInRole("Admin") || User.IsInRole("Recruiter"))
             {
-                <a class="btn btn-lg" href="/Assessments" role="button">
+                <a class="" href="/Assessments" role="button">
                     <h2>Assessments</h2>
                     <p>Create or review candidate assessments.</p>
                 </a>
@@ -16,7 +16,7 @@
 
             @if (User.IsInRole("Admin") || User.IsInRole("QuestionManager"))
             {
-                <a class="btn btn-lg" href="/Topic" role="button">
+                <a class="" href="/Topic" role="button">
                     <h2>Questions</h2>
                     <p>Manage the topics and the pools of questions for each topic.</p>
                 </a>

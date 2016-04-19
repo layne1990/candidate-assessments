@@ -22,25 +22,25 @@
                     </h3>
                     <div class="card-block">
                         <blockquote class="card-blockquote">
-                            <p class="card-text">@Html.DisplayFor(model => model.Question.QuestionText)</p>
+                            <p class="card-text">@Html.Raw(Model.Question.QuestionText)</p>
                             <div class="list-group">
                                 @if (Model.Question.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
                                 {
                                     <label class="container-fluid list-group-item" for="radio-1">
                                         <input type="radio" class="quiz-radio" name="Answer" value="A" id="radio-1" />
-                                        <span class="question_label">A) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceA)</span>
+                                        <span class="question_label">A) </span><span class="col-md-9 question_text">@Html.Raw(Model.Question.ChoiceA)</span>
                                     </label>
                                     <label class="container-fluid list-group-item" for="radio-2">
                                         <input type="radio" class="quiz-radio" name="Answer" value="B" id="radio-2" />
-                                        <span class="question_label">B) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceB)</span>
+                                        <span class="question_label">B) </span><span class="col-md-9 question_text">@Html.Raw(Model.Question.ChoiceB)</span>
                                     </label>
                                     <label class="container-fluid list-group-item" for="radio-3">
                                         <input type="radio" class="quiz-radio" name="Answer" value="C" id="radio-3" />
-                                        <span class="question_label">C) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceC)</span>
+                                        <span class="question_label">C) </span><span class="col-md-9 question_text">@Html.Raw(Model.Question.ChoiceC)</span>
                                     </label>
                                     <label class="container-fluid list-group-item" for="radio-4">
                                         <input type="radio" class="quiz-radio" name="Answer" value="D" id="radio-4" />
-                                        <span class="question_label">D) </span><span class="col-md-9 question_text">@Html.DisplayFor(model => model.Question.ChoiceD)</span>
+                                        <span class="question_label">D) </span><span class="col-md-9 question_text">@Html.Raw(Model.Question.ChoiceD)</span>
                                     </label>
                                 }
                                 else if (Model.Question.QuestionType == CandidateAssessments.Models.QuestionTypes.TrueFalse)

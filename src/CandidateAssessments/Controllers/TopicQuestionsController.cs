@@ -5,6 +5,7 @@ using Microsoft.Data.Entity;
 using CandidateAssessments.Models;
 using System.Collections.Generic;
 using Microsoft.AspNet.Authorization;
+using System;
 
 namespace WebApplication1.Controllers
 {
@@ -49,7 +50,7 @@ namespace WebApplication1.Controllers
                .ToList();
 
 
-            ViewBag.count = questionQuery.Count();
+            ViewBag.pages = (int)Math.Ceiling(questionQuery.Count() / (double)pageSize);
             ViewBag.search = searchParam;
             ViewBag.page = page;
             ViewBag.TopicId = topicId;
@@ -79,7 +80,9 @@ namespace WebApplication1.Controllers
 
             ViewBag.TopicList = _context.Topics.ToList();
             ViewBag.TopicId = id;
-            return View();
+            TopicQuestion topicQuestion = new TopicQuestion();
+            topicQuestion.IsActive = true;
+            return View(topicQuestion);
         }
 
         // POST: TopicQuestions/Create

@@ -1,6 +1,9 @@
 
 @model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
+@{
+    ViewData["Title"] = "Questions";
+}
 
 <nav class="navbar navbar-full navbar-default" id="pageNav">
     <div class="container-fluid">
@@ -28,7 +31,7 @@
 
         <div class="col-md-2 col-xs-2">
             <form class="nav navbar-btn navbar-right" method="get" asp-action="Create" asp-route-id="@ViewBag.TopicId">
-                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create New</button>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Question</button>
             </form>
         </div>
     </div>
@@ -78,28 +81,28 @@
                         }
                         <div class="card-block">
                             <blockquote class="card-blockquote">
-                                <p class="card-text">@Html.DisplayFor(modelItem => item.QuestionText)</p>
+                                <p class="card-text">@Html.Raw(item.QuestionText)</p>
                                 <ul class="list-group list-unstyled">
                                     @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
                                     {
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">A)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceA)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceA)</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">B)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceB)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceB)</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">C)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceC)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceC)</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentC) ? 0 : percentC)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">D)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.DisplayFor(modelItem => item.ChoiceD)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceD)</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentD) ? 0 : percentD)%</span>
                                         </li>
                                     }
@@ -145,74 +148,8 @@
         }
     </div>
 </div>
-@{var pages = Math.Ceiling(ViewBag.count / 5.0);}
-@if (pages > 1)
-{
-    <ul class="pagination pagination-lg">
 
-        <li><a id="leftArrow" href="/TopicQuestions/?page=1&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">&laquo;</a></li>
-        @{var back = (ViewBag.page > 1) ? ViewBag.page - 1 : 1; }
-        <li><a href="/TopicQuestions/?page=@back&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">&lsaquo;</a></li>
-        @{
-            var DisplayDots = true;
-            var start = 1;
-            var end = pages;
-            if (ViewBag.page < 4)
-            {
-                if (pages > 5)
-                {
-                    end = 5;
-                }
-                else
-                {
-                    DisplayDots = false;
-
-                }
-
-            }
-            else
-            {
-                if (ViewBag.Page > (pages - 3))
-                {
-                    start = (int)pages - 4;
-                    DisplayDots = false;
-
-                }
-                else {
-                    start = ViewBag.page - 2;
-                    end = ViewBag.page + 2;
-                }
-            }
-
-
-        }
-        @for (int i = start; i <= end; i++)
-        {
-            @if (ViewBag.page == i)
-            {
-                <li class="active"><span>@i</span></li>
-
-            }
-            else {
-                <li><a href="/TopicQuestions/?page=@i&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">@i</a></li>
-            }
-
-        }
-        @{var next = (ViewBag.page < pages) ? ViewBag.page + 1 : pages;}
-        @if (DisplayDots)
-        {
-            var skip = next + 4;
-            if (skip > pages)
-            {
-                skip = pages;
-
-            }
-
-            <li><a href="/TopicQuestions/?page=@skip &searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">...</a></li>
-        }
-        <li><a href="/TopicQuestions/?page=@next&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">&rsaquo;</a></li>
-        <li><a id="rightArrow" href="/TopicQuestions/?page=@pages&searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId">&raquo;</a></li>
-    </ul>
-
-            }
-
+<pager additional-parameters="searchParam=@ViewBag.search&TopicId=@ViewBag.TopicId" 
+       current-page="@ViewBag.page" 
+       link-url="/TopicQuestions/" 
+       total-pages="@ViewBag.pages"></pager>

@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
                .ToList();
             
             ViewBag.currentUserFilter = currentUserFilter;
-            ViewBag.count = assessmentQuery.Count();
+            ViewBag.pages = (int)Math.Ceiling(assessmentQuery.Count() / (double)pageSize);
             ViewBag.search = searchParam;
             ViewBag.page = page;
         

@@ -1,30 +1,41 @@
-﻿
+﻿function processQuestionType(){
+    var questionType = $("#QuestionType option:selected").val();
+
+    $("[id^='Choice']").val("");
+    $("[id$='-error']").text("");
+
+    $("#trueFalseAnswer").hide();
+    $("#fillInBlankAnswer").hide();
+    $("#multipleChoiceAnswer").hide();
+
+    $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
+    $("input[type='radio'][name='CorrectAnswer']").prop('required', true);
+    $("input[type='radio'][name='ChoiceA']").prop('required', false);
+    $("input[type='radio'][name='ChoiceB']").prop('required', false);
+    $("input[type='radio'][name='ChoiceC']").prop('required', false);
+    $("input[type='radio'][name='ChoiceD']").prop('required', false);
+
+    if (questionType == "FillInBlank") {
+        $("#fillInBlankAnswer").show();
+    } else if (questionType == "TrueFalse") {
+        $("#trueFalseAnswer").show();
+    } else if (questionType == "MultipleChoice") {
+        $("#multipleChoiceAnswer").show();
+        $("input[type='radio'][name='ChoiceA']").prop('required', true);
+        $("input[type='radio'][name='ChoiceB']").prop('required', true);
+        $("input[type='radio'][name='ChoiceC']").prop('required', true);
+        $("input[type='radio'][name='ChoiceD']").prop('required', true);
+    } else if (questionType == "Essay") {
+        $("input[type='radio'][name='CorrectAnswer']").prop('required', false);
+    }
+};
 
 
 $(function () {
 
+  
 
-
-    $("#QuestionType").change(function () {
-        var questionType = $("#QuestionType option:selected").val();
-
-        $("[id^='Choice']").val("");
-        $("[id$='-error']").text("");
-
-        $("#trueFalseAnswer").hide();
-        $("#fillInBlankAnswer").hide();
-        $("#multipleChoiceAnswer").hide();
-
-        $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
-
-        if (questionType == "FillInBlank") {
-            $("#fillInBlankAnswer").show();
-        } else if (questionType == "TrueFalse") {
-            $("#trueFalseAnswer").show();
-        } else if (selquestionTypeect == "MultipleChoice") {
-            $("#multipleChoiceAnswer").show();
-        }
-    })
+    $("#QuestionType").change(processQuestionType);
 
 
     $(function () {
