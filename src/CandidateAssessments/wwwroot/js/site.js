@@ -10,6 +10,7 @@
 
     $("input[type='radio'][name='CorrectAnswer']").prop('checked', false);
     $("input[type='radio'][name='CorrectAnswer']").prop('required', true);
+    $("input[type='text'][name='CorrectAnswer']").prop('required', false);
     $("input[type='radio'][name='ChoiceA']").prop('required', false);
     $("input[type='radio'][name='ChoiceB']").prop('required', false);
     $("input[type='radio'][name='ChoiceC']").prop('required', false);
@@ -17,6 +18,7 @@
 
     if (questionType == "FillInBlank") {
         $("#fillInBlankAnswer").show();
+        $("input[type='text'][name='CorrectAnswer']").prop('required', true);
     } else if (questionType == "TrueFalse") {
         $("#trueFalseAnswer").show();
     } else if (questionType == "MultipleChoice") {

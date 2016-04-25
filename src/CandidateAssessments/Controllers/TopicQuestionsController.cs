@@ -34,14 +34,11 @@ namespace WebApplication1.Controllers
             if (searchParam != null)
             {
                 questionQuery = questionQuery.Where(x => x.QuestionText.ToLower().Contains(searchParam.ToLower()) || 
-                x.TopicQuestionId.ToString().Contains(searchParam.ToLower()) || 
-                x.ChoiceA.ToLower().Contains(searchParam.ToLower()) ||
-                x.ChoiceB.ToLower().Contains(searchParam.ToLower()) || 
-                x.ChoiceC.ToLower().Contains(searchParam.ToLower()) || 
-                x.DifficultyLevel.ToString().ToLower().Contains(searchParam.ToLower()) || 
-                x.ChoiceD.ToLower().Contains(searchParam.ToLower()) 
+                x.TopicQuestionId.ToString().Contains(searchParam.ToLower()) ||
+                x.DifficultyLevel.ToString().ToLower().Contains(searchParam.ToLower()) 
                );
             }
+
 
             var questions = questionQuery.Include(x => x.Topic)
                .OrderBy(x => x.TopicQuestionId)
