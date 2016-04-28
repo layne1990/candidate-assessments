@@ -33,7 +33,7 @@ namespace CandidateAssessments.Controllers
             }
             else {
                 inactive = false;
-                 topics = _db.Topics.Where(x => x.Active == true).ToList();
+                topics = _db.Topics.Where(x => x.Active == true).ToList();
                 ViewBag.Questions = _db.TopicQuestions.Where(x => x.Topic.Active == true).ToList();
             }
 
