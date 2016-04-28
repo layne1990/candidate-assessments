@@ -56,7 +56,7 @@
                         TimeTaken = Answered.Subtract(Presented);
 
                     }
-                    @if(item.CorrectAnswer == question.Answer)
+                    @if(string.Equals(question.Answer, item.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
                     {
                     <span class="label label-success ">Correct</span>
 

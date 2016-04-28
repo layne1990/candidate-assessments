@@ -157,9 +157,6 @@ namespace CandidateAssessments.Controllers
                 return View("QuizComplete");
             }
 
-            
-
-
             // Save the answer
             if (quizQuestion.Answer == null)
             {
@@ -169,7 +166,14 @@ namespace CandidateAssessments.Controllers
 
                 // update the total time taken
                 var TimeTaken = quizQuestion.TimeAnswered.Value.Subtract(quizQuestion.TimePresented.Value);
-                quizQuestion.Question.TotalTime = quizQuestion.Question.TotalTime.Value.Add(TimeTaken);
+                if(quizQuestion.Question.TotalTime.HasValue)
+                {
+                    quizQuestion.Question.TotalTime = quizQuestion.Question.TotalTime.Value.Add(TimeTaken);
+                }
+                else
+                {
+                    quizQuestion.Question.TotalTime = TimeTaken;
+                }
 
                 if (string.Equals(quizQuestion.Answer, quizQuestion.Question.CorrectAnswer, StringComparison.CurrentCultureIgnoreCase))
                 {
