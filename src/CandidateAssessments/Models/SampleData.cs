@@ -128,8 +128,8 @@ namespace CandidateAssessments.Models
 
                     new Assessment { CandidateName = "John Doe", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
                     new Assessment { CandidateName = "Jim Beam", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now.AddDays(7), User = "user1@laynerdacorp232.onmicrosoft.com" },
-                    // Expired assessment
-                    new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now, User = "user1@laynerdacorp232.onmicrosoft.com" }
+                     // Expired assessment
+                     new Assessment { CandidateName = "Jane Smith", AccessCode = Guid.NewGuid().ToString(), CreatedDate = DateTime.Now, ExpirationDate = DateTime.Now, User = "user1@laynerdacorp232.onmicrosoft.com" }
                 );
 
                 context.SaveChanges();
