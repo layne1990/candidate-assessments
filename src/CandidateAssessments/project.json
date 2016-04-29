@@ -36,14 +36,8 @@
   },
 
   "frameworks": {
-    "dnx451": {
-      "dependencies": {
-        "MarkdownSharp": "1.13.0"
-      },
-      "frameworkAssemblies": {
-        "System.Web": "4.0.0.0"
-      }
-    }
+    "dnx451": { },
+    "dnxcore50": { }
   },
 
   "exclude": [
