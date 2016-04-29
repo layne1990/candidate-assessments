@@ -83,28 +83,29 @@
                         }
                         <div class="card-block">
                             <blockquote class="card-blockquote">
+                                <!-- transforms to markdown -->
                                 <p class="card-text">@Html.Raw(md.Transform(item.QuestionText))</p>
                                 <ul class="list-group list-unstyled">
                                     @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
                                     {
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "A" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">A)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceA)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(md.Transform(item.ChoiceA))</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentA) ? 0 : percentA)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "B" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">B)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceB)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(md.Transform(item.ChoiceB))</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentB) ? 0 : percentB)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "C" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">C)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceC)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(md.Transform(item.ChoiceC))</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentC) ? 0 : percentC)%</span>
                                         </li>
                                         <li class='container-fluid list-group-item @(item.CorrectAnswer == "D" ? "list-group-item-success" : "list-group-item-default")'>
                                             <span class="question_label">D)</span>
-                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(item.ChoiceD)</span>
+                                            <span class="col-xs-10 col-sm-9 col-md-10 question_text">@Html.Raw(md.Transform(item.ChoiceD))</span>
                                             <span class="badge navbar-right">@(double.IsNaN(percentD) ? 0 : percentD)%</span>
                                         </li>
                                     }
