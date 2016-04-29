@@ -81,7 +81,8 @@
                         }
                         <div class="card-block">
                             <blockquote class="card-blockquote">
-                                <p class="card-text">@Html.Raw(item.QuestionText)</p>
+                                <!-- TODO: change the item.QuestionText to use markdown-->
+                                <p class="card-text">Markdown(item.QuestionText)</p>
                                 <ul class="list-group list-unstyled">
                                     @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
                                     {
