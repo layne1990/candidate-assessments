@@ -1,8 +1,10 @@
 
 @model System.Collections.Generic.IEnumerable<CandidateAssessments.Models.TopicQuestion>
 
+@using MarkdownSharp
 @{
     ViewData["Title"] = "Questions";
+    Markdown md = new Markdown();
 }
 
 <nav class="navbar navbar-full navbar-default" id="pageNav">
@@ -81,7 +83,7 @@
                         }
                         <div class="card-block">
                             <blockquote class="card-blockquote">
-                                <p class="card-text">@Html.Raw(item.QuestionText)</p>
+                                <p class="card-text">@Html.Raw(md.Transform(item.QuestionText))</p>
                                 <ul class="list-group list-unstyled">
                                     @if (item.QuestionType == CandidateAssessments.Models.QuestionTypes.MultipleChoice)
                                     {
