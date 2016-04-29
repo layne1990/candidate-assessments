@@ -17,6 +17,9 @@
         useThis = timeTaken.ToString(@"hh\:mm\:ss");
     }
 }
+
+<link rel="stylesheet" href="~/css/vs.css" />
+
 <nav class="navbar navbar-full navbar-default" id="pageNav">
     <div class="container-fluid">
         <div class="col-md-offset-4 row">
@@ -150,3 +153,12 @@
         }
     </div>
 </div>
+
+<script src="~/lib/highlight/highlight.pack.js"></script>
+<script>
+    $(document).ready(function () {
+        $('code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
