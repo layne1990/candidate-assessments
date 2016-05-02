@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
                 return HttpNotFound();
             }
 
-            TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
+            TopicQuestion topicQuestion = _context.TopicQuestions.Where(m => m.TopicQuestionId == id).Include(y => y.Topic).SingleOrDefault();
             if (topicQuestion == null)
             {
                 return HttpNotFound();
@@ -100,7 +100,7 @@ namespace WebApplication1.Controllers
                 _context.TopicQuestions.Add(topicQuestion);
 
                 _context.SaveChanges();
-                return RedirectToAction("Index", new { TopicId = top.TopicId });
+                return RedirectToAction("Details", new { id = topicQuestion.TopicQuestionId });
             }
             ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
