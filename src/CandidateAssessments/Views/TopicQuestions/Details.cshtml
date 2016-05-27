@@ -2,13 +2,13 @@
 @using MarkdownSharp
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Preview";
     Markdown md = new Markdown();
 }
 
 <link rel="stylesheet" href="~/css/vs.css" />
 
-<h2>Details</h2>
+<h2>Preview</h2>
 
 <hr />
 
@@ -94,3 +94,15 @@
     <p>
         @Html.ActionLink("Back to List", "Index", new { TopicId = Model.TopicId })
     </p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TopicQuestionId })
+</p>
+
+<script src="~/lib/highlight/highlight.pack.js"></script>
+<script>
+    $(document).ready(function () {
+        $('code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
