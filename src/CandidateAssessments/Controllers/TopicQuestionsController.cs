@@ -145,7 +145,7 @@ namespace WebApplication1.Controllers
                 }
                 _context.Update(topicQuestion);
                 _context.SaveChanges();
-                return RedirectToAction("Index", new { TopicId = top.TopicId });
+                return RedirectToAction("Details", new { id = topicQuestion.TopicQuestionId });
             }
             ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
