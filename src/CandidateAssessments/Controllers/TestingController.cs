@@ -114,8 +114,7 @@ namespace CandidateAssessments.Controllers
                 _db.SaveChanges();
             }
 
-            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
-            ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
+            ViewBag.EndDate = quiz.TimeStarted.Value.Add(new TimeSpan(0, quiz.TimeLimit, 0)).ToString("dd-MM-yyyy h:mm:ss tt");
             ViewBag.TimeLimit = quiz.TimeLimit;
             ViewBag.QTopic = _db.Topics.Where(x => x.TopicId == quiz.TopicId).Include(x => x.Name);
             return View(question);
@@ -213,9 +212,7 @@ namespace CandidateAssessments.Controllers
             }
 
             // Calculate time remaining
-            ViewBag.TimeLimit = quiz.TimeLimit;
-            var TimeRemaining = (new TimeSpan(0, quiz.TimeLimit, 0)).Subtract(DateTime.Now.Subtract(quiz.TimeStarted.Value));
-            ViewBag.EndDate = DateTime.Now.Add(TimeRemaining).ToString("dd-MM-yyyy h:mm:ss tt");
+            ViewBag.EndDate = quiz.TimeStarted.Value.Add(new TimeSpan(0, quiz.TimeLimit, 0)).ToString("dd-MM-yyyy h:mm:ss tt");
 
             // Get the next question
             QuizQuestion nextQuestion = _db.QuizQuestions.Where(x => x.QuizQuestionId == quizQuestion.NextQuestionId).Include(x => x.Question).ThenInclude(y => y.Topic).FirstOrDefault();
