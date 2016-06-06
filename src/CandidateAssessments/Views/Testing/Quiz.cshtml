@@ -83,59 +83,6 @@
         </div>
     </form>
 </div>
-<script>
-    var dt = '@ViewBag.EndDate';
-    var dateAr = dt.split('-');
-    var newDate = dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2];
-
-    var end = new Date(dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2]);
-
-    var _second = 1000;
-    var _minute = _second * 60;
-    var _hour = _minute * 60;
-    var _day = _hour * 24;
-    var timer;
-
-    function showRemaining() {
-        var now = new Date();
-        var distance = end - now;
-        var limit = @ViewBag.TimeLimit;
-        if (distance < ((limit * 60000) / 2)) {
-
-            document.getElementById('countdown').className = "text-danger"
-
-        }
-        if (distance < 0) {
-            clearInterval(timer);
-            document.getElementById('countdown').innerHTML = 'EXPIRED';
-            window.location.href = '/Testing/Quiz/@Model.QuizId';
-
-            return;
-        }
-        var hours = Math.floor((distance % _day) / _hour);
-        var minutes = Math.floor((distance % _hour) / _minute);
-        var seconds = Math.floor((distance % _minute) / _second);
-
-        if(hours>0){
-            document.getElementById('countdown').innerHTML = hours + ':';
-            if(minutes<10)
-                document.getElementById('countdown').innerHTML += '0'+minutes + ':';
-            else
-                document.getElementById('countdown').innerHTML += minutes + ':';
-        }else{
-            document.getElementById('countdown').innerHTML = minutes + ':';
-
-        }
-
-        if (seconds < 10)
-            document.getElementById('countdown').innerHTML += '0' + seconds;
-        else
-            document.getElementById('countdown').innerHTML += seconds + '';
-    }
-
-    timer = setInterval(showRemaining, 1000);
-
-</script>
 
 <script src="~/lib/highlight/highlight.pack.js"></script>
 <script>
@@ -143,5 +90,7 @@
         $('code').each(function (i, block) {
             hljs.highlightBlock(block);
         });
+
+        startTimer(@ViewBag.TimeRemaining, document.querySelector('#countdown'), '/Testing/Quiz/@Model.QuizId');
     });
 </script>
