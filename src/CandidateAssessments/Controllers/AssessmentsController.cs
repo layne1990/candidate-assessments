@@ -203,7 +203,7 @@ namespace WebApplication1.Controllers
                        
                         NumQuestions = List.Count();
                     }
-                    int NumEasy = (int) Math.Ceiling(NumQuestions * 0.1);
+                    int NumEasy = (int) Math.Ceiling(NumQuestions * 0.3);
                     int NumHard = (int) Math.Ceiling(NumQuestions * 0.3);
                   
                     var EasyList = List.Where(x => x.DifficultyLevel == DifficultyLevels.Easy).ToList();
