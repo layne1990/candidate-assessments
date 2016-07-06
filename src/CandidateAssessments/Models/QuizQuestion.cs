@@ -11,6 +11,8 @@ namespace CandidateAssessments.Models
 
         public String Answer { get; set; }
 
+        public int EssayScore { get; set; }
+
         public DateTime? TimePresented { get; set; }
         public DateTime? TimeAnswered { get; set; }
 
