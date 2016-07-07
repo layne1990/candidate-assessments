@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using CandidateAssessments.Data;
 
 namespace CandidateAssessments.Models
 {

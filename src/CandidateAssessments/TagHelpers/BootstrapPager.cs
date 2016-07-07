@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
 
 namespace CandidateAssessments.TagHelpers
 {
@@ -34,12 +34,12 @@ namespace CandidateAssessments.TagHelpers
                 a.MergeAttribute("href", $"{Url}?page={i}&{AdditionalParameters}");
                 a.MergeAttribute("title", $"Click to go to page {i}");
                 a.InnerHtml.AppendHtml(i.ToString());
-
-                li.InnerHtml.Append(a);
+                
+                li.InnerHtml.AppendHtml(a);
 
 
                 var writer = new System.IO.StringWriter();
-                li.WriteTo(writer, new HtmlEncoder());
+                li.WriteTo(writer, HtmlEncoder.Default);
                 var s = writer.ToString();
                 items.AppendLine(s);
             }

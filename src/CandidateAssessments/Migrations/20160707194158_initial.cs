@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CandidateAssessments.Migrations
 {
-    public partial class Migration1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace CandidateAssessments.Migrations
                 {
                     AssessmentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AccessCode = table.Column<string>(nullable: true),
-                    CandidateName = table.Column<string>(nullable: false),
+                    AccessCode = table.Column<string>(type: "VARCHAR(36)", maxLength: 36, nullable: false),
+                    CandidateName = table.Column<string>(maxLength: 128, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
                     User = table.Column<string>(nullable: true)
@@ -26,6 +26,7 @@ namespace CandidateAssessments.Migrations
                     table.PrimaryKey("PK_Assessment", x => x.AssessmentId);
                     table.UniqueConstraint("AK_Assessment_AccessCode", x => x.AccessCode);
                 });
+
             migrationBuilder.CreateTable(
                 name: "Topic",
                 columns: table => new
@@ -33,12 +34,13 @@ namespace CandidateAssessments.Migrations
                     TopicId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Topic", x => x.TopicId);
                 });
+
             migrationBuilder.CreateTable(
                 name: "Quiz",
                 columns: table => new
@@ -69,6 +71,7 @@ namespace CandidateAssessments.Migrations
                         principalColumn: "TopicId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
                 name: "TopicQuestion",
                 columns: table => new
@@ -82,7 +85,7 @@ namespace CandidateAssessments.Migrations
                     ChoiceB = table.Column<string>(nullable: true),
                     ChoiceC = table.Column<string>(nullable: true),
                     ChoiceD = table.Column<string>(nullable: true),
-                    CorrectAnswer = table.Column<string>(nullable: true),
+                    CorrectAnswer = table.Column<string>(maxLength: 50, nullable: true),
                     DSelected = table.Column<int>(nullable: false),
                     DifficultyLevel = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
@@ -102,6 +105,7 @@ namespace CandidateAssessments.Migrations
                         principalColumn: "TopicId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
                 name: "QuizQuestion",
                 columns: table => new
@@ -132,15 +136,49 @@ namespace CandidateAssessments.Migrations
                         principalColumn: "TopicQuestionId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quiz_AssessmentId",
+                table: "Quiz",
+                column: "AssessmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quiz_TopicId",
+                table: "Quiz",
+                column: "TopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizQuestion_QuizId",
+                table: "QuizQuestion",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizQuestion_TopicQuestionId",
+                table: "QuizQuestion",
+                column: "TopicQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TopicQuestion_TopicId",
+                table: "TopicQuestion",
+                column: "TopicId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable("QuizQuestion");
-            migrationBuilder.DropTable("Quiz");
-            migrationBuilder.DropTable("TopicQuestion");
-            migrationBuilder.DropTable("Assessment");
-            migrationBuilder.DropTable("Topic");
+            migrationBuilder.DropTable(
+                name: "QuizQuestion");
+
+            migrationBuilder.DropTable(
+                name: "Quiz");
+
+            migrationBuilder.DropTable(
+                name: "TopicQuestion");
+
+            migrationBuilder.DropTable(
+                name: "Assessment");
+
+            migrationBuilder.DropTable(
+                name: "Topic");
         }
     }
 }

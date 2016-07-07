@@ -1,0 +1,35 @@
+ "appRoles": [
+    {
+      "allowedMemberTypes": [
+        "User"
+      ],
+      "description": "Recruiters can create assessments or review assessment results",
+      "displayName": "Recruiter",
+      "id": "deaf1095-e892-4633-9d07-5ad7e9f450ba",
+      "isEnabled": true,
+      "origin": "Application",
+      "value": "Recruiter"
+    },
+    {
+      "allowedMemberTypes": [
+        "User"
+      ],
+      "description": "Question Managers maintain the pool of questions and topics",
+      "displayName": "Question Manager",
+      "id": "8864f1bc-89b8-4d50-8148-01094d5eace8",
+      "isEnabled": true,
+      "origin": "Application",
+      "value": "QuestionManager"
+    },
+    {
+      "allowedMemberTypes": [
+        "User"
+      ],
+      "description": "Admins can do everything.",
+      "displayName": "Admin",
+      "id": "aeffef0f-bf40-4898-83e4-da269abeec3e",
+      "isEnabled": true,
+      "origin": "Application",
+      "value": "Admin"
+    }
+  ],

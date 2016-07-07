@@ -1,10 +1,11 @@
 using System.Linq;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using CandidateAssessments.Models;
+using CandidateAssessments.Data;
 using System.Collections.Generic;
-using Microsoft.AspNet.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using System;
 
 namespace WebApplication1.Controllers
@@ -59,13 +60,13 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             TopicQuestion topicQuestion = _context.TopicQuestions.Where(m => m.TopicQuestionId == id).Include(y => y.Topic).SingleOrDefault();
             if (topicQuestion == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             return View(topicQuestion);
@@ -89,14 +90,14 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
-                topicQuestion.Topic = top;
-
+                // Initilize some statistics for this topic questions
                 topicQuestion.TotalTime = new System.TimeSpan(0, 0, 0);
-                //not sure when topic.Questions gets initiated
-                if (top.Questions == null)
-                    top.Questions = new List<TopicQuestion>();
-                top.Questions.Add(topicQuestion);
+                topicQuestion.TimesAnswered = 0;
+                topicQuestion.ASelected = 0;
+                topicQuestion.BSelected = 0;
+                topicQuestion.CSelected = 0;
+                topicQuestion.DSelected = 0;
+
                 _context.TopicQuestions.Add(topicQuestion);
 
                 _context.SaveChanges();
@@ -111,13 +112,13 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             TopicQuestion topicQuestion = _context.TopicQuestions.Single(m => m.TopicQuestionId == id);
             if (topicQuestion == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             ViewBag.TopicList = _context.Topics.ToList();
             return View(topicQuestion);
@@ -130,19 +131,6 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                // if topic was changes need to remove question from original topic list
-                var top = _context.Topics.Single(t => t.TopicId == topicQuestion.TopicId);
-                topicQuestion.Topic = top;
-
-                //not sure when topic.Questions gets initiated
-                if (top.Questions == null)
-                    top.Questions = new List<TopicQuestion>();
-                top.Questions.Add(topicQuestion);
-                if (topicQuestion.QuestionType == QuestionTypes.TrueFalse)
-                {
-                    topicQuestion.ChoiceA = "True";
-                    topicQuestion.ChoiceB = "False";
-                }
                 _context.Update(topicQuestion);
                 _context.SaveChanges();
                 return RedirectToAction("Details", new { id = topicQuestion.TopicQuestionId });
@@ -157,13 +145,13 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             TopicQuestion topicQuestion = _context.TopicQuestions.SingleOrDefault(m => m.TopicQuestionId == id);
             if (topicQuestion == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             return View(topicQuestion);

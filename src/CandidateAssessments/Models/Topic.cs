@@ -15,5 +15,8 @@ namespace CandidateAssessments.Models
         public Boolean Active { get; set; }
         public List<TopicQuestion> Questions { get; set; }
 
+        //public int DefaultNumberOfQuestions { get; set; }
+        //public int DefaultTimeLimit { get; set; }
+
     }
 }

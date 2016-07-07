@@ -14,8 +14,6 @@ namespace CandidateAssessments.Models
 
         public Assessment Assessment { get; set; }
         public int AssessmentId { get; set; }
-
-        // this can be calculated based on the length of this.Questions, do we need to keep it around?
         public int NumberOfQuestions { get; set; }
         public int NumberCorrect { get; set; }
         public int TimeLimit { get; set; }

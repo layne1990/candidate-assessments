@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using CandidateAssessments.Models;
-using Microsoft.AspNet.Authorization;
+using CandidateAssessments.Data;
+using Microsoft.AspNetCore.Authorization;
 using System.Globalization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -74,17 +75,17 @@ namespace CandidateAssessments.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             var qs = _db.TopicQuestions.Where(x => x.TopicId == id);
             if (qs.Count() != 0)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
           Topic topic = _db.Topics.SingleOrDefault(m => m.TopicId == id);
             if (topic == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             return View(topic);

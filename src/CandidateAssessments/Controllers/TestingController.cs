@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using CandidateAssessments.Models;
-using Microsoft.Data.Entity;
+using CandidateAssessments.Data;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,7 +36,7 @@ namespace CandidateAssessments.Controllers
                 accessCode = GetAccessCodeCookie();
 
             if (string.IsNullOrEmpty(accessCode))
-                return new HttpUnauthorizedResult();
+                return new UnauthorizedResult();
 
 
             // retrieve accessment by access code alternate key (be sure to include the quiz list)
@@ -46,7 +44,7 @@ namespace CandidateAssessments.Controllers
             
 
             if (assessment == null)
-                return new HttpNotFoundResult();
+                return new NotFoundResult();
 
 
             // validate that the access code has not expired
@@ -64,12 +62,12 @@ namespace CandidateAssessments.Controllers
             string accessCode = GetAccessCodeCookie();
 
             if (string.IsNullOrEmpty(accessCode))
-                return HttpUnauthorized();
+                return new UnauthorizedResult();
 
             Assessment assessment = _db.Assessments.Where(x => x.AccessCode == accessCode).FirstOrDefault();
 
             if (assessment == null)
-                return HttpNotFound();
+                return new NotFoundResult();
             
             // Get the quiz from the db by id
             Quiz quiz = _db.Quizes.Where(x => x.QuizId == id).FirstOrDefault();
@@ -78,7 +76,7 @@ namespace CandidateAssessments.Controllers
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
             if(quiz.AssessmentId != assessment.AssessmentId)
-                return HttpUnauthorized();
+                return new UnauthorizedResult();
 
             // Quiz is has been completed
             if (quiz.TimeCompleted != null)
@@ -126,12 +124,12 @@ namespace CandidateAssessments.Controllers
             string accessCode = GetAccessCodeCookie();
 
             if (string.IsNullOrEmpty(accessCode))
-                return HttpUnauthorized();
+                return new UnauthorizedResult();
 
             Assessment assessment = _db.Assessments.Where(x => x.AccessCode == accessCode).FirstOrDefault();
 
             if (assessment == null)
-                return HttpNotFound();
+                return new NotFoundResult();
 
             // Find the question that was just answered
             QuizQuestion quizQuestion = _db.QuizQuestions.Include(x => x.Question).Include(x => x.Quiz).Where(x => x.QuizQuestionId == questionAnswered.QuizQuestionId).FirstOrDefault();
@@ -140,7 +138,7 @@ namespace CandidateAssessments.Controllers
             // Validation
             // Quiz is a part of the assessment of the corresponding access code cookie
             if (quiz.AssessmentId != assessment.AssessmentId)
-                return new HttpUnauthorizedResult();
+                return new UnauthorizedResult();
 
             // Quiz is complete
             if (quiz.TimeCompleted != null)

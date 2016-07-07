@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using CandidateAssessments.Models;
+using CandidateAssessments.Data;
 using System.Collections.Generic;
-using Microsoft.AspNet.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers
 {
@@ -90,7 +90,7 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             Assessment assessment = _context.Assessments
                 .Include(x => x.Quizes).ThenInclude(x => x.Questions).ThenInclude(x => x.Question)
@@ -100,7 +100,7 @@ namespace WebApplication1.Controllers
 
             if (assessment == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             return View(assessment);
         }
@@ -109,12 +109,12 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             Assessment assessment = _context.Assessments.Where(m => m.AssessmentId == id).FirstOrDefault();
             if (assessment == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             ViewBag.url = Request.Host;
             return View(assessment);
@@ -125,7 +125,7 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             Quiz quiz = _context.Quizes.Where(m => m.QuizId == id)
@@ -135,7 +135,7 @@ namespace WebApplication1.Controllers
                 .FirstOrDefault();
             if (quiz == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             return View(quiz);
         }
@@ -301,13 +301,13 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             Assessment assessment = _context.Assessments.Single(m => m.AssessmentId == id);
             if (assessment == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
             return View(assessment);
         }
@@ -334,13 +334,13 @@ namespace WebApplication1.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             Assessment assessment = _context.Assessments.SingleOrDefault(m => m.AssessmentId == id);
             if (assessment == null)
             {
-                return HttpNotFound();
+                return new NotFoundResult();
             }
 
             return View(assessment);

@@ -1,9 +1,9 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using CandidateAssessments.Models;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using CandidateAssessments.Data;
 
 namespace CandidateAssessments.Migrations
 {
@@ -13,7 +13,7 @@ namespace CandidateAssessments.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CandidateAssessments.Models.Assessment", b =>
@@ -22,6 +22,8 @@ namespace CandidateAssessments.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AccessCode")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(36)")
                         .HasAnnotation("MaxLength", 36);
 
                     b.Property<string>("CandidateName")
@@ -37,6 +39,8 @@ namespace CandidateAssessments.Migrations
                     b.HasKey("AssessmentId");
 
                     b.HasAlternateKey("AccessCode");
+
+                    b.ToTable("Assessment");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.Quiz", b =>
@@ -59,6 +63,12 @@ namespace CandidateAssessments.Migrations
                     b.Property<int>("TopicId");
 
                     b.HasKey("QuizId");
+
+                    b.HasIndex("AssessmentId");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("Quiz");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.QuizQuestion", b =>
@@ -81,6 +91,12 @@ namespace CandidateAssessments.Migrations
                     b.Property<int>("TopicQuestionId");
 
                     b.HasKey("QuizQuestionId");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("TopicQuestionId");
+
+                    b.ToTable("QuizQuestion");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.Topic", b =>
@@ -95,6 +111,8 @@ namespace CandidateAssessments.Migrations
                         .HasAnnotation("MaxLength", 128);
 
                     b.HasKey("TopicId");
+
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.TopicQuestion", b =>
@@ -137,35 +155,43 @@ namespace CandidateAssessments.Migrations
                     b.Property<TimeSpan?>("TotalTime");
 
                     b.HasKey("TopicQuestionId");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("TopicQuestion");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.Quiz", b =>
                 {
-                    b.HasOne("CandidateAssessments.Models.Assessment")
-                        .WithMany()
-                        .HasForeignKey("AssessmentId");
+                    b.HasOne("CandidateAssessments.Models.Assessment", "Assessment")
+                        .WithMany("Quizes")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CandidateAssessments.Models.Topic")
+                    b.HasOne("CandidateAssessments.Models.Topic", "Topic")
                         .WithMany()
-                        .HasForeignKey("TopicId");
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.QuizQuestion", b =>
                 {
-                    b.HasOne("CandidateAssessments.Models.Quiz")
-                        .WithMany()
-                        .HasForeignKey("QuizId");
+                    b.HasOne("CandidateAssessments.Models.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CandidateAssessments.Models.TopicQuestion")
+                    b.HasOne("CandidateAssessments.Models.TopicQuestion", "Question")
                         .WithMany()
                         .HasForeignKey("TopicQuestionId");
                 });
 
             modelBuilder.Entity("CandidateAssessments.Models.TopicQuestion", b =>
                 {
-                    b.HasOne("CandidateAssessments.Models.Topic")
-                        .WithMany()
-                        .HasForeignKey("TopicId");
+                    b.HasOne("CandidateAssessments.Models.Topic", "Topic")
+                        .WithMany("Questions")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

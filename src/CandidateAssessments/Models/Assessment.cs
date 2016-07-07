@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CandidateAssessments.Models
 {
@@ -23,6 +24,7 @@ namespace CandidateAssessments.Models
 
         [Display(Name = "Access Code")]
         [MaxLength(36)]
+        [Column(TypeName = "VARCHAR(36)")]
         public string AccessCode { get; set; }
 
         [Display(Name = "Date Created")]
